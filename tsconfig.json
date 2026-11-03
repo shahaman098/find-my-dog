@@ -11,5 +11,5 @@
     "isolatedModules": true,
     "allowJs": true
   },
-  "include": ["worker/src/**/*.ts", "eval/**/*.ts", "scripts/**/*.ts", "worker-configuration.d.ts"]
+  "include": ["worker/src/**/*.ts", "worker-configuration.d.ts"]
 }

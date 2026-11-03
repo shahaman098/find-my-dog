@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "find-my-dog",
   "main": "worker/src/index.ts",
+  "account_id": "cf7590968e7d3a54091b3a94df6f1506",
   "compatibility_date": "2026-10-28",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {

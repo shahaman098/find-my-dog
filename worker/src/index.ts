@@ -164,6 +164,20 @@ app.delete('/api/reports/:id/clips/:clipId', async (c) => {
   }))
 })
 
+app.patch('/api/reports/:id/clips/:clipId', async (c) => {
+  const { id, clipId } = c.req.param()
+  const body = await c.req.json().catch(() => ({}))
+  return c.json(await updateState(c.env.DB, id, (s) => {
+    const cl = s.clips.find((x) => x.clip_id === clipId)
+    if (!cl) throw new Error('clip not found')
+    if (typeof body.label === 'string') cl.label = body.label
+    if (typeof body.captured_clock === 'string') cl.captured_clock = body.captured_clock
+    if (typeof body.fps === 'number' && body.fps > 0) cl.fps = body.fps
+    if (typeof body.duration === 'number' && body.duration > 0) cl.duration_s = body.duration
+    if (body.still_done === true) cl.still_done = true
+  }))
+})
+
 // ---- matching ----
 
 const MATCH_SCHEMA = {
@@ -197,7 +211,8 @@ app.post('/api/reports/:id/match', async (c) => {
   const candidates: Array<{ clip: Clip; objectId: number }> = []
   for (const clip of s0.clips) {
     for (const t of clip.tracks) {
-      if (t.n_frames > 0) candidates.push({ clip, objectId: t.object_id })
+      const still = await c.env.MEDIA.head(`${s0.report_id}/stills/${clip.clip_id}_${t.object_id}.jpg`)
+      if (t.n_frames > 0 && still) candidates.push({ clip, objectId: t.object_id })
     }
   }
   if (candidates.length === 0) return c.json({ error: 'no tracked animals yet — ingest clips first' }, 400)
@@ -464,10 +479,16 @@ export default {
             cl.status = 'tracking'
           })
           const tracks = mockTracks()
+          // Placeholder stills so matching works without a browser session.
+          const placeholder = '<svg xmlns="http://www.w3.org/2000/svg" width="260" height="200"><rect width="260" height="200" fill="#234"/><text x="130" y="105" font-size="20" fill="#cde" text-anchor="middle" font-family="sans-serif">mock track</text></svg>'
+          for (const t of tracks) {
+            await env.MEDIA.put(`${reportId}/stills/${clipId}_${t.object_id}.jpg`, placeholder, { httpMetadata: { contentType: 'image/svg+xml' } })
+          }
           await setClip((cl) => {
             cl.tracks = tracks
             cl.n_tracks = tracks.length
             cl.status = 'done'
+            cl.still_done = true
           })
         } else {
           await setClip((cl) => {
