@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "find-my-dog",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-10-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "r2_buckets": [
+    { "binding": "MEDIA", "bucket_name": "findmydog-media" }
+  ],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "findmydog" }
+  ],
+  "queues": {
+    "producers": [
+      { "binding": "PIPELINE", "queue": "findmydog-pipeline" }
+    ],
+    "consumers": [
+      {
+        "queue": "findmydog-pipeline",
+        "max_batch_size": 1,
+        "max_batch_timeout": 5,
+        "max_retries": 2
+      }
+    ]
+  },
+  "vars": {
+    "FMD_MOCK": "0",
+    "SPARK_MODEL": "muse-spark-1.3",
+    "GLIMMER_MODEL": "meta-models/muse-glimmer"
+  },
+  "observability": { "enabled": true }
+}
