@@ -4,9 +4,11 @@ import { createState, readState, updateState } from './store'
 import { emptyCost, addCost } from './cost'
 import { mockTracks, mockTranscript, mockMatch, mockPlan, MOCK_POSTER_SVG } from './mock'
 import { trackVideo, sparkStructured, glimmerStructured, toolLoop, transcribe, generatePoster, type ContentPart } from './meta'
-import { samCost } from './sam'
 
 const app = new Hono<{ Bindings: Env }>()
+
+// Judges should never see a bare 500 — always JSON, always readable.
+app.onError((err, c) => c.json({ error: String(err?.message ?? err).slice(0, 400) }, 500))
 
 function mockMode(env: Env): boolean {
   return env.FMD_MOCK === '1' || !env.META_API_KEY
@@ -176,10 +178,13 @@ app.delete('/api/reports/:id/clips/:clipId', async (c) => {
 
 app.patch('/api/reports/:id/clips/:clipId', async (c) => {
   const { id, clipId } = c.req.param()
+  const s = await readState(c.env.DB, id)
+  if (!s) return c.json({ error: 'report not found' }, 404)
+  if (!s.clips.some((x) => x.clip_id === clipId)) return c.json({ error: 'clip not found' }, 404)
   const body = await c.req.json().catch(() => ({}))
   return c.json(await updateState(c.env.DB, id, (s) => {
     const cl = s.clips.find((x) => x.clip_id === clipId)
-    if (!cl) throw new Error('clip not found')
+    if (!cl) return
     if (typeof body.label === 'string') cl.label = body.label
     if (typeof body.captured_clock === 'string') cl.captured_clock = body.captured_clock
     if (typeof body.fps === 'number' && body.fps > 0) cl.fps = body.fps
@@ -244,41 +249,62 @@ app.post('/api/reports/:id/match', async (c) => {
   const usage = { input: 0, output: 0 }
   const petPhotoB64 = await b64Of(c.env, s0.pet.photo_key)
 
-  if (c.env.BASETEN_API_KEY) {
-    try {
-      for (const { clip, objectId } of candidates) {
-        const stillB64 = await b64Of(c.env, `${s0.report_id}/stills/${clip.clip_id}_${objectId}.jpg`)
-        const r = await glimmerStructured(
-          c.env,
-          [
-            { type: 'text', text: (matchPrompt(s0.pet, s0.transcript, `${clip.clip_id}:${objectId}`)[0] as any).text },
-            { type: 'image_url', image_url: { url: petPhotoB64 } },
-            { type: 'image_url', image_url: { url: stillB64 } },
-          ],
-          'match_verdict',
-          MATCH_SCHEMA,
+  // One LLM call per candidate track, run in parallel — serial calls made judges wait.
+  const prepared = await Promise.all(
+    candidates.map(async ({ clip, objectId }) => ({
+      clip_id: clip.clip_id,
+      object_id: objectId,
+      stillB64: await b64Of(c.env, `${s0.report_id}/stills/${clip.clip_id}_${objectId}.jpg`),
+    })),
+  )
+
+  try {
+    if (c.env.BASETEN_API_KEY) {
+      try {
+        const glimmerVerdicts = await Promise.all(
+          prepared.map(async (p) => {
+            const r = await glimmerStructured(
+              c.env,
+              [
+                { type: 'text', text: (matchPrompt(s0.pet, s0.transcript, `${p.clip_id}:${p.object_id}`)[0] as any).text },
+                { type: 'image_url', image_url: { url: petPhotoB64 } },
+                { type: 'image_url', image_url: { url: p.stillB64 } },
+              ],
+              'match_verdict',
+              MATCH_SCHEMA,
+            )
+            usage.input += r.usage.input
+            usage.output += r.usage.output
+            return toVerdict(p.clip_id, p.object_id, r.parsed)
+          }),
         )
-        usage.input += r.usage.input
-        usage.output += r.usage.output
-        verdicts.push(toVerdict(clip.clip_id, objectId, r.parsed))
+        verdicts.push(...glimmerVerdicts)
         modelUsed = `glimmer:${c.env.GLIMMER_MODEL}`
+      } catch (e) {
+        // Glimmer is the cheap path; on any failure fall back to hosted Spark for the whole set.
+        console.warn(`glimmer match failed, falling back to spark: ${String(e).slice(0, 200)}`)
+        verdicts.length = 0
+        usage.input = 0
+        usage.output = 0
       }
-    } catch {
-      verdicts.length = 0
     }
-  }
-  if (verdicts.length === 0) {
-    for (const { clip, objectId } of candidates) {
-      const stillB64 = await b64Of(c.env, `${s0.report_id}/stills/${clip.clip_id}_${objectId}.jpg`)
-      const content = matchPrompt(s0.pet, s0.transcript, `${clip.clip_id}:${objectId}`)
-      content.push({ type: 'input_image', image_url: petPhotoB64 })
-      content.push({ type: 'input_image', image_url: stillB64 })
-      const r = await sparkStructured(c.env, content, 'match_verdict', MATCH_SCHEMA)
-      usage.input += r.usage.input
-      usage.output += r.usage.output
-      verdicts.push(toVerdict(clip.clip_id, objectId, r.parsed))
+    if (verdicts.length === 0) {
+      const sparkVerdicts = await Promise.all(
+        prepared.map(async (p) => {
+          const content = matchPrompt(s0.pet, s0.transcript, `${p.clip_id}:${p.object_id}`)
+          content.push({ type: 'input_image', image_url: petPhotoB64 })
+          content.push({ type: 'input_image', image_url: p.stillB64 })
+          const r = await sparkStructured(c.env, content, 'match_verdict', MATCH_SCHEMA)
+          usage.input += r.usage.input
+          usage.output += r.usage.output
+          return toVerdict(p.clip_id, p.object_id, r.parsed)
+        }),
+      )
+      verdicts.push(...sparkVerdicts)
       modelUsed = `spark:${c.env.SPARK_MODEL}`
     }
+  } catch (e: any) {
+    return c.json({ error: `matcher failed: ${String(e?.message ?? e).slice(0, 300)}` }, 502)
   }
   const st = await updateState(c.env.DB, s0.report_id, (s) => {
     s.matches = verdicts
@@ -420,22 +446,28 @@ app.post('/api/reports/:id/analyze', async (c) => {
   let plan: ReportState['next_search'] = null
   let posterKey: string | null = null
   let images = 0
-  const { summary, calls } = await toolLoop(c.env, input, TOOLS, {
-    suggest_next_search: async (args) => {
-      plan = args
-      return 'plan recorded'
-    },
-    make_poster: async (args) => {
-      const r = await generatePoster(
-        c.env,
-        `${args.poster_prompt}. Bold headline text at top: '${args.headline_text}'. Clean lost-pet alert poster layout, high contrast, printable.`,
-      )
-      posterKey = `${s0.report_id}/poster.png`
-      await c.env.MEDIA.put(posterKey, r.png, { httpMetadata: { contentType: 'image/png' } })
-      images++
-      return 'poster generated'
-    },
-  })
+  let calls: string[] = []
+  let summary = ''
+  try {
+    ;({ summary, calls } = await toolLoop(c.env, input, TOOLS, {
+      suggest_next_search: async (args) => {
+        plan = args
+        return 'plan recorded'
+      },
+      make_poster: async (args) => {
+        const r = await generatePoster(
+          c.env,
+          `${args.poster_prompt}. Bold headline text at top: '${args.headline_text}'. Clean lost-pet alert poster layout, high contrast, printable.`,
+        )
+        posterKey = `${s0.report_id}/poster.png`
+        await c.env.MEDIA.put(posterKey, r.png, { httpMetadata: { contentType: 'image/png' } })
+        images++
+        return 'poster generated'
+      },
+    }))
+  } catch (e: any) {
+    return c.json({ error: `search coordinator failed: ${String(e?.message ?? e).slice(0, 300)}` }, 502)
+  }
   const st = await updateState(c.env.DB, s0.report_id, (s) => {
     if (plan) s.next_search = plan
     if (posterKey) s.poster_key = posterKey
@@ -465,6 +497,14 @@ app.get('/api/reports/:id/poster', async (c) => {
 app.get('/api/health', (c) =>
   c.json({ ok: true, mock: mockMode(c.env), matcher: c.env.BASETEN_API_KEY ? 'glimmer-available' : 'spark' }),
 )
+
+/** Pre-seeded demo report for #/demo (set DEMO_REPORT_ID after seeding on prod). */
+app.get('/api/demo', async (c) => {
+  const id = c.env.DEMO_REPORT_ID
+  if (!id) return c.json({ id: null })
+  const s = await readState(c.env.DB, id)
+  return c.json({ id: s ? id : null })
+})
 
 export default {
   fetch: app.fetch,
@@ -505,7 +545,8 @@ export default {
             cl.status = 'tracking'
           })
           const tracks = await trackVideo(env, clip.media_url, concept, clip.fps)
-          const framesBilled = Math.round(clip.fps * clip.duration_s)
+          // SAM bills a 50-frame minimum per request (sam.ts samCost) — honor it in the meter.
+          const framesBilled = Math.max(Math.round(clip.fps * clip.duration_s), 50)
           await setClip((cl) => {
             cl.tracks = tracks
             cl.n_tracks = tracks.length

@@ -8,6 +8,7 @@ export interface Env {
   FMD_MOCK: string
   SPARK_MODEL: string
   GLIMMER_MODEL: string
+  DEMO_REPORT_ID?: string
   META_API_KEY?: string
   BASETEN_API_KEY?: string
 }

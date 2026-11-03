@@ -9,6 +9,23 @@ function authHeaders(env: Env): Record<string, string> {
   return { Authorization: `Bearer ${env.META_API_KEY}`, 'Content-Type': 'application/json' }
 }
 
+/** Parse a model's JSON answer defensively: strip markdown fences, fail with a readable error. */
+function parseModelJson(text: unknown, label: string): any {
+  const raw = String(text ?? '').trim()
+  const stripped = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
+  try {
+    return JSON.parse(stripped)
+  } catch {
+    // last resort: first balanced {...} block
+    const start = stripped.indexOf('{')
+    const end = stripped.lastIndexOf('}')
+    if (start >= 0 && end > start) {
+      try { return JSON.parse(stripped.slice(start, end + 1)) } catch { /* fall through */ }
+    }
+    throw new Error(`${label} returned invalid JSON: ${raw.slice(0, 120)}`)
+  }
+}
+
 export type ContentPart =
   | { type: 'input_text'; text: string }
   | { type: 'input_image'; image_url: string }
@@ -81,7 +98,7 @@ export async function sparkStructured(
   if (!resp.ok) throw new Error(`responses ${resp.status}: ${(await resp.text()).slice(0, 300)}`)
   const j: any = await resp.json()
   const usage = j.usage ?? {}
-  return { parsed: JSON.parse(j.output_text), usage: { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 } }
+  return { parsed: parseModelJson(j.output_text, `${env.SPARK_MODEL} matcher`), usage: { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 } }
 }
 
 /** Open-weight Muse Glimmer on Baseten (OpenAI-compatible chat with image_url parts). */
@@ -103,7 +120,7 @@ export async function glimmerStructured(
   if (!resp.ok) throw new Error(`baseten ${resp.status}: ${(await resp.text()).slice(0, 300)}`)
   const j: any = await resp.json()
   const usage = j.usage ?? {}
-  return { parsed: JSON.parse(j.choices[0].message.content), usage: { input: usage.prompt_tokens ?? 0, output: usage.completion_tokens ?? 0 } }
+  return { parsed: parseModelJson(j.choices?.[0]?.message?.content, `${env.GLIMMER_MODEL} matcher`), usage: { input: usage.prompt_tokens ?? 0, output: usage.completion_tokens ?? 0 } }
 }
 
 /** Responses-API tool loop against hosted Spark. handlers execute requested tools. */
@@ -130,7 +147,14 @@ export async function toolLoop(
     if (calls.length === 0) return { summary, calls: callsMade }
     convo = [...convo, ...out]
     for (const call of calls) {
-      const args = JSON.parse(call.arguments || '{}')
+      let args: any = {}
+      try {
+        args = parseModelJson(call.arguments || '{}', `${call.name} arguments`)
+      } catch (e: any) {
+        // Bad tool arguments are recoverable: feed the error back and let the model retry.
+        convo.push({ type: 'function_call_output', call_id: call.call_id, output: `tool failed: ${String(e?.message ?? e).slice(0, 200)}` })
+        continue
+      }
       callsMade.push(call.name)
       let output = 'ok'
       try {

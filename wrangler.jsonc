@@ -33,7 +33,8 @@
   "vars": {
     "FMD_MOCK": "0",
     "SPARK_MODEL": "muse-spark-1.3",
-    "GLIMMER_MODEL": "meta-models/muse-glimmer"
+    "GLIMMER_MODEL": "meta-models/muse-glimmer",
+    "DEMO_REPORT_ID": ""
   },
   "observability": { "enabled": true }
 }
