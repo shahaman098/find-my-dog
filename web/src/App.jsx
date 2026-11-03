@@ -35,9 +35,24 @@ function Recorder({ onDone }) {
     setRecording(true)
   }
   return (
-    <button type="button" className={recording ? 'btn recording' : 'btn'} onClick={() => (recording ? (rec.stop(), setRecording(false)) : start())}>
-      {recording ? '⏺ Stop voice note' : '🎙 Record voice note'}
+    <button type="button" className={recording ? 'pill recording' : 'pill'} onClick={() => (recording ? (rec.stop(), setRecording(false)) : start())}>
+      {recording ? '⏺ Stop' : '🎙 Voice note'}
     </button>
+  )
+}
+
+function Brand() {
+  return <div className="brand"><span className="paw">🐾</span>findmydog</div>
+}
+
+function Nav({ showDemo }) {
+  return (
+    <nav className="nav">
+      <Brand />
+      <span className="spacer" />
+      {showDemo && <a className="pill" href="#/demo">Live demo</a>}
+      <a className="pill" href="https://github.com/shahaman098/find-my-dog" target="_blank" rel="noreferrer">Open source</a>
+    </nav>
   )
 }
 
@@ -64,26 +79,42 @@ function NewReport({ go }) {
   }
 
   return (
-    <div className="card center">
-      <h1>🐾 Find My Dog</h1>
-      <p className="sub">Your pet is missing. Every camera on your street already filmed the answer.</p>
-      <form onSubmit={submit}>
-        <input required placeholder="Pet's name" value={form.pet_name}
-          onChange={e => setForm({ ...form, pet_name: e.target.value })} />
-        <select value={form.species} onChange={e => setForm({ ...form, species: e.target.value })}>
-          <option value="dog">Dog</option><option value="cat">Cat</option><option value="other">Other</option>
-        </select>
-        <textarea placeholder="Describe them: coat color, markings, collar, size…"
-          value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
-        <label className="filelabel">📷 Reference photo{photo ? `: ${photo.name}` : ' (required)'}
-          <input required type="file" accept="image/*" onChange={e => setPhoto(e.target.files[0])} />
-        </label>
-        <Recorder onDone={setVoice} />
-        {voice && <span className="ok"> voice note ready</span>}
-        {err && <p className="err">{err}</p>}
-        <button className="btn primary" disabled={busy}>{busy ? 'Filing report…' : 'Start the search'}</button>
-        <p className="sub small">Opt-in &amp; time-boxed: only footage you or a consenting neighbor share. No person or face identification — ever.</p>
-      </form>
+    <div>
+      <Nav />
+      <div className="hero">
+        <p className="announce"><span className="spark">✨</span>SAM 3.1 watches every clip your street already recorded, with a persistent identity for each animal. Muse Spark knows which one is yours. →</p>
+        <h1 className="heroTitle">Bring them home</h1>
+        <form className="inputCard" onSubmit={submit}>
+          <input required type="text" placeholder="Your pet's name" value={form.pet_name}
+            onChange={e => setForm({ ...form, pet_name: e.target.value })} />
+          <textarea placeholder="Describe them — coat, markings, collar, size…" value={form.description}
+            onChange={e => setForm({ ...form, description: e.target.value })} />
+          <div className="inputRow">
+            <span className="pill">
+              <select value={form.species} onChange={e => setForm({ ...form, species: e.target.value })}>
+                <option value="dog">Dog</option><option value="cat">Cat</option><option value="other">Other</option>
+              </select>
+            </span>
+            <label className="filelabel pill">📷 {photo ? photo.name.slice(0, 18) : 'Photo'}
+              <input required type="file" accept="image/*" onChange={e => setPhoto(e.target.files[0])} />
+            </label>
+            <Recorder onDone={setVoice} />
+            {voice && <span className="ok">✓ ready</span>}
+            <button className="sendBtn" disabled={busy} title="Start the search">{busy ? '…' : '↑'}</button>
+          </div>
+          {err && <p className="err" style={{ marginTop: 10 }}>{err}</p>}
+        </form>
+        <div className="heroPills">
+          <a className="pill" href="#/demo">▷ Live demo</a>
+          <span className="pill">🔐 Opt-in · time-boxed · no face recognition</span>
+          <a className="pill" href="https://github.com/shahaman098/find-my-dog" target="_blank" rel="noreferrer">⌘ Open source</a>
+        </div>
+        <div className="steps">
+          <div className="step"><b><span className="n">1</span>File the report</b><span>A photo, a description, a panicked voice note — 30 seconds.</span></div>
+          <div className="step"><b><span className="n">2</span>Any camera joins</b><span>Doorbell cams, home cams, dashcams. Whatever a neighbor will share.</span></div>
+          <div className="step"><b><span className="n">3</span>Evidence, not hope</b><span>A sighting timeline, a search plan for dawn, and a poster for the street.</span></div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -191,15 +222,16 @@ function ShareView({ id, r }) {
       {tl && sightings.length > 0 && <Ribbon sightings={sightings} petName={r.pet.name} />}
       {!tl && <p className="sub">Loading…</p>}
       {tl && sightings.length === 0 && <p className="sub">No confirmed sightings yet.</p>}
-      {r.next_search && (
+      {tl?.next_search && (
         <div className="plan">
-          <h3>➡️ {r.next_search.headline}</h3>
-          <p><b>Window:</b> {r.next_search.window} · <b>Area:</b> {r.next_search.area}</p>
-          <p>{r.next_search.why}</p>
-          <ul>{(r.next_search.steps || []).map((s, i) => <li key={i}>{s}</li>)}</ul>
+          <h3>➡️ {tl.next_search.headline}</h3>
+          <p><b>Window:</b> {tl.next_search.window} · <b>Area:</b> {tl.next_search.area}</p>
+          <p>{tl.next_search.why}</p>
+          <ul>{(tl.next_search.steps || []).map((s, i) => <li key={i}>{s}</li>)}</ul>
         </div>
       )}
-      {r.poster && <img className="poster" src={`/api/reports/${id}/poster`} alt="alert poster" />}
+      {tl?.summary && <p className="sub">{tl.summary}</p>}
+      {tl?.poster && <img className="poster" src={tl.poster} alt="alert poster" />}
       {tl?.cost && (
         <p className="sub small costline">
           This search: ${tl.cost.usd?.toFixed(2)} — SAM {tl.cost.sam_frames?.toLocaleString()} video frames ·
@@ -238,22 +270,25 @@ function NeighborGive({ id }) {
   if (err) return <div className="card center"><p className="err">{err}</p></div>
   if (!r) return <div className="card center">Loading…</div>
   return (
-    <div className="card center">
-      <h1>🤝 Help find {r.pet.name}</h1>
-      <p className="sub">A neighbor is searching for their lost {r.pet.species}. If your camera might have caught them, share the clip — it stays within this search only.</p>
-      {done ? (
-        <p className="ok">✅ Thank you! Your clip is being searched now.</p>
-      ) : (
-        <form onSubmit={upload}>
-          <input name="label" placeholder="Where is this camera? (e.g. Front door, Driveway)" />
-          <input name="clock" type="time" value={clock} onChange={e => setClock(e.target.value)} title="Roughly when was this recorded?" />
-          <label className="filelabel">🎥 Choose the clip
-            <input name="file" type="file" accept="video/*" required />
-          </label>
-          <button className="btn primary">Share clip with the search</button>
-        </form>
-      )}
-      <p className="sub small">Opt-in only · time-boxed to this search · animals matched by appearance, never people.</p>
+    <div>
+      <Nav />
+      <div className="card center">
+        <h1>🤝 Help find {r.pet.name}</h1>
+        <p className="sub">A neighbor is searching for their lost {r.pet.species}. If your camera might have caught them, share the clip — it stays within this search only.</p>
+        {done ? (
+          <p className="ok">✅ Thank you! Your clip is being searched now.</p>
+        ) : (
+          <form onSubmit={upload}>
+            <input name="label" placeholder="Where is this camera? (e.g. Front door, Driveway)" />
+            <input name="clock" type="time" value={clock} onChange={e => setClock(e.target.value)} title="Roughly when was this recorded?" />
+            <label className="filelabel pill" style={{ justifyContent: 'center' }}>🎥 Choose the clip
+              <input name="file" type="file" accept="video/*" required />
+            </label>
+            <button className="btn primary">Share clip with the search</button>
+          </form>
+        )}
+        <p className="sub small">Opt-in only · time-boxed to this search · animals matched by appearance, never people.</p>
+      </div>
     </div>
   )
 }
@@ -311,14 +346,15 @@ function ReportView({ id, share }) {
 
   return (
     <div>
+      <Nav />
       <header className="topbar">
-        <b>🐾 {r.pet.name}</b>
+        <b style={{ fontSize: 17 }}>Searching for {r.pet.name}</b>
         <span className="chip">{r.pet.species}</span>
         {r.transcript && <span className="chip">🎙 transcribed</span>}
-        <span className="chip">/search cost ${r.cost?.usd?.toFixed?.(2) ?? '0.00'}</span>
+        <span className="chip">search cost ${r.cost?.usd?.toFixed?.(2) ?? '0.00'}</span>
         <span className="spacer" />
-        {sightings.length > 0 && <a className="btn" href={`#/r/${id}/share`}>🔗 Share page</a>}
-        <a className="btn" href={`#/r/${id}/give`}>🤝 Neighbor link</a>
+        {sightings.length > 0 && <a className="pill" href={`#/r/${id}/share`}>🔗 Share page</a>}
+        <a className="pill" href={`#/r/${id}/give`}>🤝 Neighbor link</a>
       </header>
 
       {share ? <ShareView id={id} r={r} /> : (

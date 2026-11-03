@@ -95,11 +95,21 @@ app.put('/api/reports/:id/stills/:clipId/:objectId', async (c) => {
   return c.json({ key })
 })
 
+async function still(obj: R2ObjectBody, fallback: string): Promise<Response> {
+  // Mock placeholders are SVG; real stills are JPEG. R2 httpMetadata round-trips
+  // unreliably across runtimes, so sniff the first byte of the body instead.
+  const buf = await obj.arrayBuffer()
+  const isSvg = new Uint8Array(buf)[0] === 0x3c // '<'
+  return new Response(buf, {
+    headers: { 'Content-Type': isSvg ? 'image/svg+xml' : (obj.httpMetadata?.contentType ?? fallback) },
+  })
+}
+
 app.get('/api/reports/:id/stills/:clipId/:objectId', async (c) => {
   const { id, clipId, objectId } = c.req.param()
   const obj = await c.env.MEDIA.get(`${id}/stills/${clipId}_${objectId}.jpg`)
   if (!obj) return c.json({ error: 'not found' }, 404)
-  return new Response(obj.body, { headers: { 'Content-Type': 'image/jpeg' } })
+  return still(obj, 'image/jpeg')
 })
 
 // ---- clips ----
@@ -447,7 +457,7 @@ app.get('/api/reports/:id/poster', async (c) => {
   if (!s || !key) return c.json({ error: 'no poster yet' }, 404)
   const obj = await c.env.MEDIA.get(key)
   if (!obj) return c.json({ error: 'no poster yet' }, 404)
-  return new Response(obj.body, { headers: { 'Content-Type': obj.httpMetadata?.contentType ?? 'image/png' } })
+  return still(obj, 'image/png')
 })
 
 // ---- misc ----
