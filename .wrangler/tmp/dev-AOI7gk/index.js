@@ -2246,11 +2246,19 @@ app.put("/api/reports/:id/stills/:clipId/:objectId", async (c) => {
   await c.env.MEDIA.put(key, await c.req.arrayBuffer(), { httpMetadata: { contentType: "image/jpeg" } });
   return c.json({ key });
 });
+async function still(obj, fallback) {
+  const buf = await obj.arrayBuffer();
+  const isSvg = new Uint8Array(buf)[0] === 60;
+  return new Response(buf, {
+    headers: { "Content-Type": isSvg ? "image/svg+xml" : obj.httpMetadata?.contentType ?? fallback }
+  });
+}
+__name(still, "still");
 app.get("/api/reports/:id/stills/:clipId/:objectId", async (c) => {
   const { id, clipId, objectId } = c.req.param();
   const obj = await c.env.MEDIA.get(`${id}/stills/${clipId}_${objectId}.jpg`);
   if (!obj) return c.json({ error: "not found" }, 404);
-  return new Response(obj.body, { headers: { "Content-Type": "image/jpeg" } });
+  return still(obj, "image/jpeg");
 });
 app.post("/api/reports/:id/clips", async (c) => {
   const s = await readState(c.env.DB, c.req.param("id"));
@@ -2350,8 +2358,8 @@ app.post("/api/reports/:id/match", async (c) => {
   const candidates = [];
   for (const clip of s0.clips) {
     for (const t of clip.tracks) {
-      const still = await c.env.MEDIA.head(`${s0.report_id}/stills/${clip.clip_id}_${t.object_id}.jpg`);
-      if (t.n_frames > 0 && still) candidates.push({ clip, objectId: t.object_id });
+      const still2 = await c.env.MEDIA.head(`${s0.report_id}/stills/${clip.clip_id}_${t.object_id}.jpg`);
+      if (t.n_frames > 0 && still2) candidates.push({ clip, objectId: t.object_id });
     }
   }
   if (candidates.length === 0) return c.json({ error: "no tracked animals yet \u2014 ingest clips first" }, 400);
@@ -2575,7 +2583,7 @@ app.get("/api/reports/:id/poster", async (c) => {
   if (!s || !key) return c.json({ error: "no poster yet" }, 404);
   const obj = await c.env.MEDIA.get(key);
   if (!obj) return c.json({ error: "no poster yet" }, 404);
-  return new Response(obj.body, { headers: { "Content-Type": obj.httpMetadata?.contentType ?? "image/png" } });
+  return still(obj, "image/png");
 });
 app.get(
   "/api/health",
