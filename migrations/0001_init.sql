@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS reports (
+  id TEXT PRIMARY KEY,
+  state TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
