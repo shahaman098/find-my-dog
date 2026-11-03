@@ -2306,6 +2306,19 @@ app.delete("/api/reports/:id/clips/:clipId", async (c) => {
     s.matches = s.matches.filter((m) => m.clip_id !== clipId);
   }));
 });
+app.patch("/api/reports/:id/clips/:clipId", async (c) => {
+  const { id, clipId } = c.req.param();
+  const body = await c.req.json().catch(() => ({}));
+  return c.json(await updateState(c.env.DB, id, (s) => {
+    const cl = s.clips.find((x) => x.clip_id === clipId);
+    if (!cl) throw new Error("clip not found");
+    if (typeof body.label === "string") cl.label = body.label;
+    if (typeof body.captured_clock === "string") cl.captured_clock = body.captured_clock;
+    if (typeof body.fps === "number" && body.fps > 0) cl.fps = body.fps;
+    if (typeof body.duration === "number" && body.duration > 0) cl.duration_s = body.duration;
+    if (body.still_done === true) cl.still_done = true;
+  }));
+});
 var MATCH_SCHEMA = {
   type: "object",
   properties: {
@@ -2337,7 +2350,8 @@ app.post("/api/reports/:id/match", async (c) => {
   const candidates = [];
   for (const clip of s0.clips) {
     for (const t of clip.tracks) {
-      if (t.n_frames > 0) candidates.push({ clip, objectId: t.object_id });
+      const still = await c.env.MEDIA.head(`${s0.report_id}/stills/${clip.clip_id}_${t.object_id}.jpg`);
+      if (t.n_frames > 0 && still) candidates.push({ clip, objectId: t.object_id });
     }
   }
   if (candidates.length === 0) return c.json({ error: "no tracked animals yet \u2014 ingest clips first" }, 400);
@@ -2589,10 +2603,15 @@ var src_default = {
             cl.status = "tracking";
           });
           const tracks = mockTracks();
+          const placeholder = '<svg xmlns="http://www.w3.org/2000/svg" width="260" height="200"><rect width="260" height="200" fill="#234"/><text x="130" y="105" font-size="20" fill="#cde" text-anchor="middle" font-family="sans-serif">mock track</text></svg>';
+          for (const t of tracks) {
+            await env.MEDIA.put(`${reportId}/stills/${clipId}_${t.object_id}.jpg`, placeholder, { httpMetadata: { contentType: "image/svg+xml" } });
+          }
           await setClip((cl) => {
             cl.tracks = tracks;
             cl.n_tracks = tracks.length;
             cl.status = "done";
+            cl.still_done = true;
           });
         } else {
           await setClip((cl) => {
@@ -2667,7 +2686,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-ClECj0/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-Zo7dtn/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -2699,7 +2718,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-ClECj0/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-Zo7dtn/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
