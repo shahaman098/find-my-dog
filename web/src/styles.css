@@ -33,7 +33,7 @@ a { color: var(--blue); text-decoration: none; }
 /* ---------- nav ---------- */
 .nav {
   display: flex; align-items: center; gap: 14px;
-  padding: 22px calc((100vw - 940px) / 2);
+  padding: 22px max(20px, calc((100vw - 940px) / 2));
   position: sticky; top: 0; z-index: 5;
   margin-left: calc(50% - 50vw); width: 100vw;
   background: rgba(244,247,253,0.85);
@@ -150,6 +150,11 @@ a { color: var(--blue); text-decoration: none; }
 .sighting { display: flex; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); align-items: flex-start; }
 .sighting:first-child { border-top: none; }
 .sighting img { width: 170px; height: 120px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); }
+.ownerRef { margin-top: 10px; }
+.ownerThumb {
+  width: 74px; height: 74px; object-fit: cover; border-radius: 14px;
+  border: 2px solid var(--blue); box-shadow: var(--shadow); background: #f1f4fa;
+}
 
 /* ---------- plan / poster ---------- */
 .plan {

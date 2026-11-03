@@ -3,7 +3,12 @@ import { blobToWavBlob } from './wav.js'
 import { probeVideo, extractStill } from './probe.js'
 
 const api = (path, opts) => fetch(`/api${path}`, opts).then(async r => {
-  if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || (await r.text()).slice(0, 200))
+  if (!r.ok) {
+    const body = await r.json().catch(() => ({}))
+    const e = new Error(body.error || (await r.text().catch(() => '')).slice(0, 200) || `HTTP ${r.status}`)
+    e.status = r.status
+    throw e
+  }
   return r.json()
 })
 
@@ -20,16 +25,24 @@ function useHashRoute() {
 /** Uploaded files live only in this session's memory; stills they produce persist in R2. */
 const fileCache = {}
 
-function Recorder({ onDone }) {
+function Recorder({ onDone, onError }) {
   const [rec, setRec] = useState(null)
   const [recording, setRecording] = useState(false)
   const chunks = useRef([])
+  const streamRef = useRef(null)
+  const stopTracks = () => { streamRef.current?.getTracks().forEach(t => t.stop()); streamRef.current = null }
+  useEffect(() => stopTracks, []) // release the mic if the tab navigates mid-recording
   async function start() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-    const r = new MediaRecorder(stream)
+    try {
+      streamRef.current = await navigator.mediaDevices.getUserMedia({ audio: true })
+    } catch (e) {
+      onError?.('Microphone unavailable — check permission, or just type the description.')
+      return
+    }
+    const r = new MediaRecorder(streamRef.current)
     chunks.current = []
     r.ondataavailable = e => chunks.current.push(e.data)
-    r.onstop = () => onDone(new Blob(chunks.current))
+    r.onstop = () => { stopTracks(); onDone(new Blob(chunks.current)) }
     r.start()
     setRec(r)
     setRecording(true)
@@ -45,15 +58,38 @@ function Brand() {
   return <div className="brand"><span className="paw">🐾</span>findmydog</div>
 }
 
-function Nav({ showDemo }) {
+function Nav() {
   return (
     <nav className="nav">
       <Brand />
       <span className="spacer" />
-      {showDemo && <a className="pill" href="#/demo">Live demo</a>}
+      <a className="pill" href="#/demo">Live demo</a>
       <a className="pill" href="https://github.com/shahaman098/find-my-dog" target="_blank" rel="noreferrer">Open source</a>
     </nav>
   )
+}
+
+/** #/demo — jumps to the pre-seeded demo report's share page (no setup, works logged out). */
+function DemoLanding() {
+  const [failed, setFailed] = useState(false)
+  useEffect(() => {
+    api('/demo')
+      .then(d => { if (d?.id) location.hash = `#/r/${d.id}/share`; else setFailed(true) })
+      .catch(() => setFailed(true))
+  }, [])
+  if (failed) {
+    return (
+      <div>
+        <Nav />
+        <div className="card center">
+          <h2>🐾 Demo is warming up</h2>
+          <p className="sub">The seeded demo report isn't ready yet — but the real thing is one form away.</p>
+          <a className="btn primary" href="#/">Start a report</a>
+        </div>
+      </div>
+    )
+  }
+  return <div className="card center">Loading demo…</div>
 }
 
 function NewReport({ go }) {
@@ -98,7 +134,7 @@ function NewReport({ go }) {
             <label className="filelabel pill">📷 {photo ? photo.name.slice(0, 18) : 'Photo'}
               <input required type="file" accept="image/*" onChange={e => setPhoto(e.target.files[0])} />
             </label>
-            <Recorder onDone={setVoice} />
+            <Recorder onDone={setVoice} onError={setErr} />
             {voice && <span className="ok">✓ ready</span>}
             <button className="sendBtn" disabled={busy} title="Start the search">{busy ? '…' : '↑'}</button>
           </div>
@@ -119,8 +155,15 @@ function NewReport({ go }) {
   )
 }
 
-async function extractStillsFor(report, clip) {
-  const file = fileCache[clip.clip_id]
+/** Still-cutting works in any session: prefer the in-memory file, else fetch the clip media (it's stored in R2). */
+async function mediaFor(clip) {
+  return fileCache[clip.clip_id] ?? fetch(clip.media_url).then(r => {
+    if (!r.ok) throw new Error(`media ${r.status}`)
+    return r.blob()
+  })
+}
+
+async function extractStillsFor(report, clip, file) {
   if (!file) return false
   let ok = 0
   for (const t of clip.tracks || []) {
@@ -140,12 +183,20 @@ async function extractStillsFor(report, clip) {
 
 function ClipCard({ report, clip, onRefresh }) {
   const [busy, setBusy] = useState(false)
+  const [missing, setMissing] = useState(() => new Set())
   useEffect(() => {
-    if (clip.status === 'done' && !clip.still_done && fileCache[clip.clip_id]) {
+    let stale = false
+    if (clip.status === 'done' && !clip.still_done) {
       setBusy(true)
-      extractStillsFor(report, clip).then(onRefresh).finally(() => setBusy(false))
+      mediaFor(clip)
+        .then(file => extractStillsFor(report, clip, file))
+        .then(ok => { if (!stale && ok) onRefresh() })
+        .catch(e => console.warn('still extraction skipped', e))
+        .finally(() => { if (!stale) setBusy(false) })
     }
+    return () => { stale = true }
   }, [clip.status, clip.still_done])
+  useEffect(() => { if (clip.still_done) setMissing(new Set()) }, [clip.still_done])
   const still = id => `/api/reports/${report.report_id}/stills/${clip.clip_id}/${id}`
   const statusChip = { queued: '⏳ queued', uploading: '⬆️', tracking: '👁 SAM 3.1 tracking…', extracting: '✂️', done: '✅ done', error: '❌' }[clip.status] || clip.status
   async function reclock(e) {
@@ -168,8 +219,9 @@ function ClipCard({ report, clip, onRefresh }) {
         <div className="gallery">
           {(clip.tracks || []).map(t => (
             <div key={t.object_id} className="still">
-              <img src={still(t.object_id)} alt={`track ${t.object_id}`}
-                onError={e => { e.currentTarget.replaceWith(Object.assign(document.createElement('div'), { className: 'stillMissing', textContent: busy ? 'cutting stills…' : 'still unavailable' })) }} />
+              {missing.has(t.object_id)
+                ? <div className="stillMissing">{busy ? 'cutting stills…' : 'still unavailable'}</div>
+                : <img src={still(t.object_id)} alt={`track ${t.object_id}`} onError={() => setMissing(prev => new Set(prev).add(t.object_id))} />}
               <span>track #{t.object_id} · {t.first_seen.toFixed(0)}s–{t.last_seen.toFixed(0)}s · {t.n_frames}f</span>
             </div>
           ))}
@@ -213,14 +265,20 @@ function Ribbon({ sightings, petName }) {
 
 function ShareView({ id, r }) {
   const [tl, setTl] = useState(null)
-  useEffect(() => { api(`/reports/${id}/timeline`).then(setTl).catch(() => {}) }, [id])
+  const [tlErr, setTlErr] = useState('')
+  const load = () => {
+    setTlErr(''); setTl(null)
+    api(`/reports/${id}/timeline`).then(setTl).catch(e => setTlErr(e.message))
+  }
+  useEffect(load, [id])
   const sightings = tl?.sightings ?? []
   return (
     <div className="card center">
       <h2>🔎 Sightings of {r.pet.name}</h2>
       <p className="sub">Owner-initiated search · opt-in footage only · no person identification</p>
+      {tlErr && <p className="err">Couldn't load the timeline: {tlErr} <button className="btn" onClick={load}>Retry</button></p>}
       {tl && sightings.length > 0 && <Ribbon sightings={sightings} petName={r.pet.name} />}
-      {!tl && <p className="sub">Loading…</p>}
+      {!tl && !tlErr && <p className="sub">Loading…</p>}
       {tl && sightings.length === 0 && <p className="sub">No confirmed sightings yet.</p>}
       {tl?.next_search && (
         <div className="plan">
@@ -262,8 +320,8 @@ function NeighborGive({ id }) {
       fd.set('captured_clock', clock)
       fd.set('fps', String(probe.fps))
       fd.set('duration', String(probe.duration))
-      fileCache[id + ':' + file.name] = file // stills extracted when owner views; neighbor page may close after
-      await api(`/reports/${id}/clips`, { method: 'POST', body: fd })
+      const clip = await api(`/reports/${id}/clips`, { method: 'POST', body: fd })
+      if (clip?.clip_id) fileCache[clip.clip_id] = file // cut stills here if this tab stays open; the owner's console cuts them otherwise
       setDone(true)
     } catch (e2) { setErr(e2.message) }
   }
@@ -296,8 +354,13 @@ function NeighborGive({ id }) {
 function ReportView({ id, share }) {
   const [r, setR] = useState(null)
   const [err, setErr] = useState('')
+  const [connLost, setConnLost] = useState(false)
   const [busy, setBusy] = useState('')
-  const refresh = () => api(`/reports/${id}`).then(setR).catch(e => setErr(e.message))
+  const refresh = () => api(`/reports/${id}`).then(data => { setR(data); setConnLost(false) }).catch(e => {
+    if (e.status === 404) setErr(e.message) // really gone
+    else if (!r) setErr(e.message) // first load failed — nothing to show
+    else setConnLost(true) // transient poll blip: keep the last good state on screen
+  })
   useEffect(() => { refresh() }, [id])
   useEffect(() => {
     if (!r || share) return
@@ -305,7 +368,7 @@ function ReportView({ id, share }) {
     if (pending) { const t = setTimeout(refresh, 2500); return () => clearTimeout(t) }
   }, [r])
 
-  if (err) return <div className="card center"><p className="err">{err}</p><a className="btn" href="#/">Start a report</a></div>
+  if (err && !r) return <div className="card center"><p className="err">{err}</p><a className="btn" href="#/">Start a report</a></div>
   if (!r) return <div className="card center">Loading…</div>
 
   async function addClips(e) {
@@ -342,7 +405,6 @@ function ReportView({ id, share }) {
   }
 
   const sightings = (r.matches || []).filter(m => m.confirmed === true)
-  const nStillMissing = (r.clips || []).some(c => c.status === 'done' && !c.still_done && !fileCache[c.clip_id])
 
   return (
     <div>
@@ -351,6 +413,8 @@ function ReportView({ id, share }) {
         <b style={{ fontSize: 17 }}>Searching for {r.pet.name}</b>
         <span className="chip">{r.pet.species}</span>
         {r.transcript && <span className="chip">🎙 transcribed</span>}
+        {r.transcript_error && <span className="chip" title={r.transcript_error}>🎙 unavailable</span>}
+        {connLost && <span className="chip">⚠ reconnecting…</span>}
         <span className="chip">search cost ${r.cost?.usd?.toFixed?.(2) ?? '0.00'}</span>
         <span className="spacer" />
         {sightings.length > 0 && <a className="pill" href={`#/r/${id}/share`}>🔗 Share page</a>}
@@ -368,7 +432,6 @@ function ReportView({ id, share }) {
             <p className="sub">Doorbell cams, home cams, dashcams — anything a neighbor will share. Set each clip's recording time for the timeline.</p>
             {(r.clips || []).map(c => <ClipCard key={c.clip_id} report={r} clip={c} onRefresh={refresh} />)}
             {(r.clips || []).length === 0 && <p className="sub">No clips yet.</p>}
-            {nStillMissing && <p className="sub small">Tip: stills for clips uploaded in a previous session are cut by re-adding the clip.</p>}
           </section>
 
           <section className="card">
@@ -376,6 +439,10 @@ function ReportView({ id, share }) {
               <button className="btn primary" disabled={busy === 'match' || !(r.clips || []).some(c => c.status === 'done')} onClick={runMatch}>
                 {busy === 'match' ? 'Matching…' : `Run matcher${r.matcher_model && r.matcher_model !== 'mock' ? ` (${r.matcher_model.split(':')[0]})` : ''}`}
               </button>
+            </div>
+            <div className="row ownerRef">
+              <img className="ownerThumb" src={`/api/reports/${id}/pet_photo`} alt={`reference photo of ${r.pet.name}`} />
+              <span className="sub">Reference photo — every tracked animal is compared against this, by appearance only.</span>
             </div>
             {(r.matches || []).length === 0 && <p className="sub">Run the matcher after clips finish processing.</p>}
             {(r.matches || []).map(m => {
@@ -427,6 +494,7 @@ function ReportView({ id, share }) {
 export default function App() {
   const hash = useHashRoute()
   const go = h => { location.hash = h }
+  if (hash === '#/demo') return <DemoLanding />
   const give = hash.match(/^#\/r\/(\w+)\/give$/)
   if (give) return <NeighborGive id={give[1]} />
   const m = hash.match(/^#\/r\/(\w+)(\/share)?$/)

@@ -2025,6 +2025,24 @@ function authHeaders(env) {
   return { Authorization: `Bearer ${env.META_API_KEY}`, "Content-Type": "application/json" };
 }
 __name(authHeaders, "authHeaders");
+function parseModelJson(text, label) {
+  const raw2 = String(text ?? "").trim();
+  const stripped = raw2.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  try {
+    return JSON.parse(stripped);
+  } catch {
+    const start = stripped.indexOf("{");
+    const end = stripped.lastIndexOf("}");
+    if (start >= 0 && end > start) {
+      try {
+        return JSON.parse(stripped.slice(start, end + 1));
+      } catch {
+      }
+    }
+    throw new Error(`${label} returned invalid JSON: ${raw2.slice(0, 120)}`);
+  }
+}
+__name(parseModelJson, "parseModelJson");
 async function trackVideo(env, videoUrl, concept, fps) {
   const resp = await fetch(`${BASE}/responses`, {
     method: "POST",
@@ -2087,7 +2105,7 @@ async function sparkStructured(env, content, schemaName, schema) {
   if (!resp.ok) throw new Error(`responses ${resp.status}: ${(await resp.text()).slice(0, 300)}`);
   const j = await resp.json();
   const usage = j.usage ?? {};
-  return { parsed: JSON.parse(j.output_text), usage: { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 } };
+  return { parsed: parseModelJson(j.output_text, `${env.SPARK_MODEL} matcher`), usage: { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 } };
 }
 __name(sparkStructured, "sparkStructured");
 async function glimmerStructured(env, parts, schemaName, schema) {
@@ -2103,7 +2121,7 @@ async function glimmerStructured(env, parts, schemaName, schema) {
   if (!resp.ok) throw new Error(`baseten ${resp.status}: ${(await resp.text()).slice(0, 300)}`);
   const j = await resp.json();
   const usage = j.usage ?? {};
-  return { parsed: JSON.parse(j.choices[0].message.content), usage: { input: usage.prompt_tokens ?? 0, output: usage.completion_tokens ?? 0 } };
+  return { parsed: parseModelJson(j.choices?.[0]?.message?.content, `${env.GLIMMER_MODEL} matcher`), usage: { input: usage.prompt_tokens ?? 0, output: usage.completion_tokens ?? 0 } };
 }
 __name(glimmerStructured, "glimmerStructured");
 async function toolLoop(env, input, tools, handlers) {
@@ -2124,7 +2142,13 @@ async function toolLoop(env, input, tools, handlers) {
     if (calls.length === 0) return { summary, calls: callsMade };
     convo = [...convo, ...out];
     for (const call of calls) {
-      const args = JSON.parse(call.arguments || "{}");
+      let args = {};
+      try {
+        args = parseModelJson(call.arguments || "{}", `${call.name} arguments`);
+      } catch (e) {
+        convo.push({ type: "function_call_output", call_id: call.call_id, output: `tool failed: ${String(e?.message ?? e).slice(0, 200)}` });
+        continue;
+      }
       callsMade.push(call.name);
       let output = "ok";
       try {
@@ -2167,6 +2191,7 @@ __name(generatePoster, "generatePoster");
 
 // worker/src/index.ts
 var app = new Hono3();
+app.onError((err, c) => c.json({ error: String(err?.message ?? err).slice(0, 400) }, 500));
 function mockMode(env) {
   return env.FMD_MOCK === "1" || !env.META_API_KEY;
 }
@@ -2316,10 +2341,13 @@ app.delete("/api/reports/:id/clips/:clipId", async (c) => {
 });
 app.patch("/api/reports/:id/clips/:clipId", async (c) => {
   const { id, clipId } = c.req.param();
+  const s = await readState(c.env.DB, id);
+  if (!s) return c.json({ error: "report not found" }, 404);
+  if (!s.clips.some((x) => x.clip_id === clipId)) return c.json({ error: "clip not found" }, 404);
   const body = await c.req.json().catch(() => ({}));
-  return c.json(await updateState(c.env.DB, id, (s) => {
-    const cl = s.clips.find((x) => x.clip_id === clipId);
-    if (!cl) throw new Error("clip not found");
+  return c.json(await updateState(c.env.DB, id, (s2) => {
+    const cl = s2.clips.find((x) => x.clip_id === clipId);
+    if (!cl) return;
     if (typeof body.label === "string") cl.label = body.label;
     if (typeof body.captured_clock === "string") cl.captured_clock = body.captured_clock;
     if (typeof body.fps === "number" && body.fps > 0) cl.fps = body.fps;
@@ -2378,41 +2406,59 @@ app.post("/api/reports/:id/match", async (c) => {
   let modelUsed = "";
   const usage = { input: 0, output: 0 };
   const petPhotoB64 = await b64Of(c.env, s0.pet.photo_key);
-  if (c.env.BASETEN_API_KEY) {
-    try {
-      for (const { clip, objectId } of candidates) {
-        const stillB64 = await b64Of(c.env, `${s0.report_id}/stills/${clip.clip_id}_${objectId}.jpg`);
-        const r = await glimmerStructured(
-          c.env,
-          [
-            { type: "text", text: matchPrompt(s0.pet, s0.transcript, `${clip.clip_id}:${objectId}`)[0].text },
-            { type: "image_url", image_url: { url: petPhotoB64 } },
-            { type: "image_url", image_url: { url: stillB64 } }
-          ],
-          "match_verdict",
-          MATCH_SCHEMA
+  const prepared = await Promise.all(
+    candidates.map(async ({ clip, objectId }) => ({
+      clip_id: clip.clip_id,
+      object_id: objectId,
+      stillB64: await b64Of(c.env, `${s0.report_id}/stills/${clip.clip_id}_${objectId}.jpg`)
+    }))
+  );
+  try {
+    if (c.env.BASETEN_API_KEY) {
+      try {
+        const glimmerVerdicts = await Promise.all(
+          prepared.map(async (p) => {
+            const r = await glimmerStructured(
+              c.env,
+              [
+                { type: "text", text: matchPrompt(s0.pet, s0.transcript, `${p.clip_id}:${p.object_id}`)[0].text },
+                { type: "image_url", image_url: { url: petPhotoB64 } },
+                { type: "image_url", image_url: { url: p.stillB64 } }
+              ],
+              "match_verdict",
+              MATCH_SCHEMA
+            );
+            usage.input += r.usage.input;
+            usage.output += r.usage.output;
+            return toVerdict(p.clip_id, p.object_id, r.parsed);
+          })
         );
-        usage.input += r.usage.input;
-        usage.output += r.usage.output;
-        verdicts.push(toVerdict(clip.clip_id, objectId, r.parsed));
+        verdicts.push(...glimmerVerdicts);
         modelUsed = `glimmer:${c.env.GLIMMER_MODEL}`;
+      } catch (e) {
+        console.warn(`glimmer match failed, falling back to spark: ${String(e).slice(0, 200)}`);
+        verdicts.length = 0;
+        usage.input = 0;
+        usage.output = 0;
       }
-    } catch {
-      verdicts.length = 0;
     }
-  }
-  if (verdicts.length === 0) {
-    for (const { clip, objectId } of candidates) {
-      const stillB64 = await b64Of(c.env, `${s0.report_id}/stills/${clip.clip_id}_${objectId}.jpg`);
-      const content = matchPrompt(s0.pet, s0.transcript, `${clip.clip_id}:${objectId}`);
-      content.push({ type: "input_image", image_url: petPhotoB64 });
-      content.push({ type: "input_image", image_url: stillB64 });
-      const r = await sparkStructured(c.env, content, "match_verdict", MATCH_SCHEMA);
-      usage.input += r.usage.input;
-      usage.output += r.usage.output;
-      verdicts.push(toVerdict(clip.clip_id, objectId, r.parsed));
+    if (verdicts.length === 0) {
+      const sparkVerdicts = await Promise.all(
+        prepared.map(async (p) => {
+          const content = matchPrompt(s0.pet, s0.transcript, `${p.clip_id}:${p.object_id}`);
+          content.push({ type: "input_image", image_url: petPhotoB64 });
+          content.push({ type: "input_image", image_url: p.stillB64 });
+          const r = await sparkStructured(c.env, content, "match_verdict", MATCH_SCHEMA);
+          usage.input += r.usage.input;
+          usage.output += r.usage.output;
+          return toVerdict(p.clip_id, p.object_id, r.parsed);
+        })
+      );
+      verdicts.push(...sparkVerdicts);
       modelUsed = `spark:${c.env.SPARK_MODEL}`;
     }
+  } catch (e) {
+    return c.json({ error: `matcher failed: ${String(e?.message ?? e).slice(0, 300)}` }, 502);
   }
   const st = await updateState(c.env.DB, s0.report_id, (s) => {
     s.matches = verdicts;
@@ -2547,22 +2593,29 @@ Decide what to do next using your tools: record a concrete next-search plan (sug
   let plan = null;
   let posterKey = null;
   let images = 0;
-  const { summary, calls } = await toolLoop(c.env, input, TOOLS, {
-    suggest_next_search: /* @__PURE__ */ __name(async (args) => {
-      plan = args;
-      return "plan recorded";
-    }, "suggest_next_search"),
-    make_poster: /* @__PURE__ */ __name(async (args) => {
-      const r = await generatePoster(
-        c.env,
-        `${args.poster_prompt}. Bold headline text at top: '${args.headline_text}'. Clean lost-pet alert poster layout, high contrast, printable.`
-      );
-      posterKey = `${s0.report_id}/poster.png`;
-      await c.env.MEDIA.put(posterKey, r.png, { httpMetadata: { contentType: "image/png" } });
-      images++;
-      return "poster generated";
-    }, "make_poster")
-  });
+  let calls = [];
+  let summary = "";
+  try {
+    ;
+    ({ summary, calls } = await toolLoop(c.env, input, TOOLS, {
+      suggest_next_search: /* @__PURE__ */ __name(async (args) => {
+        plan = args;
+        return "plan recorded";
+      }, "suggest_next_search"),
+      make_poster: /* @__PURE__ */ __name(async (args) => {
+        const r = await generatePoster(
+          c.env,
+          `${args.poster_prompt}. Bold headline text at top: '${args.headline_text}'. Clean lost-pet alert poster layout, high contrast, printable.`
+        );
+        posterKey = `${s0.report_id}/poster.png`;
+        await c.env.MEDIA.put(posterKey, r.png, { httpMetadata: { contentType: "image/png" } });
+        images++;
+        return "poster generated";
+      }, "make_poster")
+    }));
+  } catch (e) {
+    return c.json({ error: `search coordinator failed: ${String(e?.message ?? e).slice(0, 300)}` }, 502);
+  }
   const st = await updateState(c.env.DB, s0.report_id, (s) => {
     if (plan) s.next_search = plan;
     if (posterKey) s.poster_key = posterKey;
@@ -2589,6 +2642,12 @@ app.get(
   "/api/health",
   (c) => c.json({ ok: true, mock: mockMode(c.env), matcher: c.env.BASETEN_API_KEY ? "glimmer-available" : "spark" })
 );
+app.get("/api/demo", async (c) => {
+  const id = c.env.DEMO_REPORT_ID;
+  if (!id) return c.json({ id: null });
+  const s = await readState(c.env.DB, id);
+  return c.json({ id: s ? id : null });
+});
 var src_default = {
   fetch: app.fetch,
   async queue(batch, env, _ctx) {
@@ -2626,7 +2685,7 @@ var src_default = {
             cl.status = "tracking";
           });
           const tracks = await trackVideo(env, clip.media_url, concept, clip.fps);
-          const framesBilled = Math.round(clip.fps * clip.duration_s);
+          const framesBilled = Math.max(Math.round(clip.fps * clip.duration_s), 50);
           await setClip((cl) => {
             cl.tracks = tracks;
             cl.n_tracks = tracks.length;
@@ -2694,7 +2753,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-Zo7dtn/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-m6HV1T/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -2726,7 +2785,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-Zo7dtn/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-m6HV1T/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
