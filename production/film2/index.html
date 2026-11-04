@@ -112,7 +112,16 @@ B.a3.innerHTML = `<h4>Same request in both records</h4><div style="font-size:21p
 
 window.setTime = async function (t) {
   pending.length = 0
-  for (const s of D.scenes) { const n = $('s' + s.id.slice(0, 2)); const on = t >= s.start && t < s.end; n.style.display = on ? 'block' : 'none'; if (on) n.style.opacity = clamp((t - s.start) / .35, 0, 1) }
+  for (const s of D.scenes) {
+    const n = $('s' + s.id.slice(0, 2)); const on = t >= s.start && t < s.end; n.style.display = on ? 'block' : 'none'
+    if (on) {
+      n.style.opacity = clamp((t - s.start) / .35, 0, 1)
+      // slow camera push across each evidence scene, alternating direction; content is untouched
+      const k = (t - s.start) / (s.end - s.start), dir = D.scenes.indexOf(s) % 2 ? -1 : 1
+      n.style.transformOrigin = dir > 0 ? '35% 40%' : '65% 45%'
+      n.style.transform = `scale(${1 + 0.035 * k})`
+    }
+  }
   const L = (id) => t - sc(id).start
   if (t < 30) { termRender(B.r1, D.terminal.repo, L('01_reproducibility') - 1, 'repository'); termRender(B.r2, D.terminal.creds, L('01_reproducibility') - (wt('01_reproducibility', 'credentials') - sc('01_reproducibility').start), 'required credentials, no secrets') }
   else if (t < 60) { const l = L('02_boot_health'); termRender(B.b1, D.terminal.setup, l - 1, 'setup + build'); termRender(B.b3, D.terminal.typecheck, l - 4, 'typecheck'); termRender(B.b2, D.terminal.boot, (t - wt('02_boot_health', 'verify')) * 1.0, 'fresh Worker + health check') }
