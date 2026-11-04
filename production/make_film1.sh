@@ -31,5 +31,5 @@ python3 production/build_film1.py "$TAKE"
 python3 production/mix.py production/film1/audio_plan.json $OUT/audio/film1_score.wav 120 $OUT/04_demo_voiceover.wav $OUT/audio/film1_mix.wav $OUT/06_demo_subtitles.srt
 node production/render.cjs production/film1/index.html $OUT/audio/film1_video.mp4 --fps 30 --duration 120 --workers 3
 ffmpeg -loglevel error -y -i $OUT/audio/film1_video.mp4 -i $OUT/audio/film1_mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -ar 48000 -movflags +faststart -t 120 $OUT/01_hackathon_demo_120s.mp4
-SECRETS="$TOKEN,$(cat /tmp/claude-0/-home-user-find-my-dog/f8a50dba-7b71-5a76-83a0-c42f2f2de293/scratchpad/secrets/elevenlabs.key 2>/dev/null),$(sed -n 's/^META_API_KEY=//p' .dev.vars)" \
+SECRETS="$TOKEN,$(sed -n 's/^ELEVENLABS_API_KEY=//p' .env 2>/dev/null),$(sed -n 's/^META_API_KEY=//p' .dev.vars)" \
   python3 production/qa.py $OUT/01_hackathon_demo_120s.mp4 --duration 120 --fps 30 --srt $OUT/06_demo_subtitles.srt --script production/scripts/film1.json --scan production/film1 $OUT/12_raw_evidence/terminal

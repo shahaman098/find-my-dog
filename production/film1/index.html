@@ -7,14 +7,11 @@
   :root { --bg:#0b0d12; --ink:#f3f5fa; --sub:#8f97ab; --line:rgba(255,255,255,.12); --acc:#4d6bfe; --acc2:#7d93ff; --good:#3ecf8e; --bad:#ff6b6b; }
   * { box-sizing:border-box; margin:0; }
   html, body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); color:var(--ink); font-family:Montserrat, system-ui, sans-serif; }
-  #stage { position:absolute; inset:0; overflow:hidden;
-    background: radial-gradient(60% 50% at 20% 0%, rgba(60,90,180,.28), transparent 70%), radial-gradient(50% 50% at 90% 100%, rgba(40,60,130,.22), transparent 70%), var(--bg); }
-  #stage::after { content:''; position:absolute; inset:0; pointer-events:none;
-    background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size:80px 80px; }
+  #stage { position:absolute; inset:0; overflow:hidden; background:var(--bg); }
   .scene { position:absolute; inset:0; display:none; z-index:1; }
   .mono { font-family:'DM Mono', ui-monospace, monospace; }
-  .eyebrow { position:absolute; left:80px; top:48px; font-family:'DM Mono', monospace; font-size:17px; letter-spacing:.22em; color:var(--acc2); text-transform:uppercase; }
-  .win { position:absolute; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px rgba(0,0,0,.55); background:#000; }
+  .eyebrow { position:absolute; left:80px; top:48px; font-family:'DM Mono', monospace; font-size:17px; letter-spacing:.08em; color:var(--sub); text-transform:uppercase; }
+  .win { position:absolute; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:0 8px 24px rgba(0,0,0,.4); background:#000; }
   .win img { width:100%; height:100%; object-fit:cover; display:block; }
   .badge { position:absolute; padding:8px 14px; border-radius:999px; background:rgba(11,13,18,.82); border:1px solid var(--line); font-family:'DM Mono', monospace; font-size:17px; color:var(--ink); white-space:nowrap; backdrop-filter:blur(6px); }
   .badge b { color:var(--acc2); font-weight:500; }
@@ -26,7 +23,7 @@
   .json { white-space:pre-wrap; color:#dfe4f1; font-size:15px; }
   #cap { position:absolute; left:50%; bottom:40px; transform:translateX(-50%); max-width:1500px; padding:12px 26px; border-radius:14px; background:rgba(5,6,10,.78);
     font-family:Montserrat; font-weight:500; font-size:34px; line-height:1.25; color:#fff; text-align:center; z-index:50; display:none; }
-  #cap .w.sp { color:#fff; } #cap .w { color:rgba(255,255,255,.62); }
+  #cap .w, #cap .w.sp { color:#fff; }
   .title { position:absolute; font-family:Montserrat; font-weight:400; color:var(--ink); }
   .card { position:absolute; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid var(--line); padding:22px 26px; font-size:26px; color:var(--ink); }
   .card small { display:block; font-size:18px; color:var(--sub); margin-top:6px; }
@@ -36,8 +33,8 @@
   .term .bar { color:var(--sub); font-size:14px; margin-bottom:10px; }
   .term .cmd { color:var(--acc2); }
   svg.arch { position:absolute; left:240px; top:100px; width:1440px; height:810px; }
-  svg.arch .hl > rect { stroke:#9db0ff !important; stroke-width:3 !important; filter:drop-shadow(0 0 14px rgba(125,147,255,.75)); }
-  .divider { position:absolute; width:2px; background:linear-gradient(transparent, var(--acc2), transparent); }
+  svg.arch .hl > rect { stroke:#9db0ff !important; stroke-width:3 !important; }
+  .divider { position:absolute; width:2px; background:var(--line); }
 </style></head>
 <body><div id="stage">
   <div class="scene" id="s01"></div><div class="scene" id="s02"></div><div class="scene" id="s03"></div><div class="scene" id="s04"></div>

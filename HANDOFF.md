@@ -18,6 +18,22 @@ Written 4 Nov 2026, ~19:00 GMT, at the end of a Claude Code session that ran out
 | Concept stills (Muse Image) | Committed in `production/assets/concept/`. |
 | `11_production_report.md` | **Done** (P3). Live-finals pitch + Q&A sheet in `PITCH.md`. |
 
+## Film 1 v3: slower narration, less "AI demo" styling (prepared 4 Nov ~20:50 GMT, not rendered yet)
+
+Kris asked for a re-voice: v2 narration ran at ~196 words/min and sounded rushed. Ready in this repo:
+- `production/scripts/film1.json`: scenes 01, 02, 03, 04, 08, 10, 11 trimmed to fit at speed 0.88 (~170 words/min). Every word a visual is cued on is kept. "Running live" was dropped because the take is a recording.
+- `production/film1/index.html`: flat background (no glow blobs or grid), plain subtitles (no word-by-word karaoke), no neon glow on the architecture diagram, neutral labels. Footage is untouched.
+- `production/revoice_film1.sh`: re-voices with speed 0.88, similarity 0.9, style 0, stops on any overrun, and copies the result into `production/assets/voice/`.
+
+Needs a session whose network allows `api.elevenlabs.io`, `api.meta.ai`, `archive.org`, `*.archive.org`, `fonts.googleapis.com` and `fonts.gstatic.com`. The allowlist change did not reach the session that prepared this. Then:
+
+```bash
+bash production/revoice_film1.sh            # needs ELEVENLABS_API_KEY in .env (git-ignored)
+FILM1_ONLY=1 bash production/bootstrap.sh   # needs META_API_KEY in .dev.vars; ~45 min; must end with all PASS lines
+```
+
+Then listen to the whole film before sending it, check that captions match the speech, and commit `production/assets/voice/01_hackathon_demo_120s/`. If v3 isn't ready in time, **upload v2**: it's valid, just brisk.
+
 ## Set up the new environment (5 minutes)
 
 1. Connect GitHub to an account with access to the **private** repo `shahaman098/find-my-dog`; work on branch `claude/brave-darwin-9r9p3b` (or `main`; both are at the same commit).

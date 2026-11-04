@@ -6,25 +6,25 @@
       "id": "01_hook",
       "start": 0,
       "end": 8,
-      "text": "What if every camera on your street could help bring a lost dog home, without anyone scrubbing through hours of footage?"
+      "text": "What if every camera on your street could help find a lost dog, without anyone scrubbing through footage?"
     },
     {
       "id": "02_problem",
       "start": 8,
       "end": 18,
-      "text": "Today, that means knocking on doors, posting in group chats, and asking neighbours to rewind video. Ring can search Ring cameras. Most streets have a mix."
+      "text": "Today that means knocking on doors, posting in group chats, asking neighbours to rewind video. Ring searches Ring cameras. Most streets have a mix."
     },
     {
       "id": "03_reveal",
       "start": 18,
       "end": 28,
-      "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app, running live."
+      "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app."
     },
     {
       "id": "04_clean_state",
       "start": 28,
       "end": 40,
-      "text": "I'm starting a brand-new report on a local Worker running this exact code against the live Meta API. Health reports real models, not mock mode, and nothing is preloaded."
+      "text": "I'm starting a brand-new report on a local Worker running this code against the live Meta API. Health shows real models, not mock mode, and nothing is preloaded."
     },
     {
       "id": "05_live_action",
@@ -48,7 +48,7 @@
       "id": "08_architecture",
       "start": 82,
       "end": 94,
-      "text": "Under the hood: a React app, a Cloudflare Worker, D1 for state, R2 for media, and a queue for tracking. Our key decision: the owner confirms every match, never the model."
+      "text": "Under the hood: a React app, a Cloudflare Worker, D1, R2 and a queue. Our key decision: the owner confirms every match, not the model."
     },
     {
       "id": "09_tests",
@@ -60,13 +60,13 @@
       "id": "10_edge_case",
       "start": 105,
       "end": 115,
-      "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403, and nothing changes."
+      "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403. Nothing changes."
     },
     {
       "id": "11_close",
       "start": 115,
       "end": 120,
-      "text": "The evidence is in the repo. This is Find My Dog."
+      "text": "The evidence is in the repo. Find My Dog."
     }
   ]
 }

@@ -41,9 +41,9 @@ scene_vis = {
 }
 scene_map = {'04_clean_state': 'clean', '05_live_action': 'live', '06_process': 'process', '07_result': 'result'}
 L = [f'# Script and timeline: Film 1 "The Proof" (120 s)\n',
-     f'Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice `dxT8yYZS41hHdsvjw7XV` (eleven_multilingual_v2; stability 0.65, similarity 0.85, style 0.15, speed 1.0; 48 kHz). '
+     f'Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice `dxT8yYZS41hHdsvjw7XV` (eleven_multilingual_v2; stability 0.65, similarity 0.90, style 0, speed 0.88; 48 kHz). '
      f'Every time below is generated from the voice word timings and the capture event log. Source revision `{rev}`; take `{os.path.relpath(take_dir, ROOT)}` against `{ev["base"]}`.\n',
-     '**Lock history:** scene 04 originally said "on the deployed site". The production deploy was not available in time, so the take was recorded on a local Worker running the same commit against the live Meta API, and the line was re-locked to say exactly that. No other line changed.\n']
+     '**Lock history:** scene 04 originally said "on the deployed site". The production deploy was not available in time, so the take was recorded on a local Worker running the same commit against the live Meta API, and the line was re-locked to say exactly that. **v3:** v2 narration ran at ~196 words/min and sounded rushed. It was re-voiced at speed 0.88 (~170 words/min) with higher similarity and no style exaggeration, and scenes 01, 02, 03, 04, 08, 10 and 11 were trimmed to fit their windows; every word a visual is cued on was kept. "running live" was dropped from scene 03 because the take is a recording.\n']
 for sc in s1['scenes']:
     words = data['words'][sc['id']]
     L.append(f"\n## {sc['id']} · {mmss(sc['start'])}–{mmss(sc['end'])}\n")

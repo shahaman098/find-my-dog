@@ -2,6 +2,7 @@
 # Rebuild everything for the films from a fresh clone, then shoot and render all three.
 #   1. put the (rotated) Meta key in .dev.vars:  META_API_KEY=...
 #   2. bash production/bootstrap.sh            (~1 h 30 m total; ~$0.60 of Meta API calls)
+#      FILM1_ONLY=1 bash production/bootstrap.sh  (Film 1 only, ~45 min)
 # Needs: node 22, ffmpeg, Xvfb, Playwright's Chromium (all present in Claude Code cloud containers).
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -44,6 +45,12 @@ node production/term_record.cjs $T/npm_test.json -- npm test >/dev/null 2>&1
 SHOW_CMD="node eval/e2e.ts http://localhost:8787" node production/term_record.cjs $T/e2e_mock.json -- node eval/e2e.ts http://localhost:8787 >/dev/null 2>&1
 bash production/record_film2_terminal.sh none repo creds setup typecheck boot bench
 
-echo "== 7/7 shoot the take + render and QA Films 1, 3, 2 (production/reshoot_all.sh)"
-SECRETS="$META_API_KEY" BASE=http://localhost:8788 bash production/reshoot_all.sh
+if [ "${FILM1_ONLY:-0}" = 1 ]; then
+  echo "== 7/7 shoot the take + render and QA Film 1 only (production/make_film1.sh)"
+  BASE=http://localhost:8788 bash production/make_film1.sh
+  python3 production/docs.py
+else
+  echo "== 7/7 shoot the take + render and QA Films 1, 3, 2 (production/reshoot_all.sh)"
+  SECRETS="$META_API_KEY" BASE=http://localhost:8788 bash production/reshoot_all.sh
+fi
 ls -la production/out/0*.mp4
