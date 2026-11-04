@@ -56,7 +56,7 @@
 
 ## Contents
 
-[The problem](#-the-problem) · [How it works](#-how-it-works) · [The Meta stack](#-the-meta-stack) · [See it run](#-see-it-run-on-real-models) · [Results](#-results) · [Privacy](#-privacy-and-access-control) · [Why not Ring?](#-why-not-just-ring-search-party) · [Architecture](#-architecture) · [Unit economics](#-unit-economics) · [Bugs we caught](#-bugs-the-evidence-exposed-all-fixed) · [Limitations](#-limitations-read-before-quoting-the-numbers) · [Run it](#-run-it) · [Reproduce](#-reproduce-every-number) · [Judging criteria](#-how-this-meets-the-judging-criteria) · [Team](#-team)
+[The problem](#-the-problem) · [How it works](#-how-it-works) · [The Meta stack](#-the-meta-stack) · [See it run](#-see-it-run-on-real-models) · [Results](#-results) · [Privacy](#-privacy-and-access-control) · [Why not Ring?](#-why-not-just-ring-search-party) · [Architecture](#-architecture) · [Unit economics](#-unit-economics) · [Bugs we caught](#-bugs-the-evidence-exposed-all-fixed) · [Limitations](#-limitations-read-before-quoting-the-numbers) · [Run it](#-run-it) · [Reproduce](#-reproduce-every-number) · [Judging criteria](#-how-this-meets-the-judging-criteria) · [Author](#-author)
 
 ---
 
@@ -446,9 +446,9 @@ verdict can be checked against its animal.
 | **Whether it works** | Deployed live and passing the real-mode E2E. Measured on real footage: 9 / 9 top-ranked, 92 % accuracy, 15 / 15 under simulated doorbell conditions, identity held through a blackout, 21 / 21 through the real UI. **Failures and limitations are published too.** |
 | **Impact** | 10 M lost pets a year, and the neighbourhood search is the #1 way they come home. This makes that search fast, cheap (≈ $3) and evidence-based. |
 
-## 👥 Team
+## 👤 Author
 
-**Aman Kumar Sah**, Meta Global AI Developer Hackathon, November 2026.
+Built by **Aman Kumar Sah** for the Meta Global AI Developer Hackathon, November 2026.
 
 Released under the [MIT License](LICENSE).
 

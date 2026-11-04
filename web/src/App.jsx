@@ -108,6 +108,7 @@ const ICONS = {
   video: <><rect x="3" y="6" width="13" height="12" rx="2" /><path d="M16 10l5-3v10l-5-3" /></>,
   arrowUp: <path d="M12 19V5M6 11l6-6 6 6" />,
   doc: <><path d="M6 3h9l3 3v15H6z" /><path d="M9 10h6M9 14h6M9 18h4" /></>,
+  user: <><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5" /></>,
   users: <><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5" /><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c1.8.8 3 2.6 3.5 5.2" /></>,
   route: <><circle cx="6" cy="18" r="2.5" /><circle cx="18" cy="6" r="2.5" /><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5" /></>,
   eye: <><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></>,
@@ -245,7 +246,7 @@ function ClosingFooter() {
         </div>
       </div>
       <footer className="footRow">
-        <span className="footLeft"><Icon name="users" /> Aman Kumar Sah</span>
+        <span className="footLeft"><Icon name="user" /> Aman Kumar Sah</span>
         <span className="footMid">Open source · Built for the Meta Global AI Developer Hackathon 2026</span>
         <span className="footRight"><a href="#/demo">Demo</a><span aria-hidden="true">·</span><a href={REPO} target="_blank" rel="noreferrer">Source</a></span>
       </footer>
