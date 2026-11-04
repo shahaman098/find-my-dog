@@ -1,0 +1,19 @@
+clip,track_id,detections,first_seen_s,last_seen_s,gaps_over_0.5s
+dogpark,0,200,6.9,71.8,4.2 0.8 3.8 35.9 0.8
+dogpark,1,26,7,9.5,
+dogpark,2,96,8,17.9,
+dogpark,3,66,11.3,17.8,
+dogpark,4,62,12.7,33.4,7.3 6.1 1.5
+dogpark,5,32,16.3,22.2,2.9
+dogpark,6,36,24.1,27.6,
+dogpark,7,54,27.6,32.9,
+dogpark,8,42,33.5,72,23.2 9.9 1.6
+dogpark,9,42,35,39.1,
+dogpark,10,51,39.1,63.4,14.3 5
+dogpark,11,50,39.2,44.1,
+dogpark,12,233,39.6,75.9,13.2
+dogpark,13,4,43.3,43.6,
+dogpark,14,161,50.3,75.9,7.9 1.4
+dogpark,16,100,66,75.9,
+doorcam,0,117,0,12.3,
+doorcam_occluded,0,102,0.1,12.3,1.7

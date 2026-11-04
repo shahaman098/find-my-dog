@@ -9,10 +9,10 @@ calling the **live Meta API** on 4 Nov 2026. Charts are generated from the raw J
 |---|---|---|---|
 | 1 | Muse Spark puts the owner's pet first | **9 / 9** top-ranked (3 dogs × 3 trials, look-alike distractors) | [§1](#1-matching-benchmark-muse-spark), [`match.json`](eval/results/match.json) |
 | 2 | Matching is accurate | **92%** of 87 verdicts; recall **93%**; precision **83%** before the owner confirms | [§1](#1-matching-benchmark-muse-spark), [`match_rows.csv`](evidence/data/match_rows.csv) |
-| 2b | It holds up in doorbell conditions | right dog still ranked #1 in **18 / 18** case-conditions (night vision, ¼ resolution, motion blur, dusk, all combined); accuracy **86–93%**; worst-case recall **67%** | [§1b](#1b-doorbell-conditions-robustness), [`robustness_rows.csv`](evidence/data/robustness_rows.csv) |
+| 2b | It holds up in doorbell conditions | right dog still ranked #1 in **15 / 15** degraded case-conditions (night vision, ¼ resolution, motion blur, dusk, all combined; 18 / 18 with the clean baseline); accuracy **86–93%**; worst-case recall **67%** | [§1b](#1b-doorbell-conditions-robustness), [`robustness_rows.csv`](evidence/data/robustness_rows.csv) |
 | 3 | No person is ever confirmed as a pet | the person SAM labelled "dog" was **rejected 9 / 9** | [§1](#1-matching-benchmark-muse-spark) |
 | 4 | SAM 3.1 keeps identity through an occlusion | **same track ID** after a 1.5 s full-frame blackout | [§2](#2-sam-31-tracking), [`doorcam_occluded.tracks.json`](eval/results/doorcam_occluded.tracks.json) |
-| 5 | SAM finds small animals on real doorbell footage | a **72 × 43 px** dog among adults, a child and a stroller; 0 tracks on people | [§2](#2-sam-31-tracking) |
+| 5 | SAM finds small animals on real doorbell footage | a dog about **50 × 50 px** (median box, 0.3% of the frame) among adults, a child and a stroller; 0 tracks on people | [§2](#2-sam-31-tracking) |
 | 6 | It works end to end through the real UI | **21 / 21** Spark verdicts correct over 3 separate real runs; plan + poster generated | [§3](#3-the-product-running-on-real-models) |
 | 7 | The coordinator is a real tool loop | Spark itself chose `suggest_next_search` → `make_poster` | [§3](#3-the-product-running-on-real-models), [`plan.json`](eval/results/plan.json) |
 | 8 | Only the owner can decide; the demo can't be vandalised | **12 / 12** access checks pass on the real-mode Worker | [§5](#5-access-control-real-mode-worker), [log](evidence/logs/access-control-real.txt) |

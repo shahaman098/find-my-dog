@@ -35,14 +35,14 @@ No. Nothing is scanned that a neighbour didn't choose to share for this one sear
 - **No person identification anywhere.** We only ask SAM for animals, and Spark only compares animal appearance. When SAM mislabelled a person as "dog", Spark **rejected it 9 / 9 times**, and the owner-confirm step is a second guard.
 - **Enforced in code:** only the owner token can run matching, confirm or delete. Anyone else with the link can only add clips, and a withdrawn clip is **deleted from storage**, not hidden (12 / 12 access checks, `evidence/logs/access-control-real.txt`).
 - **Our own footage:** every person and number plate in our films was pixelated by a SAM 3.1 pass before upload.
-- ⚠️ **Be careful with "time-boxed".** The README, the submission and the landing page's Ring comparison say "time-boxed", but **automatic expiry is not in the code yet**. Reports stay indefinitely (there is no delete-report route), and clips stay until the owner withdraws them. Say: "Searches are scoped to one report, and owners can withdraw any clip. Automatic expiry after the search is next on our list." Don't claim it's enforced.
+- **Retention, said honestly.** The README, the submission and the landing page now say "scoped to one search", not "time-boxed": **automatic expiry is not in the code yet**. Reports stay indefinitely (there is no delete-report route), and clips stay until the owner withdraws them. Say: "Searches are scoped to one report, and owners can withdraw any clip. Automatic expiry after the search is next on our list." Don't claim it's enforced.
 
 ### "Where does SAM fail?"
 Across **hard cuts in edited video**. On a 76 s news montage, track IDs carried across cuts onto different dogs, and one track labelled people "dog". Inside continuous shots, identities held. Doorbell and CCTV footage has no cuts, and we match each track's best still independently with the owner confirming. It's our main known limitation, and it's documented with a chart in `EVIDENCE.md` §2.
 
 ### "How accurate is it, really?"
 - 92% of 87 verdicts correct, 93% recall, **83% precision**. That's why the owner confirms every match: the model alone isn't enough.
-- Right dog top-ranked **9 / 9** (3 dogs × 3 trials, look-alike distractors), and **18 / 18** under simulated night IR, ¼ resolution, motion blur, dusk and all combined. The worst case drops recall to 67%.
+- Right dog top-ranked **9 / 9** (3 dogs × 3 trials, look-alike distractors), and **15 / 15** (18 / 18 with the clean baseline) under simulated night IR, ¼ resolution, motion blur, dusk and all combined. The worst case drops recall to 67%.
 - **Be upfront about the limits:** small n, simulated degradations, and reference photos cropped from the same footage, which is easier than a real owner's phone photo.
 
 ### "Why do you need four models?"
@@ -68,4 +68,4 @@ It's sped up and labelled, never faked. Film 1 is one continuous take with no cu
 - [ ] `/#/demo` loads on the venue Wi-Fi (and on phone data as a backup)
 - [ ] Film 3 is downloaded locally, not streamed
 - [ ] The Meta key has been rotated and the repo is public (otherwise judges can't open `EVIDENCE.md`)
-- [ ] The "time-boxed" wording is fixed or explained (see Privacy above)
+- [x] The "time-boxed" wording is fixed (now "scoped to one search"; see Privacy above)

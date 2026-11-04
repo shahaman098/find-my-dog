@@ -206,7 +206,7 @@ const PROOF = [
 const VERSUS = [
   ['Cameras', 'Scans Ring outdoor cameras', 'Any clip anyone shares: doorbell, CCTV, dashcam, phone'],
   ['Pets', 'Dogs', 'Dogs, cats, any animal with a photo'],
-  ['Consent', 'Default-on scanning', 'Opt-in, owner-initiated, time-boxed to one search'],
+  ['Consent', 'Default-on scanning', 'Opt-in, owner-initiated, scoped to one search'],
   ['What you get', 'A "possible match" alert', 'Ranked evidence with reasons, a timeline, a dawn search plan and a poster'],
   ['Trust', 'Closed source', 'Open source, with the benchmark in the repo'],
 ]
@@ -236,7 +236,7 @@ function ClosingFooter() {
       <Particles />
       <div className="closingInner">
         <h2 className="closingTitle">Bring the whole street into the search</h2>
-        <p className="bandSub">Opt-in footage only, time-boxed to the search, and no person or face identification anywhere in the pipeline. Open source, so you can check every one of those claims.</p>
+        <p className="bandSub">Opt-in footage only, scoped to one search, withdrawn clips deleted, and no person or face identification anywhere in the pipeline. Open source, so you can check every one of those claims.</p>
         <div className="ctaGrid">
           <a className="cta" href={REPO} target="_blank" rel="noreferrer"><Icon name="github" /> View on GitHub</a>
           <a className="ghost" href="#/demo"><Icon name="play" /> Live demo</a>
@@ -552,7 +552,7 @@ function NeighborGive({ id }) {
             <button className="btn primary">Share clip with the search</button>
           </form>
         )}
-        <p className="sub small">Opt-in only · time-boxed to this search · animals matched by appearance, never people.</p>
+        <p className="sub small">Opt-in only · used for this search only · withdraw any time · animals matched by appearance, never people.</p>
       </div>
     </div>
   )

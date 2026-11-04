@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 data/
+!evidence/data/
 node_modules/
 web/dist/
 .DS_Store

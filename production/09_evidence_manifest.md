@@ -17,7 +17,7 @@ Revision `bca5498`. Take: `production/out/12_raw_evidence/take_01` (one continuo
 | 11 | Unit tests and E2E pass | terminal/npm_test.json, terminal/e2e_mock.json | exit codes 0 / 0 |
 | 12 | Right dog ranked first 9/9; 92% accuracy over 87 comparisons | eval/results/match.json | EVIDENCE.md §1 (production code path, live Meta API) |
 | 13 | Same SAM ID through a 1.5 s blackout | eval/results/doorcam_occluded.tracks.json | EVIDENCE.md §2 |
-| 14 | 18/18 top-ranked under simulated doorbell conditions | eval/results/robust_*.json | EVIDENCE.md §1b |
+| 14 | 18/18 top-ranked under simulated doorbell conditions (15/15 degraded + 3/3 clean baseline) | eval/results/robust_*.json | EVIDENCE.md §1b |
 | 15 | Architecture as drawn | production/08_architecture_diagram.svg | bindings from wrangler.jsonc (ASSETS, DB, MEDIA, PIPELINE); endpoints from worker/src/meta.ts |
 | 16 | 49% of found dogs were found by searching the neighbourhood | ASPCA press release (2012) | https://www.aspca.org/about-us/press-releases/how-many-pets-are-lost-how-many-find-their-way-home-aspca-survey-has-answers |
 | 17 | Ring Search Party scans Ring cameras | Amazon announcement | https://www.aboutamazon.com/news/devices/ring-search-party-for-dogs-united-states-missing-pets |

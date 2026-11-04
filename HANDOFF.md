@@ -57,7 +57,7 @@ If only one film needs redoing after a take exists: `SKIP_CAPTURE=1 BASE=http://
 - **P0 (Kris):** deploy ✅ done. Rotate Meta + ElevenLabs keys. Make the repo public only after rotating. Remove the "Muse Code" line in `SUBMISSION.md` unless true. Upload Film 1 (unlisted YouTube; check logged-out playback) and submit by 22:00 GMT. **Film 1 v2 is the one to upload.**
 - **P1:** ✅ done: all three films final and delivered (20:00 GMT). Only re-run `bash production/bootstrap.sh` if the MP4s are lost or a film must change.
 - **P2 (optional, after deploy):** re-shoot on production: `BASE=https://find-my-dog.kiritokris.workers.dev bash production/reshoot_all.sh`. If you do, change scene 04 of `production/scripts/film1.json` back to "…a brand-new report on the deployed site…", re-voice that one scene (needs ElevenLabs), and re-render Film 1.
-- **P3:** ✅ done: `production/11_production_report.md` and `PITCH.md` (60-second pitch + Q&A for the 9 Nov finals). **Open issue:** the README, `SUBMISSION.md` and the landing page say "time-boxed", but no expiry is enforced in code. Soften the wording or add expiry (see `PITCH.md` → Privacy).
+- **P3:** ✅ done: `production/11_production_report.md` and `PITCH.md` (60-second pitch + Q&A for the 9 Nov finals). ✅ "Time-boxed" softened to "scoped to one search" in the README, `SUBMISSION.md`, `PITCH.md` and the landing page (no expiry is enforced in code). Redeploy (`npm run deploy`) so the live landing page picks it up.
 
 ## Known pitfalls (each one bit the last session)
 
