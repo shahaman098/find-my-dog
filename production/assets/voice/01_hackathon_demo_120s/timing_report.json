@@ -12,9 +12,9 @@
  "report": [
   {
    "scene": "01_hook",
-   "window": 12,
+   "window": 15,
    "duration": 7.59,
-   "slack": 4.41,
+   "slack": 7.41,
    "verdict": "fits"
   },
   {
@@ -40,9 +40,9 @@
   },
   {
    "scene": "05_live_action",
-   "window": 30.0,
+   "window": 27.0,
    "duration": 24.1,
-   "slack": 5.9,
+   "slack": 2.9,
    "verdict": "fits"
   },
   {

@@ -5,30 +5,30 @@
   {
    "id": "01_hook",
    "start": 0,
-   "end": 12,
+   "end": 15,
    "text": "What if every camera on your street could help find a lost dog, in minutes, without anyone scrubbing through hours of footage?"
   },
   {
    "id": "02_problem",
-   "start": 12,
-   "end": 26,
+   "start": 15,
+   "end": 29,
    "text": "When a dog goes missing today, that means knocking on doors, posting in group chats, and asking neighbours to rewind their cameras. Ring searches Ring cameras, but only Ring. Most streets have a mix."
   },
   {
    "id": "03_reveal",
-   "start": 26,
-   "end": 39,
+   "start": 29,
+   "end": 42,
    "text": "This is Find My Dog. It searches footage from any camera, for any pet, and the owner stays in control. Neighbours choose what to share. Here's the real app, recorded in one take."
   },
   {
    "id": "04_clean_state",
-   "start": 39,
-   "end": 54.5,
+   "start": 42,
+   "end": 57.5,
    "text": "I'm starting a brand-new report on a local Worker, running this code against the live Meta API. Health shows real models, not mock mode. There are no saved reports, and nothing is preloaded, so everything you see happens in this take."
   },
   {
    "id": "05_live_action",
-   "start": 54.5,
+   "start": 57.5,
    "end": 84.5,
    "text": "First, the owner. I add Biscuit's photo and a short description: a small tan terrier, last seen near the park. Then the neighbours. I upload two clips they shared: a dog park and a doorbell. SAM 3.1 tracks every animal in each one, frame by frame. That takes about forty seconds of real time, so the waits are sped up, and the speed is always shown in the corner."
   },
@@ -70,8 +70,8 @@
   }
  ],
  "hook": [
-  2.5,
-  4.5,
-  7.0
+  3.0,
+  5.5,
+  8.5
  ]
 }
