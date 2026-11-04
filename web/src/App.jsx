@@ -371,6 +371,13 @@ async function extractStillsFor(report, clip, file) {
   return ok > 0
 }
 
+/** Spark's score is confidence in its *verdict*, and an unusable crop (no animal) is "no match, low confidence".
+ * So only a positive verdict carries match strength; ranking by it is what eval/benchmark.ts measured (9/9 top-1). */
+const matchStrength = m => (m.is_match ? m.score : 0)
+const verdictText = m => m.is_match
+  ? `${Math.round(m.score * 100)}% match`
+  : m.score >= 0.5 ? `not a match · Spark ${Math.round(m.score * 100)}% sure` : 'not a match · unclear or unusable crop'
+
 function ClipCard({ report, clip, onRefresh, canEdit }) {
   const [busy, setBusy] = useState(false)
   const [missing, setMissing] = useState(() => new Set())
@@ -660,19 +667,20 @@ function ReportView({ id, share }) {
               <span className="sub">Reference photo — every tracked animal is compared against this, by appearance only.</span>
             </div>
             {(r.matches || []).length === 0 && <p className="sub">Run the matcher after clips finish processing.</p>}
-            {[...(r.matches || [])].sort((a, b) => (b.is_match - a.is_match) || (b.score - a.score)).map(m => {
+            {[...(r.matches || [])].sort((a, b) => matchStrength(b) - matchStrength(a)).map(m => {
               const clip = r.clips.find(c => c.clip_id === m.clip_id)
+              const pct = Math.round(matchStrength(m) * 100)
               return (
                 <div key={`${m.clip_id}:${m.object_id}`} className="sighting">
                   <img src={`/api/reports/${id}/stills/${m.clip_id}/${m.object_id}`} />
                   <div>
-                    <b>{clip?.label}</b> · {(m.score * 100).toFixed(0)}% · {m.is_match ? 'possible match' : 'no match'}
-                    <div className="scorebar" role="img" aria-label={`match score ${(m.score * 100).toFixed(0)} percent`}><i style={{ width: `${Math.min(100, Math.round(m.score * 100))}%` }} /></div>
+                    <b>{clip?.label}</b> · {verdictText(m)}
+                    {m.is_match && <div className="scorebar" role="img" aria-label={`match strength ${pct} percent`}><i style={{ width: `${pct}%` }} /></div>}
                     <p className="sub">{m.rationale}</p>
                     {canEdit && m.confirmed === null && (
                       <div className="row">
-                        <button className="btn primary" onClick={() => confirm(m, true)}>✓ That's {r.pet.name}</button>
-                        <button className="btn" onClick={() => confirm(m, false)}>✗ Not them</button>
+                        <button className={m.is_match ? 'btn primary' : 'btn'} onClick={() => confirm(m, true)}>✓ That's {r.pet.name}</button>
+                        <button className={m.is_match ? 'btn' : 'btn primary'} onClick={() => confirm(m, false)}>✗ Not them</button>
                       </div>
                     )}
                     {m.confirmed === true && <span className="chip okchip">confirmed</span>}

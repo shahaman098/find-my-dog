@@ -351,13 +351,20 @@ function keepConfirmations(prev: MatchVerdict[], next: MatchVerdict[]): MatchVer
   return next.map((m) => ({ ...m, confirmed: decided.get(`${m.clip_id}:${m.object_id}`) ?? null }))
 }
 
+/** Trim at a word boundary so rationales never end mid-word ("Low re…"). */
+function clipText(s: string, max: number): string {
+  if (s.length <= max) return s
+  const cut = s.slice(0, max)
+  return cut.slice(0, Math.max(cut.lastIndexOf(' '), max - 40)).trimEnd() + '…'
+}
+
 function toVerdict(clipId: string, objectId: number, parsed: any): MatchVerdict {
   return {
     clip_id: clipId,
     object_id: objectId,
     is_match: !!parsed.is_match,
     score: Math.max(0, Math.min(1, Number(parsed.confidence) || 0)),
-    rationale: String(parsed.rationale ?? '').slice(0, 300),
+    rationale: clipText(String(parsed.rationale ?? ''), 600),
     confirmed: null,
   }
 }

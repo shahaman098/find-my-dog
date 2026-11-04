@@ -1,0 +1,17 @@
+# 2026-11-04 16:11:28 UTC  real-mode Worker, report a55a6a031327 (token redacted below)
+
+PASS GET /api/reports/:id never contains the owner token
+PASS stranger: run matcher (no token)                               want 403 got 403  {"error":"Only the owner can do this. Open the report on the device that filed it."}
+PASS stranger: confirm a sighting (wrong token)                     want 403 got 403  {"error":"Only the owner can do this. Open the report on the device that filed it."}
+PASS stranger: generate plan + poster                               want 403 got 403  {"error":"Only the owner can do this. Open the report on the device that filed it."}
+PASS stranger: delete a neighbour clip                              want 403 got 403  {"error":"Only the owner can do this. Open the report on the device that filed it."}
+PASS stranger: overwrite a still                                    want 403 got 403  {"error":"Only the owner can do this. Open the report on the device that filed it."}
+PASS owner: confirm with the real token                             want 200 got 200  {"report_id":"a55a6a031327","created_at":1793808225953,"pet":{"name":"Biscuit","species":"dog","description":"
+PASS owner: malformed confirm body rejected                         want 400 got 400  {"error":"clip_id (string) and object_id (number) required"}
+PASS anyone: read-only demo refuses analyze                         want 403 got 403  {"error":"This is the read-only demo report. Start your own report to run the full pipeline."}
+PASS anyone: read-only demo refuses new clips                       want 403 got 403  {"error":"This is the read-only demo report. Start your own report to run the full pipeline."}
+PASS anyone: read-only demo refuses delete                          want 403 got 403  {"error":"This is the read-only demo report. Start your own report to run the full pipeline."}
+PASS anyone: clip upload without a file rejected                    want 400 got 400  {"error":"file required"}
+
+summary: 12 passed, 0 failed
+# exit code: 0

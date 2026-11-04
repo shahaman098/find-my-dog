@@ -1,0 +1,50 @@
+# Real-model benchmark summary (generated from eval/results/*.json)
+
+## Muse Spark matching  run_at=2026-11-04T15:49:56.378Z  model=muse-spark-1.3
+comparisons=87  TP=25 FN=2 FP=5 TN=55
+accuracy=0.92  precision=0.833  recall=0.926  cost=$0.4776  tokens in/out=29055/103827
+  case goldendoodle: 9/9 true-pet comparisons scored above every distractor
+  case shiba: 7/9 true-pet comparisons scored above every distractor
+  case white-dog: 9/9 true-pet comparisons scored above every distractor
+
+## SAM 3.1 tracking: dog-park montage  (dogpark_10fps.mp4, 10 fps, 760 frames billed, $0.152, 43.7s wall)
+detections=1255  tracks=16
+  #0    200 det    6.9s ->  71.8s  gaps>0.5s: 4.2, 0.8, 3.8, 35.9, 0.8
+  #1     26 det      7s ->   9.5s  gaps>0.5s: -
+  #2     96 det      8s ->  17.9s  gaps>0.5s: -
+  #3     66 det   11.3s ->  17.8s  gaps>0.5s: -
+  #4     62 det   12.7s ->  33.4s  gaps>0.5s: 7.3, 6.1, 1.5
+  #5     32 det   16.3s ->  22.2s  gaps>0.5s: 2.9
+  #6     36 det   24.1s ->  27.6s  gaps>0.5s: -
+  #7     54 det   27.6s ->  32.9s  gaps>0.5s: -
+  #8     42 det   33.5s ->    72s  gaps>0.5s: 23.2, 9.9, 1.6
+  #9     42 det     35s ->  39.1s  gaps>0.5s: -
+  #10    51 det   39.1s ->  63.4s  gaps>0.5s: 14.3, 5
+  #11    50 det   39.2s ->  44.1s  gaps>0.5s: -
+  #12   233 det   39.6s ->  75.9s  gaps>0.5s: 13.2
+  #13     4 det   43.3s ->  43.6s  gaps>0.5s: -
+  #14   161 det   50.3s ->  75.9s  gaps>0.5s: 7.9, 1.4
+  #16   100 det     66s ->  75.9s  gaps>0.5s: -
+
+## SAM 3.1 tracking: doorbell clip  (doorcam_10fps.mp4, 10 fps, 320 frames billed, $0.064, 13.7s wall)
+detections=117  tracks=1
+  #0    117 det      0s ->  12.3s  gaps>0.5s: -
+
+## SAM 3.1 tracking: doorbell clip + 1.5 s blackout  (doorcam_occluded.mp4, 10 fps, 320 frames billed, $0.064, 13.1s wall)
+detections=102  tracks=1
+  #0    102 det    0.1s ->  12.3s  gaps>0.5s: 1.7
+
+## Spark coordinator tool loop  run_at=2026-11-04T15:53:50.016Z  wall=54.502s
+tool calls (chosen by the model): suggest_next_search -> make_poster
+plan headline: Search Elm St car park NOW - Biscuit moving away from dog park
+poster bytes: 373490
+
+## Real models through the product UI (local Worker, real mode)  matcher=spark:muse-spark-1.3
+  parkcam01:8   verdict=match  conf=0.72 owner_confirmed=True
+  parkcam01:6   verdict=reject conf=0.96 owner_confirmed=False
+  parkcam01:7   verdict=reject conf=0.85 owner_confirmed=False
+  parkcam01:9   verdict=reject conf=0.96 owner_confirmed=False
+  parkcam01:12  verdict=reject conf=0.10 owner_confirmed=False
+  parkcam01:14  verdict=reject conf=0.85 owner_confirmed=False
+  elmdoor01:0   verdict=reject conf=0.90 owner_confirmed=False
+metered cost of this UI session: $0.055

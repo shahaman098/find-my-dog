@@ -52,6 +52,7 @@
 - `worker/src/sam.ts` — parser for SAM 3.1's streamed `<Nf>id<|box…|>` grammar → tracks with exact timestamps (frame N at fps f)
 - `worker/src/index.ts` — queue-driven pipeline, structured matching with Glimmer→Spark fallback, agentic tool loop
 - `eval/gates.ts` — scripted acceptance gates (persistence through occlusion; ≥8/10 match accuracy)
+- `EVIDENCE.md` — every claim with its screenshot, chart, raw data and log, including real-model UI screenshots, failures and the bugs the evidence exposed
 - `eval/benchmark.ts` + `eval/results/` — real-model benchmark that imports the production parser, prompts and clients (no mocks)
 - `worker/src/prompts.ts` — every prompt, schema and tool definition, shared by the Worker and the benchmark
 - `eval/e2e.ts` — end-to-end pipeline test, runs against dev and production

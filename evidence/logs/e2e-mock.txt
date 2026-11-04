@@ -1,0 +1,26 @@
+# 2026-11-04 16:11:08 UTC  $ node eval/e2e.ts http://localhost:8787
+
+ok: health ok
+   mode: MOCK, matcher: spark
+ok: pet photo fixture exists
+ok: report created 937693afde99
+ok: pet photo stored
+ok: owner token issued at creation
+ok: owner token never returned by GET
+ok: clip queued
+ok: clip tracked by pipeline
+ok: non-owner cannot run matcher
+ok: matches produced (2)
+ok: match confirmed
+ok: re-running matcher keeps confirmations
+ok: search plan: "Search the park at dawn"
+ok: poster generated
+ok: timeline has 1 sighting(s)
+ok: poster fetchable
+ok: pet photo fetchable
+ok: owner view exposes poster_url
+skip demo read-only check: no seeded demo report on this deployment
+
+E2E PASS (mock mode) — search cost so far: $0
+
+# exit code: 0

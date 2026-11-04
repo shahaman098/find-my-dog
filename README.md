@@ -16,8 +16,9 @@ timeline, a concrete next-search plan, and a shareable alert poster.
 **Live:** https://find-my-dog.kiritokris.workers.dev
 
 **Judges, in 60 seconds:** open the [live demo](https://find-my-dog.kiritokris.workers.dev/#/demo) → skim
-[Real-model results](#real-model-results) (9/9 top-ranked, 92% accuracy, identity held through a blackout) →
-read `worker/src/prompts.ts` (every prompt and tool) and `worker/src/index.ts` (the pipeline).
+[**EVIDENCE.md**](EVIDENCE.md) (every claim with its screenshot, chart, raw data and log: 9/9 top-ranked, 92% accuracy,
+identity held through a blackout, 21/21 verdicts correct through the real UI) → read `worker/src/prompts.ts`
+(every prompt and tool) and `worker/src/index.ts` (the pipeline).
 
 ## Why not just Ring Search Party?
 
@@ -125,6 +126,7 @@ clients (`worker/src/meta.ts`). Nothing is mocked. Raw outputs are in [`eval/res
 | A person is never confirmed as a pet | SAM mislabelled one person as "dog"; Spark rejected that crop **9 / 9** times | `results/match.json` |
 | SAM 3.1 keeps identity through an occlusion | After a **1.5 s full-frame blackout**, the dog came back as the **same track ID**: 1 track, 1 gap of 1.7 s | `results/doorcam_occluded.tracks.json` |
 | SAM finds small animals in real doorbell footage | A dog about **50 × 50 px (0.3% of the frame)** among adults, a child and a stroller: one continuous track for 12.3 s, **0 tracks on people** | `results/doorcam.tracks.json` |
+| It works end to end through the product UI | **21 / 21** Spark verdicts correct across 3 real runs (7 candidates each); plan + poster generated live | [`EVIDENCE.md` §3](EVIDENCE.md#3-the-product-running-on-real-models) |
 | The coordinator is a real tool loop | Spark chose both tools itself (`suggest_next_search` → `make_poster`) and planned from the actual sighting times | `results/plan.json` |
 | Unit cost | SAM **$0.20 / 1,000 frames**; Spark **≈ $0.0055 per comparison** (87 comparisons = $0.48) | all of the above |
 
@@ -140,8 +142,11 @@ Every identity label was checked by eye. Cases are in [`eval/match_cases.json`](
   own, though, 83% precision means the owner confirmation step is load-bearing, not decorative.
 - The reference photos are frames from the same footage, which is easier than a real owner's phone photo.
   Small n: 3 dogs, 87 comparisons.
-- Across *hard cuts* in the edited montage, SAM sometimes carried one ID onto a different dog. Real camera
-  clips have no cuts, and the product never relies on IDs across clips: each track is matched independently.
+- Across *hard cuts* in the edited montage, SAM 3.1 re-identification failed: of 16 tracks, 3 stayed on one dog,
+  9 carried their ID onto a different dog after a cut, and 1 labelled people "dog" (every track checked by eye; see
+  [`EVIDENCE.md` §2](EVIDENCE.md#2-sam-31-tracking)). Real camera clips have no cuts, and each track is matched
+  independently with the owner confirming. But the coordinator reads track spans, so a span that crosses a cut can
+  leak into the plan.
 - Muse Image returns WebP (now served with the right type), and its lettering can misspell ("corly coat").
   The share page shows the owner's real photo next to the generated poster.
 
