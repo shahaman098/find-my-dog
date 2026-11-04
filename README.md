@@ -56,7 +56,7 @@
 
 ## Contents
 
-[The problem](#-the-problem) · [How it works](#-how-it-works) · [The Meta stack](#-the-meta-stack) · [See it run](#-see-it-run-on-real-models) · [Results](#-results) · [Privacy](#-privacy-and-access-control) · [Why not Ring?](#-why-not-just-ring-search-party) · [Architecture](#-architecture) · [Unit economics](#-unit-economics) · [Bugs we caught](#-bugs-the-evidence-exposed-all-fixed) · [Limitations](#-limitations-read-before-quoting-the-numbers) · [Run it](#-run-it) · [Reproduce](#-reproduce-every-number) · [Judging criteria](#-how-this-meets-the-judging-criteria) · [Author](#-author)
+[The problem](#-the-problem) · [How it works](#-how-it-works) · [The Meta stack](#-the-meta-stack) · [See it run](#-see-it-run-on-real-models) · [Design](#-designed-for-a-worried-owner) · [Results](#-results) · [Privacy](#-privacy-and-access-control) · [Why not Ring?](#-why-not-just-ring-search-party) · [Architecture](#-architecture) · [Unit economics](#-unit-economics) · [Bugs we caught](#-bugs-the-evidence-exposed-all-fixed) · [Limitations](#-limitations-read-before-quoting-the-numbers) · [Run it](#-run-it) · [Reproduce](#-reproduce-every-number) · [Judging criteria](#-how-this-meets-the-judging-criteria) · [Author](#-author)
 
 ---
 
@@ -83,6 +83,25 @@ past**. Nobody knows it yet, the clips are spread across a dozen brands, and nob
 | **6** | Spark tool loop | Reads the confirmed sightings, **decides** to call `suggest_next_search` (where to look next, and why) and `make_poster` (*Muse Image*). |
 | **7** | The street | Gets a **share page**: a sighting timeline, the next-search plan, the owner's real photo next to the generated poster, and the cost meter. |
 
+```mermaid
+flowchart LR
+  O([Owner: photo + description + voice note]) --> R[Report]
+  N([Neighbours: clips from any camera]) --> C[Clips]
+  R --> V[Muse Voice Transcribe<br/>search brief]
+  C --> S[SAM 3.1<br/>every animal, persistent IDs]
+  S --> M[Muse Spark<br/>verdict + reasons per track]
+  R -- photo + description --> M
+  V --> M
+  V -.-> T
+  M --> H{Owner confirms?}
+  H -- yes --> T[Spark tool loop]
+  H -- no --> X[Discarded]
+  T --> P[suggest_next_search<br/>where to look next]
+  T --> I[make_poster<br/>Muse Image]
+  P --> SH([Share page: timeline + plan + poster])
+  I --> SH
+```
+
 > **Output:** not a "possible match" ping, but an **evidence-linked sighting timeline, a concrete next-search plan, and a printable alert poster.**
 
 ## 🧠 The Meta stack
@@ -99,9 +118,13 @@ past**. Nobody knows it yet, the clips are spread across a dozen brands, and nob
 
 ## 🎬 See it run on real models
 
-Everything below was produced **live by SAM 3.1, Muse Spark and Muse Image through the product UI**
-([`capture_real_ui.cjs`](evidence/capture_real_ui.cjs)). Nothing is mocked. These four captures were taken on 4 Nov,
-before the UI moved to its current warm theme; the pipeline and its outputs are unchanged.
+Every verdict, rationale, plan and poster below was produced **live by SAM 3.1, Muse Spark and Muse Image** on
+4 Nov, through the product UI ([`capture_real_ui.cjs`](evidence/capture_real_ui.cjs)). Nothing is mocked.
+
+> **Shown in the current UI.** After the redesign, that recorded run ([`real_ui_state.json`](evidence/real_ui_state.json))
+> was replayed into a local Worker by [`replay_real_ui.py`](evidence/replay_real_ui.py), and the same capture script
+> photographed it. No model was called during the replay, and the outputs are unchanged: the replayed state matches the
+> recording field for field. Only the owner's confirm and reject clicks were made again.
 
 <table>
 <tr>
@@ -141,6 +164,19 @@ before the UI moved to its current warm theme; the pipeline and its outputs are 
 Full console: [`real-00-console-full.jpg`](evidence/img/real-00-console-full.jpg) · final report state:
 [`real_ui_state.json`](evidence/real_ui_state.json) · per-run numbers: [`benchmark-summary.txt`](evidence/logs/benchmark-summary.txt)
 
+## 🎨 Designed for a worried owner
+
+The report form is a **lost-pet poster**: a photo slot, the pet's name, species, a description and a voice note, then
+one button. Every tracked animal keeps **one colour across the whole search**, in the style of SAM's own mask
+overlays, so "track #8" in the footage is the same pink card in the match list. Light and dark modes and phone
+layouts are built in, and buttons meet WCAG AA contrast.
+
+| Light | Dark | Phone |
+|---|---|---|
+| <img src="evidence/img/app-landing-light.jpg" alt="Landing page, light mode"> | <img src="evidence/img/app-landing-dark.jpg" alt="Landing page, dark mode"> | <img src="evidence/img/app-landing-phone.png" alt="Landing page on a phone" width="200"> |
+
+<img src="evidence/img/app-how-it-works.jpg" alt="How it works: four numbered steps, with SAM-style coloured track chips on the SAM step">
+
 ## 📊 Results
 
 Measured on **4 Nov 2026** against the **live Meta API** using **the production code path**:
@@ -148,6 +184,14 @@ Measured on **4 Nov 2026** against the **live Meta API** using **the production 
 prompts ([`prompts.ts`](worker/src/prompts.ts)) and model clients ([`meta.ts`](worker/src/meta.ts)). Charts are
 generated from the raw JSON by [`evidence/build.py`](evidence/build.py). **No number is typed in by hand.**
 Full write-up with every chart: **[EVIDENCE.md](EVIDENCE.md)**.
+
+**How to read the evidence:**
+
+| Label | Meaning |
+|---|---|
+| **Real** | Live Meta API through the production code path. All numbers, verdicts, plans and posters in this README |
+| **Replayed** | A recorded real run shown again in the current UI, with no model calls ([`replay_real_ui.py`](evidence/replay_real_ui.py)) |
+| **Mock** | Deterministic simulation (`FMD_MOCK=1`), used for CI's end-to-end test and the landing-page screenshots (which show no model output). Never used for a quality number |
 
 ### 1. Matching: does the owner see the right animal first?
 
@@ -425,6 +469,11 @@ npx wrangler dev --port 8788 --local &
 python3 evidence/seed_real_report.py /tmp http://localhost:8788
 node evidence/capture_real_ui.cjs /tmp evidence/img
 bash evidence/access_checks.sh http://localhost:8788 <report_id> <owner_token> <DEMO_REPORT_ID>
+
+# Re-photograph the recorded real run in the current UI (no model calls)
+npx wrangler dev --local --port 8799 --var FMD_MOCK:1 &
+python3 evidence/replay_real_ui.py /tmp http://localhost:8799
+APP=http://localhost:8799 node evidence/capture_real_ui.cjs /tmp evidence/img --replay
 
 # Charts, CSVs and screenshots
 python3 evidence/build.py && node evidence/shoot.cjs http://localhost:8788 && python3 evidence/compose.py

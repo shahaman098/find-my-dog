@@ -87,8 +87,12 @@ All tracks: [`evidence/data/sam_tracks.csv`](evidence/data/sam_tracks.csv) · ra
 A real-mode local Worker with SAM 3.1 tracks from §2 seeded into a report (SAM needs a public video URL that a laptop
 doesn't have; see [`evidence/seed_real_report.py`](evidence/seed_real_report.py)). Everything below was generated live
 by Muse Spark and Muse Image through the UI ([`evidence/capture_real_ui.cjs`](evidence/capture_real_ui.cjs)).
-These captures, and the owner-vs-stranger comparison in §4, predate the move to the current warm UI theme; the landing-page
-screenshots in §4 show the current design. The pipeline and its outputs are unchanged.
+After the UI redesign, that recorded run ([`real_ui_state.json`](evidence/real_ui_state.json)) was replayed into a local
+Worker by [`replay_real_ui.py`](evidence/replay_real_ui.py) and photographed again with the same script (`--replay`), so
+these captures show the current UI. No model was called during the replay. The replayed state matches the recording
+field for field (verdicts, scores, rationales, owner decisions, plan, summary, tracks, cost). The images are the run's own:
+the exact track frames, SAM's doorbell box, and the Muse Image poster cut from the original capture
+([`evidence/img/replay/`](evidence/img/replay)).
 
 **Footage in, SAM tracks out:**
 
@@ -214,6 +218,11 @@ python3 eval/degrade.py
 for c in night_ir low_res motion_blur dark worst_case; do
   node eval/benchmark.ts match --cases eval/fixtures/cases_$c.json --trials 1 --out eval/results/robust_$c.json
 done
+
+# after the UI redesign: re-photograph the recorded real run in the current UI (no model calls)
+npx wrangler dev --local --port 8799 --var FMD_MOCK:1 &
+python3 evidence/replay_real_ui.py /tmp http://localhost:8799
+APP=http://localhost:8799 node evidence/capture_real_ui.cjs /tmp evidence/img --replay
 
 python3 evidence/build.py && node evidence/shoot.cjs http://localhost:8788 && python3 evidence/compose.py
 ```

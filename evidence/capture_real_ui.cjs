@@ -1,6 +1,9 @@
 const { chromium } = require('playwright')
 const fs = require('fs')
 const [SP, OUT] = process.argv.slice(2)
+// --replay: the report already holds the recorded real verdicts, plan and poster (evidence/replay_real_ui.py),
+// so the two buttons that call models are not pressed. Owner confirm/reject clicks still go through the UI.
+const REPLAY = process.argv.includes('--replay')
 const rep = JSON.parse(fs.readFileSync(SP + '/report.json'))
 const BASE = process.env.APP || 'http://localhost:8788'
 const NOSTICKY = '.nav{position:static !important} *{animation:none !important;transition:none !important}'
@@ -16,7 +19,7 @@ const NOSTICKY = '.nav{position:static !important} *{animation:none !important;t
   await p.waitForTimeout(800)
   await (await p.$$('section.card'))[0].screenshot({ path: `${OUT}/real-01-footage-sam-tracks.jpg`, type: 'jpeg', quality: 86 })
   let t0 = Date.now()
-  await p.click('button:has-text("Run matcher")')
+  if (!REPLAY) await p.click('button:has-text("Run matcher")')
   await p.waitForSelector('.sighting', { timeout: 240000 })
   const matchS = ((Date.now() - t0) / 1000).toFixed(1)
   await p.waitForTimeout(500)
@@ -29,7 +32,7 @@ const NOSTICKY = '.nav{position:static !important} *{animation:none !important;t
   const rest = p.locator('button:has-text("Not them")')
   while (await rest.count()) { await rest.first().click(); await p.waitForTimeout(500) }
   t0 = Date.now()
-  await p.click('button:has-text("Generate plan + poster")')
+  if (!REPLAY) await p.click('button:has-text("Generate plan + poster")')
   await p.waitForSelector('img.poster', { timeout: 300000 })
   const planS = ((Date.now() - t0) / 1000).toFixed(1)
   await p.waitForTimeout(1500)
