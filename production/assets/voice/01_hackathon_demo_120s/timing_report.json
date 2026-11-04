@@ -1,89 +1,89 @@
 {
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "report": [
   {
    "scene": "01_hook",
    "window": 8,
-   "duration": 7.01,
-   "slack": 0.99,
+   "duration": 5.2,
+   "slack": 2.8,
    "verdict": "fits"
   },
   {
    "scene": "02_problem",
    "window": 10,
-   "duration": 8.87,
-   "slack": 1.13,
+   "duration": 9.36,
+   "slack": 0.64,
    "verdict": "fits"
   },
   {
    "scene": "03_reveal",
    "window": 10,
-   "duration": 7.89,
-   "slack": 2.11,
+   "duration": 7.04,
+   "slack": 2.96,
    "verdict": "fits"
   },
   {
    "scene": "04_clean_state",
    "window": 12,
-   "duration": 10.63,
-   "slack": 1.37,
+   "duration": 9.12,
+   "slack": 2.88,
    "verdict": "fits"
   },
   {
    "scene": "05_live_action",
    "window": 16,
-   "duration": 10.36,
-   "slack": 5.64,
+   "duration": 9.28,
+   "slack": 6.72,
    "verdict": "fits"
   },
   {
    "scene": "06_process",
    "window": 14,
-   "duration": 11.01,
-   "slack": 2.99,
+   "duration": 12.16,
+   "slack": 1.84,
    "verdict": "fits"
   },
   {
    "scene": "07_result",
    "window": 12,
-   "duration": 10.68,
-   "slack": 1.32,
+   "duration": 10,
+   "slack": 2,
    "verdict": "fits"
   },
   {
    "scene": "08_architecture",
    "window": 12,
-   "duration": 10.91,
-   "slack": 1.09,
+   "duration": 10.08,
+   "slack": 1.92,
    "verdict": "fits"
   },
   {
    "scene": "09_tests",
    "window": 11,
-   "duration": 8.78,
-   "slack": 2.22,
+   "duration": 8.48,
+   "slack": 2.52,
    "verdict": "fits"
   },
   {
    "scene": "10_edge_case",
    "window": 10,
-   "duration": 8.08,
-   "slack": 1.92,
+   "duration": 9.04,
+   "slack": 0.96,
    "verdict": "fits"
   },
   {
    "scene": "11_close",
    "window": 5,
-   "duration": 2.74,
-   "slack": 2.26,
+   "duration": 2.64,
+   "slack": 2.36,
    "verdict": "fits"
   }
  ]

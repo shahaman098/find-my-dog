@@ -2,106 +2,106 @@
  "scene": "01_hook",
  "text": "What if every camera on your street could help find a lost dog, without anyone scrubbing through footage?",
  "spoken": "What if every camera on your street could help find a lost dog, without anyone scrubbing through footage?",
- "duration": 7.012417,
+ "duration": 5.2,
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "words": [
   {
    "word": "What",
    "start": 0,
-   "end": 0.337
+   "end": 0.08
   },
   {
    "word": "if",
-   "start": 0.395,
-   "end": 0.488
+   "start": 0.16,
+   "end": 0.32
   },
   {
    "word": "every",
-   "start": 0.615,
-   "end": 1.091
+   "start": 0.373,
+   "end": 0.64
   },
   {
    "word": "camera",
-   "start": 1.184,
-   "end": 1.707
+   "start": 0.697,
+   "end": 1.04
   },
   {
    "word": "on",
-   "start": 1.788,
-   "end": 1.916
+   "start": 1.067,
+   "end": 1.12
   },
   {
    "word": "your",
-   "start": 1.974,
-   "end": 2.09
+   "start": 1.152,
+   "end": 1.28
   },
   {
    "word": "street",
-   "start": 2.148,
-   "end": 2.473
+   "start": 1.337,
+   "end": 1.68
   },
   {
    "word": "could",
-   "start": 2.543,
-   "end": 2.717
+   "start": 1.72,
+   "end": 1.92
   },
   {
    "word": "help",
-   "start": 2.752,
-   "end": 2.972
+   "start": 1.968,
+   "end": 2.16
   },
   {
    "word": "find",
-   "start": 3.065,
-   "end": 3.32
+   "start": 2.208,
+   "end": 2.4
   },
   {
    "word": "a",
-   "start": 3.39,
-   "end": 3.413
+   "start": 2.44,
+   "end": 2.48
   },
   {
    "word": "lost",
-   "start": 3.483,
-   "end": 3.75
+   "start": 2.544,
+   "end": 2.8
   },
   {
    "word": "dog,",
-   "start": 3.82,
-   "end": 4.261
+   "start": 2.88,
+   "end": 3.28
   },
   {
    "word": "without",
-   "start": 4.458,
-   "end": 4.841
+   "start": 3.31,
+   "end": 3.52
   },
   {
    "word": "anyone",
-   "start": 4.911,
-   "end": 5.271
+   "start": 3.589,
+   "end": 4
   },
   {
    "word": "scrubbing",
-   "start": 5.306,
-   "end": 5.747
+   "start": 4.053,
+   "end": 4.48
   },
   {
    "word": "through",
-   "start": 5.805,
-   "end": 6.014
+   "start": 4.5,
+   "end": 4.64
   },
   {
    "word": "footage?",
-   "start": 6.084,
-   "end": 7.012
+   "start": 4.7,
+   "end": 5.2
   }
  ]
 }

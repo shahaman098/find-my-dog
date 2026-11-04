@@ -2,156 +2,156 @@
  "scene": "04_clean_state",
  "text": "I'm starting a brand-new report on a local Worker running this code against the live Meta API. Health shows real models, not mock mode, and nothing is preloaded.",
  "spoken": "I'm starting a brand-new report on a local Worker running this code against the live Meta API. Health shows real models, not mock mode, and nothing is preloaded.",
- "duration": 10.634729,
+ "duration": 9.12,
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "words": [
   {
    "word": "I'm",
    "start": 0,
-   "end": 0.244
+   "end": 0.16
   },
   {
    "word": "starting",
-   "start": 0.302,
-   "end": 0.708
+   "start": 0.196,
+   "end": 0.48
   },
   {
    "word": "a",
-   "start": 0.766,
-   "end": 0.789
+   "start": 0.52,
+   "end": 0.56
   },
   {
    "word": "brand-new",
-   "start": 0.859,
-   "end": 1.324
+   "start": 0.6,
+   "end": 0.96
   },
   {
    "word": "report",
-   "start": 1.405,
-   "end": 1.823
+   "start": 1.029,
+   "end": 1.44
   },
   {
    "word": "on",
-   "start": 1.881,
-   "end": 1.95
+   "start": 1.467,
+   "end": 1.52
   },
   {
    "word": "a",
-   "start": 2.02,
-   "end": 2.043
+   "start": 1.56,
+   "end": 1.6
   },
   {
    "word": "local",
-   "start": 2.113,
-   "end": 2.45
+   "start": 1.667,
+   "end": 2
   },
   {
    "word": "Worker",
-   "start": 2.531,
-   "end": 2.926
+   "start": 2.069,
+   "end": 2.48
   },
   {
    "word": "running",
-   "start": 2.995,
-   "end": 3.239
+   "start": 2.52,
+   "end": 2.8
   },
   {
    "word": "this",
-   "start": 3.274,
-   "end": 3.402
+   "start": 2.832,
+   "end": 2.96
   },
   {
    "word": "code",
-   "start": 3.471,
-   "end": 3.75
+   "start": 3.024,
+   "end": 3.28
   },
   {
    "word": "against",
-   "start": 3.773,
-   "end": 4.052
+   "start": 3.31,
+   "end": 3.52
   },
   {
    "word": "the",
-   "start": 4.087,
-   "end": 4.156
+   "start": 3.54,
+   "end": 3.6
   },
   {
    "word": "live",
-   "start": 4.238,
-   "end": 4.528
+   "start": 3.664,
+   "end": 3.92
   },
   {
    "word": "Meta",
-   "start": 4.586,
-   "end": 4.841
+   "start": 3.968,
+   "end": 4.16
   },
   {
    "word": "API.",
-   "start": 4.911,
-   "end": 5.666
+   "start": 4.26,
+   "end": 4.72
   },
   {
    "word": "Health",
-   "start": 5.898,
-   "end": 6.235
+   "start": 4.846,
+   "end": 5.6
   },
   {
    "word": "shows",
-   "start": 6.293,
-   "end": 6.641
+   "start": 5.653,
+   "end": 5.92
   },
   {
    "word": "real",
-   "start": 6.78,
-   "end": 7.082
+   "start": 5.968,
+   "end": 6.16
   },
   {
    "word": "models,",
-   "start": 7.163,
-   "end": 7.663
+   "start": 6.24,
+   "end": 6.8
   },
   {
    "word": "not",
-   "start": 7.697,
-   "end": 7.906
+   "start": 6.86,
+   "end": 7.04
   },
   {
    "word": "mock",
-   "start": 7.988,
-   "end": 8.231
+   "start": 7.104,
+   "end": 7.36
   },
   {
    "word": "mode,",
-   "start": 8.324,
-   "end": 8.649
+   "start": 7.424,
+   "end": 7.84
   },
   {
    "word": "and",
-   "start": 8.673,
-   "end": 8.8
+   "start": 7.88,
+   "end": 8
   },
   {
    "word": "nothing",
-   "start": 8.905,
-   "end": 9.265
+   "start": 8.04,
+   "end": 8.32
   },
   {
    "word": "is",
-   "start": 9.323,
-   "end": 9.404
+   "start": 8.373,
+   "end": 8.48
   },
   {
    "word": "preloaded.",
-   "start": 9.474,
-   "end": 10.635
+   "start": 8.54,
+   "end": 9.12
   }
  ]
 }

@@ -26,7 +26,8 @@ async function tts(text, prev, next, format) {
   const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE}/with-timestamps?output_format=${format}`, {
     method: 'POST',
     headers: { 'xi-api-key': KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, model_id: MODEL, voice_settings: SETTINGS, previous_text: prev, next_text: next }),
+    // eleven_v3 rejects previous_text/next_text, so it gets each line on its own
+    body: JSON.stringify({ text, model_id: MODEL, voice_settings: SETTINGS, ...(MODEL === 'eleven_v3' ? {} : { previous_text: prev, next_text: next }) }),
   })
   if (!r.ok) throw Object.assign(new Error(`elevenlabs ${r.status}: ${(await r.text()).slice(0, 240)}`), { status: r.status })
   return r.json()

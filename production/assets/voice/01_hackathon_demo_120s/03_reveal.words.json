@@ -2,131 +2,131 @@
  "scene": "03_reveal",
  "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app.",
  "spoken": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app.",
- "duration": 7.894792,
+ "duration": 7.04,
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "words": [
   {
    "word": "This",
    "start": 0,
-   "end": 0.221
+   "end": 0.16
   },
   {
    "word": "is",
-   "start": 0.29,
-   "end": 0.395
+   "start": 0.213,
+   "end": 0.32
   },
   {
    "word": "Find",
-   "start": 0.476,
-   "end": 0.755
+   "start": 0.384,
+   "end": 0.64
   },
   {
    "word": "My",
-   "start": 0.824,
-   "end": 0.929
+   "start": 0.693,
+   "end": 0.8
   },
   {
    "word": "Dog.",
-   "start": 1.022,
-   "end": 1.509
+   "start": 0.9,
+   "end": 1.28
   },
   {
    "word": "It",
-   "start": 1.707,
-   "end": 1.869
+   "start": 1.333,
+   "end": 1.44
   },
   {
    "word": "searches",
-   "start": 1.927,
-   "end": 2.276
+   "start": 1.484,
+   "end": 1.84
   },
   {
    "word": "footage",
-   "start": 2.357,
-   "end": 2.752
+   "start": 1.9,
+   "end": 2.32
   },
   {
    "word": "from",
-   "start": 2.786,
-   "end": 2.926
+   "start": 2.368,
+   "end": 2.56
   },
   {
    "word": "any",
-   "start": 3.007,
-   "end": 3.216
+   "start": 2.6,
+   "end": 2.72
   },
   {
    "word": "camera,",
-   "start": 3.286,
-   "end": 3.808
+   "start": 2.8,
+   "end": 3.44
   },
   {
    "word": "for",
-   "start": 3.866,
-   "end": 4.029
+   "start": 3.48,
+   "end": 3.6
   },
   {
    "word": "any",
-   "start": 4.098,
-   "end": 4.284
+   "start": 3.68,
+   "end": 3.92
   },
   {
    "word": "pet,",
-   "start": 4.365,
-   "end": 4.807
+   "start": 4,
+   "end": 4.4
   },
   {
    "word": "with",
-   "start": 5.004,
-   "end": 5.19
+   "start": 4.448,
+   "end": 4.64
   },
   {
    "word": "the",
-   "start": 5.224,
-   "end": 5.294
+   "start": 4.68,
+   "end": 4.8
   },
   {
    "word": "owner",
-   "start": 5.387,
-   "end": 5.677
+   "start": 4.853,
+   "end": 5.12
   },
   {
    "word": "in",
-   "start": 5.747,
-   "end": 5.805
+   "start": 5.147,
+   "end": 5.2
   },
   {
    "word": "control.",
-   "start": 5.875,
-   "end": 6.478
+   "start": 5.26,
+   "end": 5.92
   },
   {
    "word": "Here's",
-   "start": 6.606,
-   "end": 6.873
+   "start": 5.968,
+   "end": 6.24
   },
   {
    "word": "the",
-   "start": 6.896,
-   "end": 6.966
+   "start": 6.26,
+   "end": 6.32
   },
   {
    "word": "real",
-   "start": 7.036,
-   "end": 7.256
+   "start": 6.368,
+   "end": 6.56
   },
   {
    "word": "app.",
-   "start": 7.349,
-   "end": 7.895
+   "start": 6.64,
+   "end": 7.04
   }
  ]
 }

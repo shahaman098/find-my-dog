@@ -2,141 +2,141 @@
  "scene": "08_architecture",
  "text": "Under the hood: a React app, a Cloudflare Worker, D1, R2 and a queue. Our key decision: the owner confirms every match, not the model.",
  "spoken": "Under the hood: a React app, a Cloudflare Worker, D one, R two and a queue. Our key decision: the owner confirms every match, not the model.",
- "duration": 10.913375,
+ "duration": 10.08,
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "words": [
   {
    "word": "Under",
    "start": 0,
-   "end": 0.313
+   "end": 0.16
   },
   {
    "word": "the",
-   "start": 0.372,
-   "end": 0.441
+   "start": 0.2,
+   "end": 0.32
   },
   {
    "word": "hood:",
-   "start": 0.499,
-   "end": 0.871
+   "start": 0.368,
+   "end": 0.64
   },
   {
    "word": "a",
-   "start": 1.045,
-   "end": 1.115
+   "start": 0.8,
+   "end": 0.96
   },
   {
    "word": "React",
-   "start": 1.219,
-   "end": 1.614
+   "start": 1.027,
+   "end": 1.36
   },
   {
    "word": "app,",
-   "start": 1.718,
-   "end": 2.125
+   "start": 1.44,
+   "end": 1.84
   },
   {
    "word": "a",
-   "start": 2.252,
-   "end": 2.334
+   "start": 1.88,
+   "end": 1.92
   },
   {
    "word": "Cloudflare",
-   "start": 2.438,
-   "end": 3.053
+   "start": 1.973,
+   "end": 2.4
   },
   {
    "word": "Worker,",
-   "start": 3.088,
-   "end": 3.622
+   "start": 2.469,
+   "end": 2.96
   },
   {
    "word": "D1,",
-   "start": 3.796,
-   "end": 4.551
+   "start": 3.16,
+   "end": 3.84
   },
   {
    "word": "R2",
-   "start": 4.725,
-   "end": 5.259
+   "start": 4,
+   "end": 4.32
   },
   {
    "word": "and",
-   "start": 5.387,
-   "end": 5.538
+   "start": 4.38,
+   "end": 4.56
   },
   {
    "word": "a",
-   "start": 5.596,
-   "end": 5.619
+   "start": 4.64,
+   "end": 4.72
   },
   {
    "word": "queue.",
-   "start": 5.712,
-   "end": 6.153
+   "start": 4.76,
+   "end": 5.76
   },
   {
    "word": "Our",
-   "start": 6.432,
-   "end": 6.618
+   "start": 5.82,
+   "end": 6
   },
   {
    "word": "key",
-   "start": 6.687,
-   "end": 6.85
+   "start": 6.04,
+   "end": 6.16
   },
   {
    "word": "decision:",
-   "start": 6.908,
-   "end": 7.5
+   "start": 6.222,
+   "end": 7.2
   },
   {
    "word": "the",
-   "start": 7.593,
-   "end": 7.721
+   "start": 7.22,
+   "end": 7.28
   },
   {
    "word": "owner",
-   "start": 7.814,
-   "end": 8.104
+   "start": 7.347,
+   "end": 7.68
   },
   {
    "word": "confirms",
-   "start": 8.173,
-   "end": 8.707
+   "start": 7.742,
+   "end": 8.24
   },
   {
    "word": "every",
-   "start": 8.8,
-   "end": 9.102
+   "start": 8.28,
+   "end": 8.48
   },
   {
    "word": "match,",
-   "start": 9.172,
-   "end": 9.648
+   "start": 8.547,
+   "end": 9.12
   },
   {
    "word": "not",
-   "start": 9.845,
-   "end": 10.054
+   "start": 9.18,
+   "end": 9.36
   },
   {
    "word": "the",
-   "start": 10.089,
-   "end": 10.159
+   "start": 9.42,
+   "end": 9.6
   },
   {
    "word": "model.",
-   "start": 10.217,
-   "end": 10.913
+   "start": 9.653,
+   "end": 10.08
   }
  ]
 }

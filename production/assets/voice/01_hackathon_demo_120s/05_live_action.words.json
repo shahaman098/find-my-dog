@@ -2,146 +2,146 @@
  "scene": "05_live_action",
  "text": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM 3.1 tracks every animal in each one.",
  "spoken": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM three point one tracks every animal in each one.",
- "duration": 10.356104,
+ "duration": 9.28,
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "words": [
   {
    "word": "I",
    "start": 0,
-   "end": 0.093
+   "end": 0.08
   },
   {
    "word": "add",
-   "start": 0.197,
-   "end": 0.383
+   "start": 0.14,
+   "end": 0.32
   },
   {
    "word": "Biscuit's",
-   "start": 0.441,
-   "end": 0.917
+   "start": 0.36,
+   "end": 0.8
   },
   {
    "word": "photo",
-   "start": 0.975,
-   "end": 1.405
+   "start": 0.867,
+   "end": 1.2
   },
   {
    "word": "and",
-   "start": 1.486,
-   "end": 1.579
+   "start": 1.24,
+   "end": 1.36
   },
   {
    "word": "a",
-   "start": 1.637,
-   "end": 1.66
+   "start": 1.4,
+   "end": 1.44
   },
   {
    "word": "description,",
-   "start": 1.73,
-   "end": 2.577
+   "start": 1.493,
+   "end": 2.32
   },
   {
    "word": "then",
-   "start": 2.705,
-   "end": 2.891
+   "start": 2.368,
+   "end": 2.56
   },
   {
    "word": "upload",
-   "start": 2.972,
-   "end": 3.379
+   "start": 2.617,
+   "end": 2.96
   },
   {
    "word": "two",
-   "start": 3.413,
-   "end": 3.599
+   "start": 3.04,
+   "end": 3.28
   },
   {
    "word": "neighbour",
-   "start": 3.669,
-   "end": 3.924
+   "start": 3.32,
+   "end": 3.68
   },
   {
    "word": "clips:",
-   "start": 3.982,
-   "end": 4.551
+   "start": 3.76,
+   "end": 4.24
   },
   {
    "word": "a",
-   "start": 4.69,
-   "end": 4.772
+   "start": 4.28,
+   "end": 4.32
   },
   {
    "word": "dog",
-   "start": 4.853,
-   "end": 5.108
+   "start": 4.4,
+   "end": 4.64
   },
   {
    "word": "park",
-   "start": 5.178,
-   "end": 5.492
+   "start": 4.704,
+   "end": 4.96
   },
   {
    "word": "and",
-   "start": 5.573,
-   "end": 5.7
+   "start": 5,
+   "end": 5.12
   },
   {
    "word": "a",
-   "start": 5.759,
-   "end": 5.782
+   "start": 5.16,
+   "end": 5.2
   },
   {
    "word": "doorbell.",
-   "start": 5.84,
-   "end": 6.49
+   "start": 5.248,
+   "end": 5.92
   },
   {
    "word": "SAM",
-   "start": 6.722,
-   "end": 7.082
+   "start": 6.06,
+   "end": 6.48
   },
   {
    "word": "3.1",
-   "start": 7.152,
-   "end": 7.419
+   "start": 6.507,
+   "end": 6.64
   },
   {
    "word": "tracks",
-   "start": 7.488,
-   "end": 7.732
+   "start": 6.68,
+   "end": 6.88
   },
   {
    "word": "every",
-   "start": 7.814,
-   "end": 8.057
+   "start": 6.92,
+   "end": 7.04
   },
   {
    "word": "animal",
-   "start": 8.092,
-   "end": 8.487
+   "start": 7.12,
+   "end": 7.6
   },
   {
    "word": "in",
-   "start": 8.568,
-   "end": 8.87
+   "start": 7.667,
+   "end": 8
   },
   {
    "word": "each",
-   "start": 8.94,
-   "end": 9.288
+   "start": 8.057,
+   "end": 8.4
   },
   {
    "word": "one.",
-   "start": 9.358,
-   "end": 9.427
+   "start": 8.427,
+   "end": 8.48
   }
  ]
 }

@@ -1,137 +1,132 @@
 {
  "scene": "02_problem",
- "text": "Today that means knocking on doors, posting in group chats, asking neighbours to rewind video. Ring searches Ring cameras. Most streets have a mix.",
- "spoken": "Today that means knocking on doors, posting in group chats, asking neighbours to rewind video. Ring searches Ring cameras. Most streets have a mix.",
- "duration": 8.870021,
+ "text": "Today that means knocking on doors, posting in group chats, asking neighbours to rewind. Ring searches Ring cameras. Most streets have a mix.",
+ "spoken": "Today that means knocking on doors, posting in group chats, asking neighbours to rewind. Ring searches Ring cameras. Most streets have a mix.",
+ "duration": 9.36,
  "format": "pcm_48000",
- "model": "eleven_multilingual_v2",
+ "model": "eleven_v3",
  "settings": {
-  "stability": 0.65,
-  "similarity_boost": 0.9,
+  "stability": 0.5,
+  "similarity_boost": 0.75,
   "style": 0,
   "use_speaker_boost": true,
-  "speed": 0.88
+  "speed": 1
  },
  "words": [
   {
    "word": "Today",
    "start": 0,
-   "end": 0.372
+   "end": 0.32
   },
   {
    "word": "that",
-   "start": 0.43,
-   "end": 0.546
+   "start": 0.352,
+   "end": 0.48
   },
   {
    "word": "means",
-   "start": 0.615,
-   "end": 0.836
+   "start": 0.547,
+   "end": 0.88
   },
   {
    "word": "knocking",
-   "start": 0.894,
-   "end": 1.219
+   "start": 0.924,
+   "end": 1.28
   },
   {
    "word": "on",
-   "start": 1.289,
-   "end": 1.382
+   "start": 1.333,
+   "end": 1.44
   },
   {
    "word": "doors,",
-   "start": 1.451,
-   "end": 1.858
+   "start": 1.52,
+   "end": 2
   },
   {
    "word": "posting",
-   "start": 1.916,
-   "end": 2.334
+   "start": 2.05,
+   "end": 2.4
   },
   {
    "word": "in",
-   "start": 2.392,
-   "end": 2.438
+   "start": 2.427,
+   "end": 2.48
   },
   {
    "word": "group",
-   "start": 2.496,
-   "end": 2.717
+   "start": 2.533,
+   "end": 2.8
   },
   {
    "word": "chats,",
-   "start": 2.786,
-   "end": 3.158
+   "start": 2.88,
+   "end": 3.44
   },
   {
    "word": "asking",
-   "start": 3.181,
-   "end": 3.553
+   "start": 3.497,
+   "end": 3.84
   },
   {
    "word": "neighbours",
-   "start": 3.611,
-   "end": 3.959
+   "start": 3.884,
+   "end": 4.32
   },
   {
    "word": "to",
-   "start": 3.994,
-   "end": 4.063
+   "start": 4.373,
+   "end": 4.48
   },
   {
-   "word": "rewind",
-   "start": 4.168,
-   "end": 4.667
-  },
-  {
-   "word": "video.",
-   "start": 4.725,
-   "end": 5.341
+   "word": "rewind.",
+   "start": 4.56,
+   "end": 5.12
   },
   {
    "word": "Ring",
-   "start": 5.538,
-   "end": 5.77
+   "start": 5.264,
+   "end": 5.84
   },
   {
    "word": "searches",
-   "start": 5.851,
-   "end": 6.293
+   "start": 5.902,
+   "end": 6.4
   },
   {
    "word": "Ring",
-   "start": 6.397,
-   "end": 6.606
+   "start": 6.464,
+   "end": 6.72
   },
   {
    "word": "cameras.",
-   "start": 6.676,
-   "end": 7.152
+   "start": 6.81,
+   "end": 7.72
   },
   {
    "word": "Most",
-   "start": 7.21,
-   "end": 7.512
+   "start": 7.776,
+   "end": 8
   },
   {
    "word": "streets",
-   "start": 7.546,
-   "end": 7.895
+   "start": 8.06,
+   "end": 8.48
   },
   {
    "word": "have",
-   "start": 7.93,
-   "end": 8.092
+   "start": 8.528,
+   "end": 8.72
   },
   {
    "word": "a",
-   "start": 8.115,
-   "end": 8.139
+   "start": 8.76,
+   "end": 8.8
   },
   {
    "word": "mix.",
-   "start": 8.22,
-   "end": 8.87
+   "start": 8.9,
+   "end": 9.36
   }
  ]
 }

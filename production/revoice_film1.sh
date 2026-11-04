@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Re-voice Film 1 with the slower, closer-to-the-speaker settings, then make it the committed narration.
+# Re-voice Film 1 with eleven_v3 (more natural, less robotic than multilingual_v2 at 0.88 speed), then make it the committed narration.
 #   ELEVENLABS_API_KEY in .env (git-ignored), then:  bash production/revoice_film1.sh
 # Stops if any scene overruns its window. Never prints the key.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 KEY=${ELEVENLABS_API_KEY:-$(sed -n "s/^ELEVENLABS_API_KEY=//p" .env 2>/dev/null || true)}
 [ -n "$KEY" ] || { echo "Set ELEVENLABS_API_KEY (environment secret, or .env) first"; exit 2; }
-export ELEVENLABS_API_KEY="$KEY" EL_SPEED=${EL_SPEED:-0.88} EL_SIMILARITY=${EL_SIMILARITY:-0.9} EL_STYLE=${EL_STYLE:-0} EL_STABILITY=${EL_STABILITY:-0.65}
+export ELEVENLABS_API_KEY="$KEY" EL_MODEL=${EL_MODEL:-eleven_v3} EL_SPEED=${EL_SPEED:-1.0} EL_SIMILARITY=${EL_SIMILARITY:-0.75} EL_STYLE=${EL_STYLE:-0} EL_STABILITY=${EL_STABILITY:-0.5}
 F=01_hackathon_demo_120s
 rm -rf production/out/voice/$F
 mkdir -p production/out/voice
