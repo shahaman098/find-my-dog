@@ -12,8 +12,8 @@ Written 4 Nov 2026, ~19:00 GMT, at the end of a Claude Code session that ran out
 | Production deploy | **Done (18:56 GMT).** Real mode (`"mock":false`), new bundle live, demo report returns 403 on writes, and `node eval/e2e.ts https://find-my-dog.kiritokris.workers.dev` passes in **real mode** (`evidence/logs/e2e-production.txt`). |
 | Evidence (`EVIDENCE.md`, `evidence/`, `eval/results/`) | Done: benchmarks, charts, real-UI screenshots, logs, manifest. |
 | Film 1 "The Proof" (120 s) | **v2 delivered to Kris** (passes every QA check: real-style cursor, voice-first mix, 12-test panel). Recorded on a local Worker; optional production re-shoot is P2. |
-| Film 2 "Engineering Evidence" (240 s) | Built and previewed; needs render. |
-| Film 3 "Impossible Made Simple" (60 s ad) | Built and previewed; needs render. |
+| Film 2 "Engineering Evidence" (240 s) | **Final delivered to Kris** (passes every QA check). |
+| Film 3 "Impossible Made Simple" (60 s ad) | **Final delivered to Kris** (passes every QA check). |
 | Narration (ElevenLabs voice `dxT8yYZS41hHdsvjw7XV`) | **Committed** in `production/assets/voice/` (no ElevenLabs key needed unless a line changes). |
 | Concept stills (Muse Image) | Committed in `production/assets/concept/`. |
 | `11_production_report.md` | Not written yet (P3). |
@@ -39,7 +39,7 @@ If only one film needs redoing after a take exists: `SKIP_CAPTURE=1 BASE=http://
 ## Priorities (in order)
 
 - **P0 (Kris):** deploy ✅ done. Rotate Meta + ElevenLabs keys. Make the repo public only after rotating. Remove the "Muse Code" line in `SUBMISSION.md` unless true. Upload Film 1 (unlisted YouTube; check logged-out playback) and submit by 22:00 GMT. **Film 1 v2 is the one to upload.**
-- **P1:** `bash production/bootstrap.sh`; send Films 1 (v2), 3, 2 as they pass QA.
+- **P1:** ✅ done: all three films final and delivered (20:00 GMT). Only re-run `bash production/bootstrap.sh` if the MP4s are lost or a film must change.
 - **P2 (optional, after deploy):** re-shoot on production: `BASE=https://find-my-dog.kiritokris.workers.dev bash production/reshoot_all.sh`. If you do, change scene 04 of `production/scripts/film1.json` back to "…a brand-new report on the deployed site…", re-voice that one scene (needs ElevenLabs), and re-render Film 1.
 - **P3:** write `production/11_production_report.md` from the QA output and `production/09_evidence_manifest.md`; a 60-second live pitch + Q&A sheet (Ring, Petco Love Lost, privacy, SAM failures) for the 9 Nov live finals.
 
