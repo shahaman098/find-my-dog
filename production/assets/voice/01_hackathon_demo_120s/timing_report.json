@@ -12,9 +12,9 @@
  "report": [
   {
    "scene": "01_hook",
-   "window": 16,
+   "window": 12,
    "duration": 7.59,
-   "slack": 8.41,
+   "slack": 4.41,
    "verdict": "fits"
   },
   {
@@ -33,56 +33,56 @@
   },
   {
    "scene": "04_clean_state",
-   "window": 16,
+   "window": 15.5,
    "duration": 14.31,
-   "slack": 1.69,
+   "slack": 1.19,
    "verdict": "fits"
   },
   {
    "scene": "05_live_action",
-   "window": 36,
+   "window": 30.0,
    "duration": 24.1,
-   "slack": 11.9,
+   "slack": 5.9,
    "verdict": "fits"
   },
   {
    "scene": "06_process",
-   "window": 22,
+   "window": 21.0,
    "duration": 18.52,
-   "slack": 3.48,
+   "slack": 2.48,
    "verdict": "fits"
   },
   {
    "scene": "07_result",
-   "window": 22,
+   "window": 21.0,
    "duration": 17.83,
-   "slack": 4.17,
+   "slack": 3.17,
    "verdict": "fits"
   },
   {
    "scene": "08_architecture",
-   "window": 20,
+   "window": 19.5,
    "duration": 18.58,
-   "slack": 1.42,
+   "slack": 0.92,
    "verdict": "fits"
   },
   {
    "scene": "09_tests",
-   "window": 16,
+   "window": 15.5,
    "duration": 13.96,
-   "slack": 2.04,
+   "slack": 1.54,
    "verdict": "fits"
   },
   {
    "scene": "10_edge_case",
-   "window": 14,
+   "window": 13.5,
    "duration": 12.22,
-   "slack": 1.78,
+   "slack": 1.28,
    "verdict": "fits"
   },
   {
    "scene": "11_close",
-   "window": 5,
+   "window": 5.0,
    "duration": 3.26,
    "slack": 1.74,
    "verdict": "fits"

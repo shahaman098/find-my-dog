@@ -2,38 +2,38 @@
 <html lang="en"><head><meta charset="utf-8">
 <title>Find My Dog: The Proof (render timeline)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700&family=Fredoka:wght@500;600&display=block">
 <style>
-  :root { --bg:#0b0d12; --ink:#f3f5fa; --sub:#8f97ab; --line:rgba(255,255,255,.12); --acc:#4d6bfe; --acc2:#7d93ff; --good:#3ecf8e; --bad:#ff6b6b; }
+  :root { --bg:#17120e; --ink:#f7f1e8; --sub:#b3a38f; --line:rgba(255,240,225,.12); --acc:#e2622b; --acc2:#ff9a62; --good:#5fcf8e; --bad:#ff6b6b; }
   * { box-sizing:border-box; margin:0; }
-  html, body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); color:var(--ink); font-family:Montserrat, system-ui, sans-serif; }
+  html, body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); color:var(--ink); font-family:Nunito, system-ui, sans-serif; }
   #stage { position:absolute; inset:0; overflow:hidden; background:var(--bg); }
   .scene { position:absolute; inset:0; display:none; z-index:1; }
   .mono { font-family:'DM Mono', ui-monospace, monospace; }
   .eyebrow { position:absolute; left:80px; top:48px; font-family:'DM Mono', monospace; font-size:17px; letter-spacing:.08em; color:var(--sub); text-transform:uppercase; }
   .win { position:absolute; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:0 8px 24px rgba(0,0,0,.4); background:#000; }
   .win img { width:100%; height:100%; object-fit:cover; display:block; }
-  .badge { position:absolute; padding:8px 14px; border-radius:999px; background:rgba(11,13,18,.82); border:1px solid var(--line); font-family:'DM Mono', monospace; font-size:17px; color:var(--ink); white-space:nowrap; backdrop-filter:blur(6px); }
+  .badge { position:absolute; padding:8px 14px; border-radius:999px; background:rgba(23,18,14,.82); border:1px solid var(--line); font-family:'DM Mono', monospace; font-size:17px; color:var(--ink); white-space:nowrap; backdrop-filter:blur(6px); }
   .badge b { color:var(--acc2); font-weight:500; }
-  .panel { position:absolute; border-radius:16px; background:rgba(15,19,30,.92); border:1px solid var(--line); padding:20px 22px; font-family:'DM Mono', monospace; font-size:16px; line-height:1.55; color:#cfd5e4; overflow:hidden; }
-  .panel h4 { font-family:Montserrat; font-weight:500; font-size:17px; color:var(--sub); letter-spacing:.06em; margin-bottom:12px; text-transform:uppercase; }
+  .panel { position:absolute; border-radius:16px; background:rgba(30,23,17,.92); border:1px solid var(--line); padding:20px 22px; font-family:'DM Mono', monospace; font-size:16px; line-height:1.55; color:#ddd2c3; overflow:hidden; }
+  .panel h4 { font-family:Nunito; font-weight:500; font-size:17px; color:var(--sub); letter-spacing:.06em; margin-bottom:12px; text-transform:uppercase; }
   .row { display:grid; grid-template-columns:72px 1fr 52px; gap:10px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,.05); opacity:.35; transition:none; }
-  .row.on { opacity:1; } .row.hot { background:rgba(77,107,254,.16); border-radius:6px; }
+  .row.on { opacity:1; } .row.hot { background:rgba(226,98,43,.16); border-radius:6px; }
   .m { color:var(--acc2); } .ok { color:var(--good); } .er { color:var(--bad); } .dim { color:var(--sub); }
-  .json { white-space:pre-wrap; color:#dfe4f1; font-size:15px; }
-  #cap { position:absolute; left:50%; bottom:40px; transform:translateX(-50%); max-width:1500px; padding:12px 26px; border-radius:14px; background:rgba(5,6,10,.78);
-    font-family:Montserrat; font-weight:500; font-size:34px; line-height:1.25; color:#fff; text-align:center; z-index:50; display:none; }
+  .json { white-space:pre-wrap; color:#efe6da; font-size:15px; }
+  #cap { position:absolute; left:50%; bottom:40px; transform:translateX(-50%); max-width:1500px; padding:12px 26px; border-radius:14px; background:rgba(12,9,6,.78);
+    font-family:Nunito; font-weight:500; font-size:34px; line-height:1.25; color:#fff; text-align:center; z-index:50; display:none; }
   #cap .w, #cap .w.sp { color:#fff; }
-  .title { position:absolute; font-family:Montserrat; font-weight:400; color:var(--ink); }
+  .title { position:absolute; font-family:Fredoka; font-weight:400; color:var(--ink); }
   .card { position:absolute; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid var(--line); padding:22px 26px; font-size:26px; color:var(--ink); }
   .card small { display:block; font-size:18px; color:var(--sub); margin-top:6px; }
   .src { position:absolute; font-family:'DM Mono', monospace; font-size:15px; color:var(--sub); }
-  .logo { display:flex; align-items:center; gap:22px; font-family:Montserrat; font-weight:600; color:var(--acc2); letter-spacing:-1px; }
-  .term { position:absolute; border-radius:14px; background:#07090d; border:1px solid var(--line); padding:18px 22px 22px; font-family:'DM Mono', monospace; font-size:16px; line-height:1.5; color:#d6dbe7; overflow:hidden; white-space:pre; }
+  .logo { display:flex; align-items:center; gap:22px; font-family:Fredoka; font-weight:600; color:var(--acc2); letter-spacing:-1px; }
+  .term { position:absolute; border-radius:14px; background:#07090d; border:1px solid var(--line); padding:18px 22px 22px; font-family:'DM Mono', monospace; font-size:16px; line-height:1.5; color:#e6dccf; overflow:hidden; white-space:pre; }
   .term .bar { color:var(--sub); font-size:14px; margin-bottom:10px; }
   .term .cmd { color:var(--acc2); }
   svg.arch { position:absolute; left:240px; top:100px; width:1440px; height:810px; }
-  svg.arch .hl > rect { stroke:#9db0ff !important; stroke-width:3 !important; }
+  svg.arch .hl > rect { stroke:#ffb48a !important; stroke-width:3 !important; }
   .divider { position:absolute; width:2px; background:var(--line); }
 </style></head>
 <body><div id="stage">
@@ -109,7 +109,7 @@ const B = {}
   B.c.w = win(s, 80, 110, 1260, 709)
   B.c.p = el(s, '<div class="panel" style="left:1380px;top:110px;width:460px;height:420px"><h4>Health check</h4><div class="json" id="healthjson"></div></div>')
   B.c.u = el(s, `<div class="badge" style="left:80px;top:840px">${host} · report not yet created</div>`)
-  B.c.note = el(s, '<div class="panel" style="left:1380px;top:560px;width:460px;height:260px"><h4>What this proves</h4><div style="font-family:Montserrat;font-size:21px;line-height:1.45;color:#dfe4f1">Real models (<span class="m">mock:false</span>), this commit\'s code, empty form. Everything after this is one continuous take.</div></div>')
+  B.c.note = el(s, '<div class="panel" style="left:1380px;top:560px;width:460px;height:260px"><h4>What this proves</h4><div style="font-family:Nunito;font-size:21px;line-height:1.45;color:#efe6da">Real models (<span class="m">mock:false</span>), this commit\'s code, empty form. Everything after this is one continuous take.</div></div>')
 }
 { // 05 live action
   const s = $('s05'); B.l = {}
@@ -142,7 +142,7 @@ const B = {}
   B.t.a = el(s, '<div class="term" style="left:80px;top:110px;width:860px;height:430px"></div>')
   B.t.b = el(s, '<div class="term" style="left:80px;top:570px;width:860px;height:380px"></div>')
   B.t.c = el(s, `<div class="win" style="left:980px;top:150px;width:860px;height:431px;background:#fcfcfb"><img src="${D.strength_chart}" style="object-fit:contain"></div>`)
-  B.t.cap = el(s, '<div class="panel" style="left:980px;top:610px;width:860px;height:200px;font-family:Montserrat;font-size:24px;line-height:1.45;color:#dfe4f1"><h4>Benchmark · production code path · live Meta API</h4>Right dog ranked first <b style="color:#fff">9 / 9</b> · accuracy <b style="color:#fff">92%</b> over 87 comparisons · <span class="dim">EVIDENCE.md §1</span></div>')
+  B.t.cap = el(s, '<div class="panel" style="left:980px;top:610px;width:860px;height:200px;font-family:Nunito;font-size:24px;line-height:1.45;color:#efe6da"><h4>Benchmark · production code path · live Meta API</h4>Right dog ranked first <b style="color:#fff">9 / 9</b> · accuracy <b style="color:#fff">92%</b> over 87 comparisons · <span class="dim">EVIDENCE.md §1</span></div>')
 }
 { // 10 edge case
   const s = $('s10'); B.e = {}

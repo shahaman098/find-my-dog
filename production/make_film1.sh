@@ -30,8 +30,8 @@ REDACT="$TOKEN" SHOW_CMD="bash production/edge_case.sh   # stranger tries to cha
   node production/term_record.cjs $OUT/12_raw_evidence/terminal/access_prod.json -- bash production/edge_case.sh "$BASE" "$RID" "$CLIP" "$OBJ" "$DEMO_ID"
 
 python3 production/build_film1.py "$TAKE"
-[ -f $OUT/audio/film1_score_${D}.wav ] || { mkdir -p $OUT/audio; python3 production/score.py $OUT/audio/film1_score_${D}.wav --duration $D --reveal $REVEAL --end $END; }
-python3 production/mix.py production/film1/audio_plan.json $OUT/audio/film1_score_${D}.wav $D $OUT/04_demo_voiceover.wav $OUT/audio/film1_mix.wav $OUT/06_demo_subtitles.srt
+[ -f $OUT/audio/film1_score_${D}_${REVEAL}_${END}.wav ] || { mkdir -p $OUT/audio; python3 production/score.py $OUT/audio/film1_score_${D}_${REVEAL}_${END}.wav --duration $D --reveal $REVEAL --end $END; }
+python3 production/mix.py production/film1/audio_plan.json $OUT/audio/film1_score_${D}_${REVEAL}_${END}.wav $D $OUT/04_demo_voiceover.wav $OUT/audio/film1_mix.wav $OUT/06_demo_subtitles.srt
 node production/render.cjs production/film1/index.html $OUT/audio/film1_video.mp4 --fps 30 --duration $D --workers 3
 ffmpeg -loglevel error -y -i $OUT/audio/film1_video.mp4 -i $OUT/audio/film1_mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -ar 48000 -movflags +faststart -t $D $FILM
 SECRETS="$TOKEN,$(sed -n 's/^ELEVENLABS_API_KEY=//p' .env 2>/dev/null),$(sed -n 's/^META_API_KEY=//p' .dev.vars)" \
