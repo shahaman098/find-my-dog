@@ -68,7 +68,7 @@ function useHashRoute() {
 /** Uploaded files live only in this session's memory; stills they produce persist in R2. */
 const fileCache = {}
 
-function Recorder({ onDone, onError }) {
+function Recorder({ onDone, onError, ready }) {
   const [rec, setRec] = useState(null)
   const [recording, setRecording] = useState(false)
   const chunks = useRef([])
@@ -91,14 +91,56 @@ function Recorder({ onDone, onError }) {
     setRecording(true)
   }
   return (
-    <button type="button" className={recording ? 'pill recording' : 'pill'} onClick={() => (recording ? (rec.stop(), setRecording(false)) : start())}>
-      {recording ? '⏺ Stop' : '🎙 Voice note'}
+    <button type="button" className={recording ? 'tog recording' : ready ? 'tog on' : 'tog'} aria-pressed={recording}
+      onClick={() => (recording ? (rec.stop(), setRecording(false)) : start())}>
+      <Icon name="mic" size={14} /> {recording ? 'Stop recording' : ready ? 'Voice note ✓' : 'Voice note'}
     </button>
   )
 }
 
+/** Line icons (stroke = currentColor) so pills read cleanly in light and dark. */
+const ICONS = {
+  play: <path d="M8 5.5v13l10-6.5z" />,
+  shield: <><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></>,
+  github: <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />,
+  camera: <><path d="M4 8h3l2-2.5h6L17 8h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></>,
+  mic: <><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" /></>,
+  video: <><rect x="3" y="6" width="13" height="12" rx="2" /><path d="M16 10l5-3v10l-5-3" /></>,
+  arrowUp: <path d="M12 19V5M6 11l6-6 6 6" />,
+  doc: <><path d="M6 3h9l3 3v15H6z" /><path d="M9 10h6M9 14h6M9 18h4" /></>,
+  users: <><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5" /><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c1.8.8 3 2.6 3.5 5.2" /></>,
+  route: <><circle cx="6" cy="18" r="2.5" /><circle cx="18" cy="6" r="2.5" /><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5" /></>,
+  eye: <><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></>,
+  sparkle: <path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z" />,
+  link: <><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" /><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" /></>,
+  key: <><circle cx="8" cy="15" r="4" /><path d="M11 12l8-8M16 7l3 3" /></>,
+}
+function Icon({ name, size = 16 }) {
+  return (
+    <svg className="icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS[name]}</svg>
+  )
+}
+
+const REPO = 'https://github.com/shahaman098/find-my-dog'
+
+/** In-page anchor that survives hash routing: scroll if the section is here, else go to the landing page. */
+function scrollToHow(e) {
+  e.preventDefault()
+  const el = document.getElementById('how')
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
+  else { try { sessionStorage.setItem('fmd_scroll', 'how') } catch { /* ignore */ } location.hash = '#/' }
+}
+
 function Brand() {
-  return <div className="brand"><span className="paw">🐾</span>findmydog</div>
+  return (
+    <a className="brand" href="#/" aria-label="findmydog home">
+      <svg className="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+        <g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2" ry="2.6" /><ellipse cx="10" cy="5.8" rx="2" ry="2.6" /><ellipse cx="14.5" cy="5.8" rx="2" ry="2.6" /><ellipse cx="18.5" cy="9.5" rx="2" ry="2.6" /><path d="M12.2 11.2c-3 0-6.2 3.6-6.2 6.3 0 1.9 1.5 2.6 3 2.6 1.3 0 2.2-.6 3.2-.6s1.9.6 3.2.6c1.5 0 3-.7 3-2.6 0-2.7-3.2-6.3-6.2-6.3z" /></g>
+      </svg>
+      findmydog
+    </a>
+  )
 }
 
 function Nav() {
@@ -106,9 +148,73 @@ function Nav() {
     <nav className="nav">
       <Brand />
       <span className="spacer" />
-      <a className="pill" href="#/demo">Live demo</a>
-      <a className="pill" href="https://github.com/shahaman098/find-my-dog" target="_blank" rel="noreferrer">Open source</a>
+      <a className="navlink" href="#/demo">Live demo</a>
+      <span className="seg" role="group" aria-label="Project links">
+        <a className="on" href={REPO} target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#how" onClick={scrollToHow}>How it works</a>
+      </span>
     </nav>
+  )
+}
+
+/** Deterministic particle cloud for the dark closing section (no layout shift, no randomness between renders). */
+function Particles({ count = 140 }) {
+  const dots = React.useMemo(() => {
+    let seed = 20261104
+    const rnd = () => ((seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296)
+    return Array.from({ length: count }, () => {
+      const a = rnd() * Math.PI * 2
+      const r = Math.pow(rnd(), 0.6) * 46
+      return { x: 50 + Math.cos(a) * r * 1.15, y: 50 + Math.sin(a) * r * 0.75, s: 1 + rnd() * 1.6, o: 0.25 + rnd() * 0.6, d: rnd() * 6 }
+    })
+  }, [count])
+  return (
+    <div className="particles" aria-hidden="true">
+      {dots.map((p, i) => <i key={i} style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.s, height: p.s, opacity: p.o, animationDelay: `${p.d}s` }} />)}
+    </div>
+  )
+}
+
+function HowItWorks() {
+  return (
+    <section id="how" className="bleed dark band">
+      <div className="bandInner">
+        <p className="eyebrow"><Icon name="sparkle" size={12} /> HOW IT WORKS</p>
+        <h2 className="bandTitle">Every camera on your street.<br />Searching. Right now.</h2>
+        <p className="bandSub">No new hardware and no walled garden. Neighbours share whatever their cameras caught; Meta's models do the watching, and you stay in control of every decision.</p>
+        <a className="cta" href="#/demo"><Icon name="play" /> Watch the live demo</a>
+        <div className="bandGrid">
+          <div className="bandCard"><Icon name="doc" size={20} /><b>File the report</b><span>A photo, a description and a voice note. Muse Voice Transcribe turns thirty panicked seconds into a search brief.</span></div>
+          <div className="bandCard"><Icon name="video" size={20} /><b>SAM 3.1 watches every clip</b><span>Doorbell cams, home cams, dashcams. Every animal gets a persistent identity, even through occlusions.</span></div>
+          <div className="bandCard"><Icon name="eye" size={20} /><b>Muse Spark finds yours</b><span>Appearance-only matching with a written rationale. Nothing counts as a sighting until you confirm it.</span></div>
+          <div className="bandCard"><Icon name="route" size={20} /><b>A plan for first light</b><span>Spark's tool loop turns confirmed sightings into a timeline, a next-search plan and a Muse Image poster.</span></div>
+        </div>
+        <p className="models">SAM 3.1 · Muse Spark 1.3 · Muse Voice Transcribe · Muse Image</p>
+      </div>
+    </section>
+  )
+}
+
+function ClosingFooter() {
+  return (
+    <section className="bleed dark closing">
+      <Particles />
+      <div className="closingInner">
+        <h2 className="closingTitle">Bring the whole street into the search</h2>
+        <p className="bandSub">Opt-in footage only, time-boxed to the search, and no person or face identification anywhere in the pipeline. Open source, so you can check every one of those claims.</p>
+        <div className="ctaGrid">
+          <a className="cta" href={REPO} target="_blank" rel="noreferrer"><Icon name="github" /> View on GitHub</a>
+          <a className="ghost" href="#/demo"><Icon name="play" /> Live demo</a>
+          <a className="ghost" href="#how" onClick={scrollToHow}><Icon name="route" /> How it works</a>
+          <a className="ghost" href={`${REPO}#privacy-stance`} target="_blank" rel="noreferrer"><Icon name="shield" /> Privacy stance</a>
+        </div>
+      </div>
+      <footer className="footRow">
+        <span className="footLeft"><Icon name="users" /> Aman Kumar Sah</span>
+        <span className="footMid">Open source · Built for the Meta Global AI Developer Hackathon 2026</span>
+        <span className="footRight"><a href="#/demo">Demo</a><span aria-hidden="true">·</span><a href={REPO} target="_blank" rel="noreferrer">Source</a></span>
+      </footer>
+    </section>
   )
 }
 
@@ -125,8 +231,8 @@ function DemoLanding() {
       <div>
         <Nav />
         <div className="card center">
-          <h2>🐾 Demo is warming up</h2>
-          <p className="sub">The seeded demo report isn't ready yet — but the real thing is one form away.</p>
+          <h2>Demo is warming up</h2>
+          <p className="sub">The seeded demo report isn't ready yet, but the real thing is one form away.</p>
           <a className="btn primary" href="#/">Start a report</a>
         </div>
       </div>
@@ -141,6 +247,14 @@ function NewReport({ go }) {
   const [voice, setVoice] = useState(null)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem('fmd_scroll') === 'how') {
+        sessionStorage.removeItem('fmd_scroll')
+        requestAnimationFrame(() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' }))
+      }
+    } catch { /* storage blocked: stay at top */ }
+  }, [])
 
   async function submit(e) {
     e.preventDefault()
@@ -162,39 +276,35 @@ function NewReport({ go }) {
     <div>
       <Nav />
       <div className="hero">
-        <p className="announce"><span className="spark">✨</span>SAM 3.1 watches every clip your street already recorded, with a persistent identity for each animal. Muse Spark knows which one is yours. →</p>
-        <h1 className="heroTitle">Bring them <span className="grad">home</span></h1>
+        <p className="announce"><Icon name="sparkle" size={12} /> SAM 3.1 now watches every clip your street already recorded, with a persistent identity for each animal, and Muse Spark knows which one is yours. <a href="#how" onClick={scrollToHow}>→</a></p>
+        <h1 className="heroTitle">Bring them home</h1>
         <form className="inputCard" onSubmit={submit}>
-          <input required type="text" placeholder="Your pet's name" value={form.pet_name}
+          <input required type="text" className="nameField" placeholder="Your pet's name" value={form.pet_name}
             onChange={e => setForm({ ...form, pet_name: e.target.value })} />
-          <textarea placeholder="Describe them — coat, markings, collar, size…" value={form.description}
+          <textarea placeholder="Describe them: coat, markings, collar, size…" value={form.description}
             onChange={e => setForm({ ...form, description: e.target.value })} />
           <div className="inputRow">
-            <span className="pill">
-              <select value={form.species} onChange={e => setForm({ ...form, species: e.target.value })}>
+            <span className="tog">
+              <select aria-label="Species" value={form.species} onChange={e => setForm({ ...form, species: e.target.value })}>
                 <option value="dog">Dog</option><option value="cat">Cat</option><option value="other">Other</option>
               </select>
             </span>
-            <label className="filelabel pill">📷 {photo ? photo.name.slice(0, 18) : 'Photo'}
+            <label className={photo ? 'filelabel tog on' : 'filelabel tog'}><Icon name="camera" size={14} /> {photo ? photo.name.slice(0, 16) : 'Photo'}
               <input required type="file" accept="image/*" onChange={e => setPhoto(e.target.files[0])} />
             </label>
-            <Recorder onDone={setVoice} onError={setErr} />
-            {voice && <span className="ok">✓ ready</span>}
-            <button className="sendBtn" disabled={busy} title="Start the search" aria-label="Start the search">{busy ? <span className="spinner" /> : '↑'}</button>
+            <Recorder onDone={setVoice} onError={setErr} ready={!!voice} />
+            <button className="sendBtn" disabled={busy} title="Start the search" aria-label="Start the search">{busy ? <span className="spinner" /> : <Icon name="arrowUp" size={18} />}</button>
           </div>
           {err && <p className="err" role="alert" style={{ marginTop: 10 }}>{err}</p>}
         </form>
         <div className="heroPills">
-          <a className="pill" href="#/demo">▷ Live demo</a>
-          <span className="pill">🔐 Opt-in · time-boxed · no face recognition</span>
-          <a className="pill" href="https://github.com/shahaman098/find-my-dog" target="_blank" rel="noreferrer">⌘ Open source</a>
-        </div>
-        <div className="steps">
-          <div className="step"><b><span className="n">1</span>File the report</b><span>A photo, a description, a panicked voice note — 30 seconds.</span></div>
-          <div className="step"><b><span className="n">2</span>Any camera joins</b><span>Doorbell cams, home cams, dashcams. Whatever a neighbor will share.</span></div>
-          <div className="step"><b><span className="n">3</span>Evidence, not hope</b><span>A sighting timeline, a search plan for dawn, and a poster for the street.</span></div>
+          <a className="pill big" href="#/demo"><Icon name="play" /> Live demo</a>
+          <a className="pill big" href="#how" onClick={scrollToHow}><Icon name="shield" /> Opt-in · no face recognition</a>
+          <a className="pill big" href={REPO} target="_blank" rel="noreferrer"><Icon name="github" /> Open source</a>
         </div>
       </div>
+      <HowItWorks />
+      <ClosingFooter />
     </div>
   )
 }
@@ -468,10 +578,10 @@ function ReportView({ id, share }) {
         <span className="chip">search cost ${r.cost?.usd?.toFixed?.(2) ?? '0.00'}</span>
         <span className="spacer" />
         {share
-          ? (canEdit && <a className="pill" href={`#/r/${id}`}>← Search console</a>)
-          : sightings.length > 0 && <a className="pill" href={`#/r/${id}/share`}>🔗 Share page</a>}
-        {!r.demo && <CopyLink href={`#/r/${id}/give`} label="🤝 Copy neighbor link" title="Neighbors open this to add their camera clips" />}
-        {canEdit && !share && <CopyLink href={`#/r/${id}/k/${ownerToken(id)}`} label="🔑 Owner link" title="Private: opens this search with owner controls on another device" />}
+          ? (canEdit && <a className="pill" href={`#/r/${id}`}><Icon name="route" /> Search console</a>)
+          : sightings.length > 0 && <a className="pill" href={`#/r/${id}/share`}><Icon name="link" /> Share page</a>}
+        {!r.demo && <CopyLink href={`#/r/${id}/give`} label={<><Icon name="users" /> Copy neighbor link</>} title="Neighbors open this to add their camera clips" />}
+        {canEdit && !share && <CopyLink href={`#/r/${id}/k/${ownerToken(id)}`} label={<><Icon name="key" /> Owner link</>} title="Private: opens this search with owner controls on another device" />}
       </header>
       {!share && !canEdit && (
         <p className="banner" role="status">
