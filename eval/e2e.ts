@@ -52,9 +52,12 @@ async function main() {
     clipForm.set('file', new Blob([fs.readFileSync(clipPath)], { type: 'video/mp4' }), 'dog_clip.mp4')
     clipForm.set('label', 'Front door cam')
     clipForm.set('captured_clock', '7:42 PM')
-    // real fixture fps/duration probed via ffmpeg is unnecessary in mock mode
-    clipForm.set('fps', '3')
-    clipForm.set('duration', '9')
+    // the browser probes fps/duration from the mp4 (web/src/probe.js); do the same with ffprobe
+    const { execFileSync: probe } = await import('node:child_process')
+    const [num, den] = probe('ffprobe', ['-v', 'error', '-select_streams', 'v', '-show_entries', 'stream=r_frame_rate', '-of', 'csv=p=0', clipPath]).toString().trim().split('/').map(Number)
+    const seconds = Number(probe('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', clipPath]).toString().trim())
+    clipForm.set('fps', String(Math.round((num / (den || 1)) * 100) / 100))
+    clipForm.set('duration', String(seconds))
     const clip = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}/clips`, { method: 'POST', body: clipForm }))
     assert(clip.status === 'queued', 'clip queued')
     let done = false
@@ -66,6 +69,25 @@ async function main() {
       if (c2.status === 'error') throw new Error(`clip failed: ${c2.error}`)
     }
     assert(done, 'clip tracked by pipeline')
+    if (!health.mock) {
+      // Real mode: the browser cuts one still per track (web/src/probe.js extractStill). Do the same here with
+      // ffmpeg at each track's best detection box, then upload it with the owner token, as the UI does.
+      const { execFileSync } = await import('node:child_process')
+      const st = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}`))
+      const c2 = st.clips.find((x: any) => x.clip_id === clip.clip_id)
+      let cut = 0
+      for (const t of c2.tracks) {
+        if (!t.detections?.length) continue
+        const best = t.detections.reduce((a: any, b: any) => ((b.confidence ?? 0) > (a.confidence ?? 0) ? b : a))
+        const b = best.box, pad = 0.08, w = b.x2 - b.x1, h = b.y2 - b.y1
+        const x = Math.max(0, Math.round(b.x1 - pad * w)), y = Math.max(0, Math.round(b.y1 - pad * h))
+        const cw = Math.min(b.w - x, Math.round(w * (1 + 2 * pad))), ch = Math.min(b.h - y, Math.round(h * (1 + 2 * pad)))
+        const jpg = execFileSync('ffmpeg', ['-loglevel', 'error', '-ss', String(best.t), '-i', clipPath, '-frames:v', '1', '-vf', `crop=${cw}:${ch}:${x}:${y}`, '-f', 'image2', '-c:v', 'mjpeg', '-'])
+        const r = await fetch(`${BASE}/api/reports/${report.report_id}/stills/${clip.clip_id}/${t.object_id}`, { method: 'PUT', body: jpg, headers: OWN })
+        if (r.ok) cut++
+      }
+      assert(cut > 0, `stills cut and uploaded for ${cut} real SAM track(s)`)
+    }
   } else {
     console.log('skip clip upload: no fixture')
   }
