@@ -1,5 +1,5 @@
 # Script and timeline: Film 1 "The Proof" (120 s)
-Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice `dxT8yYZS41hHdsvjw7XV` (eleven_multilingual_v2; stability 0.65, similarity 0.85, style 0.15, speed 1.0; 48 kHz). Every time below is generated from the voice word timings and the capture event log. Source revision `99b7aa8`; take `production/out/12_raw_evidence/take_01` against `http://localhost:8788`.
+Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice `dxT8yYZS41hHdsvjw7XV` (eleven_multilingual_v2; stability 0.65, similarity 0.85, style 0.15, speed 1.0; 48 kHz). Every time below is generated from the voice word timings and the capture event log. Source revision `bca5498`; take `production/out/12_raw_evidence/take_01` against `http://localhost:8788`.
 **Lock history:** scene 04 originally said "on the deployed site". The production deploy was not available in time, so the take was recorded on a local Worker running the same commit against the live Meta API, and the line was re-locked to say exactly that. No other line changed.
 
 ## 01_hook · 0:00.00–0:08.00
@@ -17,22 +17,22 @@ Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice
 ## 04_clean_state · 0:28.00–0:40.00
 **Narration** (28.35–38.20 s): I'm starting a brand-new report on a local Worker running this exact code against the live Meta API. Health reports real models, not mock mode, and nothing is preloaded.
 **Visual / evidence:** Take frames from the health page to the empty form; health-check panel; "what this proves" panel.
-**Time map (no cuts):** film 28.00–31.20 s ← take 1.00–5.80 s (1.50×); film 31.20–40.00 s ← take 5.80–15.03 s (1.05×)
+**Time map (no cuts):** film 28.00–31.20 s ← take 0.75–5.04 s (1.34×); film 31.20–40.00 s ← take 5.04–13.69 s (0.98×)
 
 ## 05_live_action · 0:40.00–0:56.00
 **Narration** (40.35–47.90 s): I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM 3.1 tracks every animal in each one.
 **Visual / evidence:** One continuous take, piecewise time map anchored on real events; on-screen speed + real elapsed time.
-**Time map (no cuts):** film 40.00–41.22 s ← take 15.03–29.70 s (12.02×); film 41.22–42.85 s ← take 29.70–47.67 s (11.05×); film 42.85–45.62 s ← take 47.67–74.13 s (9.54×); film 45.62–48.38 s ← take 74.13–74.13 s (hold); film 48.38–56.00 s ← take 74.13–81.75 s (1.00×)
+**Time map (no cuts):** film 40.00–41.22 s ← take 13.69–29.88 s (13.26×); film 41.22–42.85 s ← take 29.88–45.88 s (9.85×); film 42.85–43.68 s ← take 45.88–45.88 s (hold); film 43.68–45.62 s ← take 45.88–47.82 s (1.00×); film 45.62–56.00 s ← take 47.82–80.69 s (3.17×)
 
 ## 06_process · 0:56.00–1:10.00
 **Narration** (56.35–66.13 s): Each clip goes onto a Cloudflare queue. The Worker sends it to SAM 3.1, then Muse Spark compares every tracked animal with Biscuit's photo. This is the real request and response.
 **Visual / evidence:** Same take beside the HAR request log of the take; rows light at their recorded times; Spark response excerpt.
-**Time map (no cuts):** film 56.00–70.00 s ← take 96.05–121.61 s (1.83×)
+**Time map (no cuts):** film 56.00–70.00 s ← take 96.30–110.77 s (1.03×)
 
 ## 07_result · 1:10.00–1:22.00
 **Narration** (70.35–79.22 s): Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.
 **Visual / evidence:** Same take: ranked matches → confirm → plan + poster → share page reload; stored-state panel from the HAR.
-**Time map (no cuts):** film 70.00–72.43 s ← take 121.61–141.28 s (8.10×); film 72.43–74.06 s ← take 141.28–155.83 s (8.89×); film 74.06–76.73 s ← take 155.83–197.40 s (15.57×); film 76.73–77.48 s ← take 197.40–227.01 s (39.80×); film 77.48–77.70 s ← take 227.01–227.01 s (hold); film 77.70–82.00 s ← take 227.01–231.31 s (1.00×)
+**Time map (no cuts):** film 70.00–72.43 s ← take 110.77–128.92 s (7.48×); film 72.43–74.06 s ← take 128.92–144.92 s (9.77×); film 74.06–76.73 s ← take 144.92–189.91 s (16.85×); film 76.73–77.48 s ← take 189.91–221.72 s (42.75×); film 77.48–77.70 s ← take 221.72–221.72 s (hold); film 77.70–82.00 s ← take 221.72–226.02 s (1.00×)
 
 ## 08_architecture · 1:22.00–1:34.00
 **Narration** (82.35–91.82 s): Under the hood: a React app, a Cloudflare Worker, D1 for state, R2 for media, and a queue for tracking. Our key decision: the owner confirms every match, never the model.
@@ -54,36 +54,36 @@ Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice
 
 | event | t |
 |---|---|
-| deploy_verified | -2.17 |
+| deploy_verified | -0.38 |
 | screen_recording_started | 0.00 |
-| health_page | 0.70 |
-| health | 3.65 |
-| landing | 5.60 |
-| typed_name | 17.53 |
-| typed_description | 29.93 |
-| photo_attached | 30.00 |
-| report_form | 33.79 |
-| submit_report | 43.41 |
-| report_created | 44.62 |
-| clips_selected | 48.27 |
-| clip_cards_visible | 49.11 |
-| clocks_set | 73.63 |
-| tracking_done | 79.75 |
-| tracks | 83.64 |
-| match_clicked | 97.55 |
-| matches_visible | 120.61 |
-| matches | 127.44 |
-| confirmed_top | 141.68 |
-| analyze_clicked | 156.13 |
-| poster_visible | 197.00 |
-| plan | 203.83 |
-| poster | 209.38 |
-| share_opened | 225.06 |
-| share_reloaded | 227.81 |
-| share | 232.27 |
-| share_scrolled | 236.76 |
-| screen_recording_stopped | 236.88 |
-| stranger_view | 242.92 |
+| health_page | 0.45 |
+| health | 2.88 |
+| landing | 4.83 |
+| typed_name | 16.19 |
+| typed_description | 30.14 |
+| photo_attached | 30.18 |
+| report_form | 32.94 |
+| submit_report | 42.08 |
+| report_created | 43.22 |
+| clips_selected | 46.48 |
+| clip_cards_visible | 47.32 |
+| clocks_set | 72.57 |
+| tracking_done | 78.69 |
+| tracks | 82.79 |
+| match_clicked | 97.80 |
+| matches_visible | 109.77 |
+| matches | 115.39 |
+| confirmed_top | 129.32 |
+| analyze_clicked | 145.22 |
+| poster_visible | 189.51 |
+| plan | 197.22 |
+| poster | 202.50 |
+| share_opened | 219.76 |
+| share_reloaded | 222.52 |
+| share | 226.94 |
+| share_scrolled | 231.65 |
+| screen_recording_stopped | 231.82 |
+| stranger_view | 237.80 |
 
 ## Captions
 
@@ -111,7 +111,7 @@ The master prompt's locked narration, verbatim. The only placeholder pair was fi
 
 # Film 3 "The Impossible Made Simple" (60 s, 24 fps): locked narration
 
-Template placeholders filled from verified facts. Two template lines were adapted, openly: **02_friction:** Template 'Every day, [TARGET_USER] loses time to [PRIMARY_PROBLEM].' filled as written. **03_cost:** Template 'One small task becomes a hundred decisions. And the important work has to wait.' adapted to the lost-pet story (disclosed). **06_engine:** Template line shortened to fit its 10 s window; claims limited to verified behaviour (disclosed).
+Template placeholders filled from verified facts. Two template lines were adapted, openly: **02_friction:** Template line (target user loses time to the primary problem) filled as written. **03_cost:** Template 'One small task becomes a hundred decisions. And the important work has to wait.' adapted to the lost-pet story (disclosed). **06_engine:** Template line shortened to fit its 10 s window; claims limited to verified behaviour (disclosed).
 
 **01_interruption · 0:00.00–0:05.00:** [silence]
 

@@ -1,18 +1,18 @@
 # Evidence manifest (claim → evidence)
 
-Revision `99b7aa8`. Take: `production/out/12_raw_evidence/take_01` (one continuous recording, unedited; Film 1 time-compresses it with on-screen speed and never cuts it).
+Revision `bca5498`. Take: `production/out/12_raw_evidence/take_01` (one continuous recording, unedited; Film 1 time-compresses it with on-screen speed and never cuts it).
 
 | # | Claim in the films | Evidence | Detail |
 |---|---|---|---|
 | 1 | The app runs on real models, not mock mode | health check in the take | take events `deploy_verified` → health `{"ok": true, "mock": false, "matcher": "spark"}` |
-| 2 | A brand-new report is created during the take | take event `report_created` | report `bb6f69abef66` at take t=44.6 s |
-| 3 | SAM 3.1 tracks every animal in each clip | HAR polling of the take | t=48.7s dog-park-fountain tracking; t=48.7s elm-st-doorbell queued; t=58.6s dog-park-fountain done (2 tracks); t=58.6s elm-st-doorbell tracking; t=77.8s elm-st-doorbell done (1 tracks) |
+| 2 | A brand-new report is created during the take | take event `report_created` | report `b04372290430` at take t=43.2 s |
+| 3 | SAM 3.1 tracks every animal in each clip | HAR polling of the take | t=46.8s dog-park-fountain tracking; t=46.8s elm-st-doorbell queued; t=60.9s dog-park-fountain done (2 tracks); t=60.9s elm-st-doorbell tracking; t=76.8s elm-st-doorbell done (1 tracks) |
 | 4 | People in the footage are blurred | production/blur_people.py | SAM 3.1 `person` + `license plate` tracks → per-frame pixelation; 5 people + 2 plates found in the doorbell clip, 0 people in the dog-park shot |
-| 5 | Muse Spark compares every animal with the owner photo | HAR: POST …/match | status 200, 22727 ms, matcher `spark:muse-spark-1.3` |
-| 6 | Biscuit ranks first | final_state.json | top: clip `91fbee660ed0` object 0 is_match=True score=0.7 |
+| 5 | Muse Spark compares every animal with the owner photo | HAR: POST …/match | status 200, 11779 ms, matcher `spark:muse-spark-1.3` |
+| 6 | Biscuit ranks first | final_state.json | top: clip `05060beb3cc0` object 0 is_match=True score=0.72 |
 | 7 | The owner confirms; the model never does | final_state.json + worker/src/index.ts `ownerOnly` | confirmed: [(0, True)] |
-| 8 | Spark's tool loop writes a plan and calls Muse Image | HAR: POST …/analyze | status 200; tool calls ['suggest_next_search', 'make_poster']; plan: "Search dog-park-fountain now for Biscuit" |
-| 9 | Reloading proves the result is stored | HAR: GET …/timeline after reload | {"sightings": 1, "next_search": "Search dog-park-fountain now for Biscuit", "poster": "/api/reports/bb6f69abef66/poster"} |
+| 8 | Spark's tool loop writes a plan and calls Muse Image | HAR: POST …/analyze | status 200; tool calls ['suggest_next_search', 'make_poster']; plan: "Biscuit at dog-park-fountain at 5:42 PM - search there now" |
+| 9 | Reloading proves the result is stored | HAR: GET …/timeline after reload | {"sightings": 1, "next_search": "Biscuit at dog-park-fountain at 5:42 PM - search there now", "poster": "/api/reports/b04372290430/poster"} |
 | 10 | A stranger cannot change the decision (403) | terminal/access_prod.json | POST confirm with a guessed token → 403; POST analyze on the demo report → 403; decision unchanged |
 | 11 | Unit tests and E2E pass | terminal/npm_test.json, terminal/e2e_mock.json | exit codes 0 / 0 |
 | 12 | Right dog ranked first 9/9; 92% accuracy over 87 comparisons | eval/results/match.json | EVIDENCE.md §1 (production code path, live Meta API) |
