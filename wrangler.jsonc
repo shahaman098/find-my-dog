@@ -34,7 +34,7 @@
     "FMD_MOCK": "0",
     "SPARK_MODEL": "muse-spark-1.3",
     "GLIMMER_MODEL": "meta-models/muse-glimmer",
-    "DEMO_REPORT_ID": ""
+    "DEMO_REPORT_ID": "939e4286bf7b"
   },
   "observability": { "enabled": true }
 }
