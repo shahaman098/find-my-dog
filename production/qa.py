@@ -11,6 +11,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument('film'); ap.add_argument('--duration', type=float, required=True); ap.add_argument('--fps', type=float, required=True)
 ap.add_argument('--srt'); ap.add_argument('--script'); ap.add_argument('--scan', nargs='*', default=[])
 ap.add_argument('--max-freeze', type=float, default=4.0)
+ap.add_argument('--allow-black', default='', help='intentional black ranges, e.g. 0-2.5,56-60 (seconds)')
 a = ap.parse_args()
 fails, notes = [], []
 def check(ok, msg): (notes if ok else fails).append(('PASS ' if ok else 'FAIL ') + msg)
@@ -34,7 +35,9 @@ notes.append(f'INFO integrated loudness {lufs[-1] if lufs else "?"} LUFS')
 r = subprocess.run(['ffmpeg', '-hide_banner', '-i', a.film, '-vf', 'blackdetect=d=0.5:pix_th=0.04,freezedetect=n=0.0008:d=%s' % a.max_freeze, '-an', '-f', 'null', '-'], capture_output=True, text=True).stderr
 blacks = re.findall(r'black_start:([\d.]+) black_end:([\d.]+)', r)
 freezes = re.findall(r'freeze_start: ([\d.]+)', r)
-check(not blacks, f'black stretches: {blacks or "none"}')
+allowed = [tuple(map(float, r.split('-'))) for r in a.allow_black.split(',') if r]
+unexpected = [b for b in blacks if not any(lo - 0.05 <= float(b[0]) and float(b[1]) <= hi + 0.05 for lo, hi in allowed)]
+check(not unexpected, f'black stretches outside intentional ranges {allowed or ""}: {unexpected or "none"}' + (f' (intentional: {[b for b in blacks if b not in unexpected]})' if blacks and allowed else ''))
 check(not freezes, f'frozen stretches > {a.max_freeze}s: {freezes or "none"}')
 
 if a.srt:

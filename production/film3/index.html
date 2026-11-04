@@ -106,7 +106,9 @@ window.setTime = async function (t) {
   $('dim').style.opacity = t > sThen ? ease((t - sThen) / 2.2) * .92 : 0
   // 04 -> 05: the clean, singular, real interface
   const uiK = ease((t - 23) / 2.5)
-  $('ui').style.transform = `perspective(2200px) rotateY(${lerp(-14, 0, uiK)}deg) scale(${lerp(.86, 1, uiK)})`
+  // the camera keeps a slow push-in after the arc settles, so the held interface never sits frozen
+  const push = ease((t - 25.5) / 5.5) * .045
+  $('ui').style.transform = `perspective(2200px) rotateY(${lerp(-14, 0, uiK) + push * 20}deg) scale(${lerp(.86, 1, uiK) + push})`
   setImg($('ui').firstChild, t < 30.6 ? takeSrc(D.take.events.landing + 4.0) : takeSrc(interp(D.reveal_map, t)))
   // 06: a signal travels the real architecture, then resolves into the real result
   if (t >= 40 && t < 50.4) {

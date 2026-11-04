@@ -3,18 +3,58 @@
   "duration": 60,
   "fps": 24,
   "adaptations": {
-    "02_friction": "Template 'Every day, [TARGET_USER] loses time to [PRIMARY_PROBLEM].' filled as written.",
+    "02_friction": "Template line (target user loses time to the primary problem) filled as written.",
     "03_cost": "Template 'One small task becomes a hundred decisions. And the important work has to wait.' adapted to the lost-pet story (disclosed).",
     "06_engine": "Template line shortened to fit its 10 s window; claims limited to verified behaviour (disclosed)."
   },
   "scenes": [
-    { "id": "01_interruption", "start": 0, "end": 5, "text": "" },
-    { "id": "02_friction", "start": 5, "end": 12, "text": "Every day, pet owners lose precious hours to a dog that slipped the gate." },
-    { "id": "03_cost", "start": 12, "end": 20, "text": "One lost dog becomes a hundred doorbells to knock on. And every hour, she gets further away." },
-    { "id": "04_turn", "start": 20, "end": 30, "text": "Then the question changes. What if the complicated part simply happened?" },
-    { "id": "05_reveal", "start": 30, "end": 40, "text": "Meet Find My Dog. Two neighbours' clips become a ranked match, while you stay in control." },
-    { "id": "06_engine", "start": 40, "end": 50, "text": "Behind that moment, SAM 3.1 tracks every animal, and Muse Spark matches on appearance. Not magic. Working software." },
-    { "id": "07_human", "start": 50, "end": 56, "text": "So you can get back to the walk home." },
-    { "id": "08_end", "start": 56, "end": 60, "text": "Find My Dog. Bring them home." }
+    {
+      "id": "01_interruption",
+      "start": 0,
+      "end": 5,
+      "text": ""
+    },
+    {
+      "id": "02_friction",
+      "start": 5,
+      "end": 12,
+      "text": "Every day, pet owners lose precious hours to a dog that slipped the gate."
+    },
+    {
+      "id": "03_cost",
+      "start": 12,
+      "end": 20,
+      "text": "One lost dog becomes a hundred doorbells to knock on. And every hour, she gets further away."
+    },
+    {
+      "id": "04_turn",
+      "start": 20,
+      "end": 30,
+      "text": "Then the question changes. What if the complicated part simply happened?"
+    },
+    {
+      "id": "05_reveal",
+      "start": 30,
+      "end": 40,
+      "text": "Meet Find My Dog. Two neighbours' clips become a ranked match, while you stay in control."
+    },
+    {
+      "id": "06_engine",
+      "start": 40,
+      "end": 50,
+      "text": "Behind that moment, SAM 3.1 tracks every animal, and Muse Spark matches on appearance. Not magic. Working software."
+    },
+    {
+      "id": "07_human",
+      "start": 50,
+      "end": 56,
+      "text": "So you can get back to the walk home."
+    },
+    {
+      "id": "08_end",
+      "start": 56,
+      "end": 60,
+      "text": "Find My Dog. Bring them home."
+    }
   ]
 }
