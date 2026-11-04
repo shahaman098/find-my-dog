@@ -10,6 +10,7 @@ Written 4 Nov 2026, ~19:00 GMT, at the end of a Claude Code session that ran out
 |---|---|
 | Product code (`worker/`, `web/`) | Done, on `main`. 12/12 unit tests, mock E2E pass. Includes owner-token access model, read-only demo, SAM Files-API fallback for non-public clip URLs. |
 | Production deploy | **Done (18:56 GMT).** Real mode (`"mock":false`), new bundle live, demo report returns 403 on writes, and `node eval/e2e.ts https://find-my-dog.kiritokris.workers.dev` passes in **real mode** (`evidence/logs/e2e-production.txt`). |
+| UI redesign (4 Nov, ~23:00 GMT) | Warm pet theme (cream, terracotta, Fredoka/Nunito, MISSING-poster report form) with SAM-style per-track colours on the report page. On `main`; **needs `npm run deploy`** to go live. Landing screenshots in `evidence/img/app-*` are recaptured; the real-model UI captures (`real-0*`, owner-vs-stranger) predate it. The films show the previous blue UI. |
 | Evidence (`EVIDENCE.md`, `evidence/`, `eval/results/`) | Done: benchmarks, charts, real-UI screenshots, logs, manifest. |
 | Film 1 "The Proof" (120 s) | **v2 delivered to Kris** (passes every QA check: real-style cursor, voice-first mix, 12-test panel). Recorded on a local Worker; optional production re-shoot is P2. |
 | Film 2 "Engineering Evidence" (240 s) | **Final delivered to Kris** (passes every QA check). |

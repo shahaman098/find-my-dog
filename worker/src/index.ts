@@ -533,7 +533,7 @@ export default {
           })
           const tracks = mockTracks()
           // Placeholder stills so matching works without a browser session.
-          const placeholder = '<svg xmlns="http://www.w3.org/2000/svg" width="260" height="200"><rect width="260" height="200" fill="#234"/><text x="130" y="105" font-size="20" fill="#cde" text-anchor="middle" font-family="sans-serif">mock track</text></svg>'
+          const placeholder = '<svg xmlns="http://www.w3.org/2000/svg" width="260" height="200"><rect width="260" height="200" fill="#5a3b26"/><text x="130" y="105" font-size="20" fill="#f6e2cc" text-anchor="middle" font-family="sans-serif">mock track</text></svg>'
           for (const t of tracks) {
             await env.MEDIA.put(`${reportId}/stills/${clipId}_${t.object_id}.jpg`, placeholder, { httpMetadata: { contentType: 'image/svg+xml' } })
           }

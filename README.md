@@ -7,7 +7,7 @@
 **An opt-in, owner-initiated search engine for neighbourhood camera footage, built on SAM 3.1 and Muse Spark.**
 
 [![CI](https://github.com/shahaman098/find-my-dog/actions/workflows/ci.yml/badge.svg)](https://github.com/shahaman098/find-my-dog/actions/workflows/ci.yml)
-[![Live](https://img.shields.io/badge/live-find--my--dog.kiritokris.workers.dev-4d6bfe)](https://find-my-dog.kiritokris.workers.dev)
+[![Live](https://img.shields.io/badge/live-find--my--dog.kiritokris.workers.dev-c04a18)](https://find-my-dog.kiritokris.workers.dev)
 [![Runtime models](https://img.shields.io/badge/runtime%20models-100%25%20Meta-0866ff)](#-the-meta-stack)
 [![Unit tests](https://img.shields.io/badge/unit%20tests-12%2F12-2ea44f)](evidence/logs/unit-tests.txt)
 [![Access checks](https://img.shields.io/badge/access%20checks-12%2F12-2ea44f)](evidence/logs/access-control-real.txt)
@@ -21,7 +21,7 @@
 
 *Meta Global AI Developer Hackathon 2026 · Problem statement: **"Build for Your World"***
 
-<img src="evidence/img/app-landing-light.jpg" alt="Find My Dog landing page: 'Bring them home', with a report form for the pet's name, description, photo and voice note" width="860">
+<img src="evidence/img/app-landing-light.jpg" alt="Find My Dog landing page: 'Lost your pet? Your street already saw them.', next to a report form styled as a MISSING poster with a photo slot, the pet's name, species, description and a voice note" width="860">
 
 </div>
 
@@ -100,7 +100,8 @@ past**. Nobody knows it yet, the clips are spread across a dozen brands, and nob
 ## 🎬 See it run on real models
 
 Everything below was produced **live by SAM 3.1, Muse Spark and Muse Image through the product UI**
-([`capture_real_ui.cjs`](evidence/capture_real_ui.cjs)). Nothing is mocked.
+([`capture_real_ui.cjs`](evidence/capture_real_ui.cjs)). Nothing is mocked. These four captures were taken on 4 Nov,
+before the UI moved to its current warm theme; the pipeline and its outputs are unchanged.
 
 <table>
 <tr>

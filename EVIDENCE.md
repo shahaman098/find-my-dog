@@ -87,6 +87,8 @@ All tracks: [`evidence/data/sam_tracks.csv`](evidence/data/sam_tracks.csv) · ra
 A real-mode local Worker with SAM 3.1 tracks from §2 seeded into a report (SAM needs a public video URL that a laptop
 doesn't have; see [`evidence/seed_real_report.py`](evidence/seed_real_report.py)). Everything below was generated live
 by Muse Spark and Muse Image through the UI ([`evidence/capture_real_ui.cjs`](evidence/capture_real_ui.cjs)).
+These captures, and the owner-vs-stranger comparison in §4, predate the move to the current warm UI theme; the landing-page
+screenshots in §4 show the current design. The pipeline and its outputs are unchanged.
 
 **Footage in, SAM tracks out:**
 

@@ -133,13 +133,24 @@ function scrollToHow(e) {
   else { try { sessionStorage.setItem('fmd_scroll', 'how') } catch { /* ignore */ } location.hash = '#/' }
 }
 
+/** SAM-style track colours: each tracked animal keeps one vivid colour, as in SAM's own mask overlays. */
+const TRACK_COLORS = ['#ff3d7f', '#00b8f0', '#f5b400', '#8b5cf6', '#00c98a', '#ff6a00', '#e94dd0', '#2f7cf6']
+const trackColor = (id) => TRACK_COLORS[Math.abs(Number(id) || 0) % TRACK_COLORS.length]
+
+/** Filled paw print, used for the logo, buttons and the decorative trails. */
+function PawMark({ size = 16, className = 'paw' }) {
+  return (
+    <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2" ry="2.6" /><ellipse cx="10" cy="5.8" rx="2" ry="2.6" /><ellipse cx="14.5" cy="5.8" rx="2" ry="2.6" /><ellipse cx="18.5" cy="9.5" rx="2" ry="2.6" /><path d="M12.2 11.2c-3 0-6.2 3.6-6.2 6.3 0 1.9 1.5 2.6 3 2.6 1.3 0 2.2-.6 3.2-.6s1.9.6 3.2.6c1.5 0 3-.7 3-2.6 0-2.7-3.2-6.3-6.2-6.3z" /></g>
+    </svg>
+  )
+}
+
 function Brand() {
   return (
     <a className="brand" href="#/" aria-label="findmydog home">
-      <svg className="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-        <g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2" ry="2.6" /><ellipse cx="10" cy="5.8" rx="2" ry="2.6" /><ellipse cx="14.5" cy="5.8" rx="2" ry="2.6" /><ellipse cx="18.5" cy="9.5" rx="2" ry="2.6" /><path d="M12.2 11.2c-3 0-6.2 3.6-6.2 6.3 0 1.9 1.5 2.6 3 2.6 1.3 0 2.2-.6 3.2-.6s1.9.6 3.2.6c1.5 0 3-.7 3-2.6 0-2.7-3.2-6.3-6.2-6.3z" /></g>
-      </svg>
-      findmydog
+      <span className="mark"><PawMark size={18} /></span>
+      <span>findmy<em>dog</em></span>
     </a>
   )
 }
@@ -149,29 +160,22 @@ function Nav() {
     <nav className="nav">
       <Brand />
       <span className="spacer" />
-      <a className="navlink" href="#/demo">Live demo</a>
-      <span className="seg" role="group" aria-label="Project links">
-        <a className="on" href={REPO} target="_blank" rel="noreferrer">GitHub</a>
-        <a href="#how" onClick={scrollToHow}>How it works</a>
-      </span>
+      <a className="navlink" href="#how" onClick={scrollToHow}>How it works</a>
+      <a className="navlink" href={REPO} target="_blank" rel="noreferrer"><Icon name="github" /> GitHub</a>
+      <a className="navBtn" href="#/demo"><Icon name="play" size={14} /> Live demo</a>
     </nav>
   )
 }
 
-/** Deterministic particle cloud for the dark closing section (no layout shift, no randomness between renders). */
-function Particles({ count = 140 }) {
-  const dots = React.useMemo(() => {
-    let seed = 20261104
-    const rnd = () => ((seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296)
-    return Array.from({ length: count }, () => {
-      const a = rnd() * Math.PI * 2
-      const r = Math.pow(rnd(), 0.6) * 46
-      return { x: 50 + Math.cos(a) * r * 1.15, y: 50 + Math.sin(a) * r * 0.75, s: 1 + rnd() * 1.6, o: 0.25 + rnd() * 0.6, d: rnd() * 6 }
-    })
-  }, [count])
+/** A trail of paw prints walking across a section (deterministic: no layout shift between renders). */
+function PawTrail({ steps = 9, className = 'pawTrail' }) {
   return (
-    <div className="particles" aria-hidden="true">
-      {dots.map((p, i) => <i key={i} style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.s, height: p.s, opacity: p.o, animationDelay: `${p.d}s` }} />)}
+    <div className={className} aria-hidden="true">
+      {Array.from({ length: steps }, (_, i) => (
+        <span key={i} style={{ left: `${(i / (steps - 1)) * 100}%`, top: `${50 + Math.sin(i * 0.9) * 26 + (i % 2 ? 9 : -9)}%`, animationDelay: `${i * 0.35}s` }}>
+          <PawMark size={18} />
+        </span>
+      ))}
     </div>
   )
 }
@@ -180,16 +184,16 @@ function HowItWorks() {
   return (
     <section id="how" className="bleed dark band">
       <div className="bandInner">
-        <p className="eyebrow"><Icon name="sparkle" size={12} /> HOW IT WORKS</p>
-        <h2 className="bandTitle">Every camera on your street.<br />Searching. Right now.</h2>
+        <p className="eyebrow"><PawMark size={13} /> HOW IT WORKS</p>
+        <h2 className="bandTitle">Every camera on your street<br />joins the search party</h2>
         <p className="bandSub">No new hardware and no walled garden. Neighbours share whatever their cameras caught; Meta's models do the watching, and you stay in control of every decision.</p>
         <a className="cta" href="#/demo"><Icon name="play" /> Watch the live demo</a>
-        <div className="bandGrid">
-          <div className="bandCard"><Icon name="doc" size={20} /><b>File the report</b><span>A photo, a description and a voice note. Muse Voice Transcribe turns thirty panicked seconds into a search brief.</span></div>
-          <div className="bandCard"><Icon name="video" size={20} /><b>SAM 3.1 watches every clip</b><span>Doorbell cams, home cams, dashcams. Every animal gets a persistent identity, even through occlusions.</span></div>
-          <div className="bandCard"><Icon name="eye" size={20} /><b>Muse Spark finds yours</b><span>Appearance-only matching with a written rationale. Nothing counts as a sighting until you confirm it.</span></div>
-          <div className="bandCard"><Icon name="route" size={20} /><b>A plan for first light</b><span>Spark's tool loop turns confirmed sightings into a timeline, a next-search plan and a Muse Image poster.</span></div>
-        </div>
+        <ol className="bandGrid">
+          <li className="bandCard"><span className="stepNo">1</span><Icon name="doc" size={22} /><b>File the report</b><span>A photo, a description and a voice note. Muse Voice Transcribe turns thirty panicked seconds into a search brief.</span></li>
+          <li className="bandCard"><span className="stepNo">2</span><Icon name="video" size={22} /><b>SAM 3.1 watches every clip</b><span>Doorbell cams, home cams, dashcams. Every animal gets a persistent identity, even through occlusions.</span><span className="samChips" aria-hidden="true">{[0, 1, 2, 3].map(i => <i key={i} style={{ '--trk': trackColor(i) }}>#{i}</i>)}</span></li>
+          <li className="bandCard"><span className="stepNo">3</span><Icon name="eye" size={22} /><b>Muse Spark finds yours</b><span>Appearance-only matching with a written rationale. Nothing counts as a sighting until you confirm it.</span></li>
+          <li className="bandCard"><span className="stepNo">4</span><Icon name="route" size={22} /><b>A plan for first light</b><span>Spark's tool loop turns confirmed sightings into a timeline, a next-search plan and a Muse Image poster.</span></li>
+        </ol>
         <p className="models">SAM 3.1 · Muse Spark 1.3 · Muse Voice Transcribe · Muse Image</p>
       </div>
     </section>
@@ -215,7 +219,7 @@ const VERSUS = [
 function ProofAndVersus() {
   return (
     <section className="versus">
-      <p className="eyebrow light"><Icon name="sparkle" size={12} /> MEASURED ON REAL FOOTAGE</p>
+      <p className="eyebrow light"><PawMark size={13} /> MEASURED ON REAL FOOTAGE</p>
       <div className="proofGrid">
         {PROOF.map(p => <div key={p.l} className="proof"><b>{p.n}</b><span>{p.l}</span><small>{p.s}</small></div>)}
       </div>
@@ -234,7 +238,7 @@ function ProofAndVersus() {
 function ClosingFooter() {
   return (
     <section className="bleed dark closing">
-      <Particles />
+      <PawTrail steps={11} className="pawTrail closingTrail" />
       <div className="closingInner">
         <h2 className="closingTitle">Bring the whole street into the search</h2>
         <p className="bandSub">Opt-in footage only, scoped to one search, withdrawn clips deleted, and no person or face identification anywhere in the pipeline. Open source, so you can check every one of those claims.</p>
@@ -280,6 +284,13 @@ function DemoLanding() {
 function NewReport({ go }) {
   const [form, setForm] = useState({ pet_name: '', species: 'dog', description: '' })
   const [photo, setPhoto] = useState(null)
+  const [preview, setPreview] = useState('')
+  useEffect(() => {
+    if (!photo) { setPreview(''); return }
+    const url = URL.createObjectURL(photo)
+    setPreview(url)
+    return () => URL.revokeObjectURL(url)
+  }, [photo])
   const [voice, setVoice] = useState(null)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
@@ -308,36 +319,54 @@ function NewReport({ go }) {
     } catch (e) { setErr(e.message) } finally { setBusy(false) }
   }
 
+  const SPECIES = [['dog', 'Dog'], ['cat', 'Cat'], ['other', 'Other']]
   return (
     <div>
       <Nav />
       <div className="hero">
-        <p className="announce"><Icon name="sparkle" size={12} /> SAM 3.1 now watches every clip your street already recorded, with a persistent identity for each animal, and Muse Spark knows which one is yours. <a href="#how" onClick={scrollToHow}>→</a></p>
-        <h1 className="heroTitle">Bring them home</h1>
-        <form className="inputCard" onSubmit={submit}>
-          <input required type="text" className="nameField" placeholder="Your pet's name" value={form.pet_name}
-            onChange={e => setForm({ ...form, pet_name: e.target.value })} />
-          <textarea placeholder="Describe them: coat, markings, collar, size…" value={form.description}
-            onChange={e => setForm({ ...form, description: e.target.value })} />
-          <div className="inputRow">
-            <span className="tog">
-              <select aria-label="Species" value={form.species} onChange={e => setForm({ ...form, species: e.target.value })}>
-                <option value="dog">Dog</option><option value="cat">Cat</option><option value="other">Other</option>
-              </select>
-            </span>
-            <label className={photo ? 'filelabel tog on' : 'filelabel tog'}><Icon name="camera" size={14} /> {photo ? photo.name.slice(0, 16) : 'Photo'}
+        <div className="heroCopy">
+          <p className="kicker"><PawMark size={14} /> A search party for lost pets</p>
+          <h1 className="heroTitle">Lost your pet?<br /><span className="hl">Your street already saw them.</span></h1>
+          <p className="heroLead">Neighbours share clips from any doorbell, CCTV or dashcam. <b>SAM 3.1</b> follows every animal in the footage, <b>Muse Spark</b> picks out yours, and you get a timeline of sightings, a plan for where to look next, and a poster for the street.</p>
+          <ul className="tags">
+            <li className="tag"><Icon name="shield" size={15} /> Opt-in footage only</li>
+            <li className="tag"><Icon name="eye" size={15} /> Animals only, never faces</li>
+            <li className="tag"><Icon name="github" size={15} /> Open source</li>
+          </ul>
+          <PawTrail steps={6} className="pawTrail heroTrail" />
+        </div>
+        <form className="inputCard missing" onSubmit={submit}>
+          <span className="tape left" aria-hidden="true" /><span className="tape right" aria-hidden="true" />
+          <div className="posterHead"><b>MISSING</b><span>Help bring them home</span></div>
+          <div className="posterBody">
+            <label className={preview ? 'photoSlot filelabel filled' : 'photoSlot filelabel'}>
+              {preview
+                ? <img src={preview} alt="Your pet's photo" />
+                : <><Icon name="camera" size={30} /><b>Add a clear photo</b><small>Face and coat visible works best</small></>}
               <input required type="file" accept="image/*" onChange={e => setPhoto(e.target.files[0])} />
             </label>
-            <Recorder onDone={setVoice} onError={setErr} ready={!!voice} />
-            <button className="sendBtn" disabled={busy} title="Start the search" aria-label="Start the search">{busy ? <span className="spinner" /> : <Icon name="arrowUp" size={18} />}</button>
+            <div className="posterFields">
+              <input required type="text" className="nameField" placeholder="Your pet's name" value={form.pet_name}
+                onChange={e => setForm({ ...form, pet_name: e.target.value })} />
+              <div className="speciesRow" role="radiogroup" aria-label="Species">
+                {SPECIES.map(([v, l]) => (
+                  <button key={v} type="button" role="radio" aria-checked={form.species === v}
+                    className={form.species === v ? 'tog on' : 'tog'} onClick={() => setForm({ ...form, species: v })}>{l}</button>
+                ))}
+              </div>
+              <textarea placeholder="Describe them: coat, markings, collar, size…" value={form.description}
+                onChange={e => setForm({ ...form, description: e.target.value })} />
+              <Recorder onDone={setVoice} onError={setErr} ready={!!voice} />
+            </div>
           </div>
-          {err && <p className="err" role="alert" style={{ marginTop: 10 }}>{err}</p>}
+          <button className="sendBtn" disabled={busy}>{busy ? <><span className="spinner" /> Starting the search…</> : <><PawMark size={18} /> Start the search</>}</button>
+          {err && <p className="err" role="alert">{err}</p>}
+          <nav className="tearTabs" aria-label="Quick links">
+            <a href="#/demo"><Icon name="play" size={14} /> Live demo</a>
+            <a href="#how" onClick={scrollToHow}><Icon name="route" size={14} /> How it works</a>
+            <a href={REPO} target="_blank" rel="noreferrer"><Icon name="github" size={14} /> Source code</a>
+          </nav>
         </form>
-        <div className="heroPills">
-          <a className="pill big" href="#/demo"><Icon name="play" /> Live demo</a>
-          <a className="pill big" href="#how" onClick={scrollToHow}><Icon name="shield" /> Opt-in · no face recognition</a>
-          <a className="pill big" href={REPO} target="_blank" rel="noreferrer"><Icon name="github" /> Open source</a>
-        </div>
       </div>
       <HowItWorks />
       <ProofAndVersus />
@@ -418,11 +447,11 @@ function ClipCard({ report, clip, onRefresh, canEdit }) {
       {clip.status === 'done' && (
         <div className="gallery">
           {(clip.tracks || []).map(t => (
-            <div key={t.object_id} className="still">
+            <div key={t.object_id} className="still trk" style={{ '--trk': trackColor(t.object_id) }}>
               {missing.has(t.object_id)
                 ? <div className="stillMissing">{busy ? 'cutting stills…' : 'still unavailable'}</div>
                 : <img src={still(t.object_id)} alt={`track ${t.object_id}`} onError={() => setMissing(prev => new Set(prev).add(t.object_id))} />}
-              <span>track #{t.object_id} · {t.first_seen.toFixed(0)}s–{t.last_seen.toFixed(0)}s · {t.n_frames}f</span>
+              <span><b className="trkId">track #{t.object_id}</b> {t.first_seen.toFixed(0)}s–{t.last_seen.toFixed(0)}s · {t.n_frames}f</span>
             </div>
           ))}
         </div>
@@ -474,7 +503,7 @@ function ShareView({ id, r }) {
   const sightings = tl?.sightings ?? []
   return (
     <div className="card center">
-      <h2>🔎 Sightings of {r.pet.name}</h2>
+      <h2><PawMark size={26} /> Sightings of {r.pet.name}</h2>
       <p className="sub">Owner-initiated search · opt-in footage only · no person identification</p>
       {tlErr && <p className="err">Couldn't load the timeline: {tlErr} <button className="btn" onClick={load}>Retry</button></p>}
       {tl && sightings.length > 0 && <Ribbon sightings={sightings} petName={r.pet.name} />}
@@ -538,7 +567,8 @@ function NeighborGive({ id }) {
     <div>
       <Nav />
       <div className="card center">
-        <h1>🤝 Help find {r.pet.name}</h1>
+        <p className="kicker"><PawMark size={14} /> A neighbour needs your help</p>
+        <h1>Help find {r.pet.name}</h1>
         {err && <p className="err" role="alert">{err}</p>}
         <p className="sub">A neighbor is searching for their lost {r.pet.species}. If your camera might have caught them, share the clip — it stays within this search only.</p>
         {done ? (
@@ -672,8 +702,8 @@ function ReportView({ id, share }) {
               const clip = r.clips.find(c => c.clip_id === m.clip_id)
               const pct = Math.round(matchStrength(m) * 100)
               return (
-                <div key={`${m.clip_id}:${m.object_id}`} className="sighting">
-                  <img src={`/api/reports/${id}/stills/${m.clip_id}/${m.object_id}`} />
+                <div key={`${m.clip_id}:${m.object_id}`} className="sighting trk" style={{ '--trk': trackColor(m.object_id) }}>
+                  <div className="trkFrame"><img src={`/api/reports/${id}/stills/${m.clip_id}/${m.object_id}`} alt={`track ${m.object_id}`} /><b className="trkId">track #{m.object_id}</b></div>
                   <div>
                     <b>{clip?.label}</b> · {verdictText(m)}
                     {m.is_match && <div className="scorebar" role="img" aria-label={`match strength ${pct} percent`}><i style={{ width: `${pct}%` }} /></div>}
