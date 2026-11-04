@@ -1,0 +1,299 @@
+{
+  "run_at": "2026-11-04T16:41:05.749Z",
+  "metrics": {
+    "model": "muse-spark-1.3",
+    "n": 29,
+    "tp": 8,
+    "fn": 1,
+    "fp": 1,
+    "tn": 19,
+    "accuracy": 0.931,
+    "precision": 0.889,
+    "recall": 0.889,
+    "ranking": [
+      {
+        "case": "goldendoodle",
+        "positives_above_every_negative": 3,
+        "positives": 3
+      },
+      {
+        "case": "shiba",
+        "positives_above_every_negative": 2,
+        "positives": 3
+      },
+      {
+        "case": "white-dog",
+        "positives_above_every_negative": 3,
+        "positives": 3
+      }
+    ],
+    "usd": 0.1708,
+    "tokens": {
+      "input": 9685,
+      "output": 37348
+    }
+  },
+  "rows": [
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t8_f351.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.65,
+      "rationale": "Image 2 shows a usable medium-large solid light cream/apricot dog with shaggy/curly coat drinking from a bowl, matching Biscuit in Image 1 in coat color, size/build, floppy ears, and tail shape/carriage. No contradictory markings or structure despite dark low-light quality."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t8_f360.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.78,
+      "rationale": "Image 2 shows a medium-large dog with uniform light apricot/cream coat, curly doodle-type texture, stocky fluffy build, fluffy tail, and head-down posture consistent with floppy ears. This matches Image 1 reference of Biscuit in coat color/pattern, size, build, and ear/tail morphology with no contradictory markings. Low resolution/dark lighting limits fine detail but robust attributes are compatible."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t8_f368.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.6,
+      "rationale": "Image 2 shows a medium-large dog with light cream/apricot fluffy coat, consistent with Biscuit's coat color, size and build. Despite very dark low-resolution crop obscuring ear/face detail, silhouette and coat texture are compatible with curly-coated goldendoodle and no contradictory markings, color, or size are visible."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t9_f383.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.88,
+      "rationale": "Image 2 shows a short-coated reddish-brown dog with a high tightly curled tail over the back and erect-type ears, drinking from a bowl. This conflicts with Biscuit's robust attributes: light apricot/cream long curly coat, floppy ears, and low-hanging non-curled tail and medium-large doodle build. Coat texture/length, tail shape/carriage, and ear shape mismatch."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t6_f241.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.93,
+      "rationale": "Image 2 shows a slender, short smooth-coated white dog with large erect pointed ears and lean build, inconsistent with Biscuit's Image 1 reference and description as apricot goldendoodle with curly coat, medium-large sturdy build, and floppy ears."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t14_f572.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.85,
+      "rationale": "Image 1 reference is uniform light apricot/cream with curly/fluffy voluminous coat, floppy ears, doodle build. Image 2 shows a usable dog in profile but with short/straight coat and two-tone pattern: tan legs/underbody with dark black/gray saddle on back and dark tail. Coat texture, color/pattern and overall type are inconsistent with uniform apricot curly goldendoodle, not explainable by night lighting/blur alone."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t14_f602.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.85,
+      "rationale": "Reference (Image 1) is a uniformly light apricot/cream dog with curly coat, medium-large build. Detection (Image 2) shows a dog with two-tone pattern: dark black/gray head and dorsal area contrasting with white/light legs, carrying a ball. This dark-marked pattern is inconsistent with Biscuit's uniform light apricot coat, so not a match."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t7_f308.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.85,
+      "rationale": "Image 1 is a medium-large apricot dog with curly/fluffy coat, sturdy build, and floppy ears consistent with goldendoodle. Image 2 shows a slender light animal with short smooth coat, slight build, and long thin high-carried tail, lacking curly coat, doodle build, and floppy ears. Coat texture, build, and tail shape are incompatible with Biscuit."
+    },
+    {
+      "case": "goldendoodle",
+      "trial": 1,
+      "still": "t12_f442.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.1,
+      "rationale": "Image 2 shows an older woman outdoors, no dog or other animal is visible. Cannot compare coat color, curly coat, size/build, ears/tail to Biscuit reference. Unusable crop with no animal."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t9_f358.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.6,
+      "rationale": "Image 1 shows a red-and-cream shiba inu with reddish-tan dorsal coat, cream/white legs and underbody, and a curled fluffy pale tail. Image 2, though very blurry/grainy and partial rear-only crop, shows a similar small-medium dog with tan-reddish upper hindquarters, pale/white lower legs, and a tightly curled fluffy pale tail over the back. Coat color/pattern, build, and tail shape are consistent with Miso with no clear contradictory attribute; head/ears/markings not visible so identity cannot be confirmed."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t9_f383.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.85,
+      "rationale": "Image 2 shows a small-medium dog with reddish-tan upper coat and cream/white legs/underside, stocky shiba build, erect triangular ears, and fluffy curled tail over back, matching the Image 1 reference of red-and-cream shiba inu Miso in coat color/pattern, size/build, and ear/tail shape with no contradictory markings despite dark low-resolution crop."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t9_f366.jpg",
+      "want_match": true,
+      "is_match": false,
+      "confidence": 0.15,
+      "rationale": "Image 2 is severely underexposed, dark and blurry with no discernible animal, coat color/pattern, size/build, or ear/tail shape visible. No robust appearance attributes can be compared to the red-and-cream curled-tail shiba inu in Image 1, so it is treated as an unusable crop."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t8_f343.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.2,
+      "rationale": "Image 1 is a clear red-and-cream Shiba Inu with curled fluffy tail drinking from bowl. Image 2 t8_f343.jpg is severely underexposed, blurry, and noisy with no discernible coat color/pattern, size/build, markings, or ear/tail shape to compare to Miso. Unusable crop, cannot confirm match."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t6_f241.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.95,
+      "rationale": "Image 2 dog is uniformly white/pale, tall and lean with very large erect ears, long legs and slim build, while Miso in Image 1 is a red-and-cream, compact stocky shiba inu with dense double coat and curled tail over back. Coat color/pattern, build, and ear/tail shape are incompatible."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t14_f572.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.78,
+      "rationale": "Image 2 shows a medium-large, longer-legged dog with dull tan-gray coat and darker dorsal/head shading, not the distinct red-and-cream Shiba coloration, compact small-to-medium build, erect fox-like ears, and tightly curled fluffy tail over back seen in Image 1. Size, build, and coat pattern are inconsistent with Miso despite poor low-light quality."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t14_f602.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.85,
+      "rationale": "Image 2 shows a dog but with incompatible robust traits vs Miso: larger long-legged build, dark gray/black dorsal saddle with pale legs, vs Miso's small-medium compact Shiba build with solid red-tan back, cream underside/legs, and curled fluffy tail. Coat color/pattern and build do not match."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t7_f308.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.9,
+      "rationale": "Image 1 reference is red-and-cream Shiba Inu with reddish-brown back/sides, cream legs/chest, and thick fluffy tail curled tightly over back. Image 2 detection shows a pale cream/white animal with long thin straight tail extended behind, no curl, and no red-brown coloration. Tail shape/carry and coat color/pattern are incompatible with Miso."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t12_f489.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.3,
+      "rationale": "Image 2 is extremely dark, noisy and motion-blurred but shows a quadruped dog in full stride. Visible build is leggier/larger than small-medium compact shiba, with an extended straight tail and dark head, inconsistent with Miso's red-and-cream coat, compact build, and fluffy curled tail in Image 1. Quality is too poor for definitive markings, so exclusion is low confidence."
+    },
+    {
+      "case": "shiba",
+      "trial": 1,
+      "still": "t12_f442.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.2,
+      "rationale": "Image 1 shows a red-and-cream shiba inu with curled tail drinking. Image 2 shows no animal - only an older person with gray hair outdoors. No coat color/pattern, size, build, markings, ear/tail shape can be evaluated, making it an unusable detection crop that could not be Miso."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t6_f255.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.65,
+      "rationale": "Image 2 shows a white/clear short-haired, slim-build dog with long legs consistent with Luna in Image 1. Red/dark collar matches description. No conflicting coat pattern, size, build, or markings visible. Dark exposure obscures ear shape and details, but visible attributes are consistent so it could be Luna."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t6_f262.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.65,
+      "rationale": "Image 2 shows a usable animal crop: slim-built, short-haired, light-coated dog with tall upright ears, long legs, narrow head, thin upcurved tail and dark/red collar. This aligns with Luna's white short coat, slim build, tall upright ears, and red collar. Dark underexposure explains tan-appearing shading; no robust excluding attribute."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t6_f269.jpg",
+      "want_match": true,
+      "is_match": true,
+      "confidence": 0.85,
+      "rationale": "Image 2 shows a usable crop of a white short-haired slim-build dog with tall upright ears and a red/dark collar, matching Luna's reference photo (Image 1) and description in coat color, build, ear shape, and collar. No inconsistent markings or species mismatch."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t7_f308.jpg",
+      "want_match": false,
+      "is_match": true,
+      "confidence": 0.6,
+      "rationale": "Image 2 shows a light-colored short-haired quadruped with slim build and long legs consistent with Luna's white coat and slim build. Night grain and head-down pose obscure ears and collar, but no incompatible coat pattern, size, build, or tail shape is clearly visible."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t8_f343.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.2,
+      "rationale": "Image 2 is extremely dark, noisy and blurry with no discernible detail. Coat color/pattern, ear shape, collar, build and markings cannot be reliably compared to Luna's white short-haired coat, tall upright ears, slim build and red collar. Crop is unusable for identification."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t9_f383.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.95,
+      "rationale": "Image 2 shows a reddish-brown dog with thicker coat and a fluffy curled tail over back drinking from a bowl, while Luna (Image 1) is a white short-haired slim-build dog with tall upright ears and red collar. Coat color white vs brown and tail type are fundamentally incompatible."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t14_f572.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.92,
+      "rationale": "Image 1 shows Luna as white short-haired, slim build with very tall upright ears and red collar. Image 2 shows a dog with tan/brown medium-long coat with dark shading, stockier heavier build, small folded ears and bushy dark tail. Coat color/pattern, build, ear shape and tail are incompatible with Luna's robust attributes, so Image 2 cannot be Luna."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t14_f602.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.88,
+      "rationale": "Luna is a slim, short-haired white dog with tall upright ears. Image 2 shows a dog with predominantly dark gray/black mottled coat on head/back and a stockier appearance carrying a ball. Coat color/pattern and build are incompatible with a white short-haired slim dog, even allowing for dark blurry night footage."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t12_f489.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.85,
+      "rationale": "Image 2 shows a dog in motion but its coat is tan/brown with a dark head/muzzle. Luna (Image 1) is a white short-haired dog with tall upright ears, slim build, and red collar. Coat color/pattern is robustly incompatible - white vs brown/dark - and not explainable by image quality alone."
+    },
+    {
+      "case": "white-dog",
+      "trial": 1,
+      "still": "t12_f442.jpg",
+      "want_match": false,
+      "is_match": false,
+      "confidence": 0.1,
+      "rationale": "Image 2 shows an older adult human woman outdoors with no dog or animal visible. No coat color, build, ear shape, or collar can be assessed against Luna's white short-haired, slim-build, upright-ears, red-collar description, so it is an unusable crop and cannot be Luna."
+    }
+  ]
+}

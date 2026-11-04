@@ -123,6 +123,7 @@ clients (`worker/src/meta.ts`). Nothing is mocked. Raw outputs are in [`eval/res
 |---|---|---|
 | Muse Spark ranks the right animal first | **9 / 9**: the true pet was the top-scored candidate in every case and trial (3 dogs × 3 trials) | `results/match.json` |
 | Match accuracy against look-alike dogs | **92%** (80 / 87) · recall **93%** · precision **83%** before the owner confirms | `results/match.json` |
+| It holds up in doorbell conditions | Right dog still ranked #1 in **18 / 18** case-conditions with crops degraded to night-vision IR, ¼ resolution, motion blur, dusk, and all combined; accuracy 86–93%; worst-case recall 67% | `results/robust_*.json` · [`EVIDENCE.md` §1b](EVIDENCE.md#1b-doorbell-conditions-robustness) |
 | A person is never confirmed as a pet | SAM mislabelled one person as "dog"; Spark rejected that crop **9 / 9** times | `results/match.json` |
 | SAM 3.1 keeps identity through an occlusion | After a **1.5 s full-frame blackout**, the dog came back as the **same track ID**: 1 track, 1 gap of 1.7 s | `results/doorcam_occluded.tracks.json` |
 | SAM finds small animals in real doorbell footage | A dog about **50 × 50 px (0.3% of the frame)** among adults, a child and a stroller: one continuous track for 12.3 s, **0 tracks on people** | `results/doorcam.tracks.json` |

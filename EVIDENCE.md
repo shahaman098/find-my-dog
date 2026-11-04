@@ -9,6 +9,7 @@ calling the **live Meta API** on 4 Nov 2026. Charts are generated from the raw J
 |---|---|---|---|
 | 1 | Muse Spark puts the owner's pet first | **9 / 9** top-ranked (3 dogs × 3 trials, look-alike distractors) | [§1](#1-matching-benchmark-muse-spark), [`match.json`](eval/results/match.json) |
 | 2 | Matching is accurate | **92%** of 87 verdicts; recall **93%**; precision **83%** before the owner confirms | [§1](#1-matching-benchmark-muse-spark), [`match_rows.csv`](evidence/data/match_rows.csv) |
+| 2b | It holds up in doorbell conditions | right dog still ranked #1 in **18 / 18** case-conditions (night vision, ¼ resolution, motion blur, dusk, all combined); accuracy **86–93%**; worst-case recall **67%** | [§1b](#1b-doorbell-conditions-robustness), [`robustness_rows.csv`](evidence/data/robustness_rows.csv) |
 | 3 | No person is ever confirmed as a pet | the person SAM labelled "dog" was **rejected 9 / 9** | [§1](#1-matching-benchmark-muse-spark) |
 | 4 | SAM 3.1 keeps identity through an occlusion | **same track ID** after a 1.5 s full-frame blackout | [§2](#2-sam-31-tracking), [`doorcam_occluded.tracks.json`](eval/results/doorcam_occluded.tracks.json) |
 | 5 | SAM finds small animals on real doorbell footage | a **72 × 43 px** dog among adults, a child and a stroller; 0 tracks on people | [§2](#2-sam-31-tracking) |
@@ -34,6 +35,20 @@ rejects). In every case-trial, the highest dot is the true pet. All 5 false flag
 candidate sorted by strength and only counts a sighting once the owner confirms it.
 
 ![Threshold trade-off](evidence/img/chart-threshold.png)
+
+## 1b. Doorbell conditions (robustness)
+
+Doorbell footage is rarely clean. The same 29 labelled comparisons were re-run through the production matcher with the
+**camera crops** degraded to simulate night-vision IR, a distant animal (¼ resolution), a running animal (motion blur),
+dusk without IR, and IR + ¼ resolution + blur combined. The owner's reference photo stays clean, as a phone photo
+would. One trial per condition, 145 calls, $0.87. Images are generated deterministically by [`eval/degrade.py`](eval/degrade.py).
+
+![Robustness under doorbell conditions](evidence/img/chart-robustness.png)
+
+**What it shows:** the right dog stayed the top-ranked candidate in every case and condition, with every margin strictly
+positive. Single degradations cost a few points of accuracy. The combined worst case drops recall to 67% and leaves the
+white dog only **+0.05** ahead of the white hound. At night, the owner's confirm step carries real weight, which is
+why the product never auto-confirms. One trial per condition is a small sample; treat these as indicative.
 
 ### Every comparison, with the animal it was about
 
@@ -160,7 +175,8 @@ summary: 12 passed, 0 failed
 
 ## 8. Limitations (read before quoting the numbers)
 
-- **Small n:** 3 dogs, 87 comparisons, 1 doorbell clip.
+- **Small n:** 3 dogs, 87 comparisons, 1 doorbell clip; the robustness run is 1 trial per condition, with
+  degradations *simulated* from daytime footage rather than real night recordings.
 - **Reference photos are frames from the same footage**, which is easier than a real owner's phone photo.
 - **SAM 3.1 re-identification fails across hard video cuts** (§2). The coordinator reads track spans, so a span that
   crosses a cut can leak into the plan (one plan said "drinking for 38.5 s").
@@ -176,7 +192,8 @@ summary: 12 passed, 0 failed
 | Muse Spark matching benchmark: 87 comparisons | $0.48 |
 | Real UI sessions: 3 × (7 matches + plan + poster), as metered in-app | $0.15 |
 | Coordinator benchmark: 2 runs (plan + poster; not metered, estimated from the in-app meter) | ≈ $0.05 |
-| **Total** | **≈ $0.96** |
+| Robustness benchmark: 5 doorbell conditions × 29 comparisons | $0.87 |
+| **Total** | **≈ $1.83** |
 
 ## 10. Reproduce everything
 
@@ -189,6 +206,11 @@ npx wrangler dev --port 8788 --local &                          # real mode
 python3 evidence/seed_real_report.py /tmp http://localhost:8788
 node evidence/capture_real_ui.cjs /tmp evidence/img
 bash evidence/access_checks.sh http://localhost:8788 <report_id> <owner_token> <DEMO_REPORT_ID>
+
+python3 eval/degrade.py
+for c in night_ir low_res motion_blur dark worst_case; do
+  node eval/benchmark.ts match --cases eval/fixtures/cases_$c.json --trials 1 --out eval/results/robust_$c.json
+done
 
 python3 evidence/build.py && node evidence/shoot.cjs http://localhost:8788 && python3 evidence/compose.py
 ```

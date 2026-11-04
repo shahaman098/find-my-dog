@@ -131,6 +131,65 @@ p70 = next(p for p in pts if p[0] == 0.70)
 P.append(('threshold', 'Trade-off if the product auto-flagged instead of asking the owner', ''.join(svg) + f'''
 <p class="note">At 0.70 the matcher would be {p70[1]:.0%} precise with {p70[2]:.0%} recall. We keep the owner in the loop instead: every candidate is shown, sorted by strength, and nothing counts as a sighting until the owner confirms it.</p>'''))
 
+# 4b. robustness under doorbell conditions (eval/degrade.py -> eval/results/robust_*.json)
+COND = [('clean', 'Clean crops (baseline, trial 1)'), ('night_ir', 'Night vision (IR greyscale + noise)'), ('low_res', 'Distant: 1/4 resolution'),
+        ('motion_blur', 'Running: 9-px motion blur'), ('dark', 'Dusk, no IR: 35% exposure'), ('worst_case', 'Worst case: IR + 1/4 res + blur')]
+rob = []
+for key, label in COND:
+    rr = [r for r in rows if r['trial'] == 1] if key == 'clean' else load(f'robust_{key}.json')['rows']
+    tp = sum(r['want_match'] and r['is_match'] for r in rr); fn = sum(r['want_match'] and not r['is_match'] for r in rr)
+    fp = sum(not r['want_match'] and r['is_match'] for r in rr); tn = sum(not r['want_match'] and not r['is_match'] for r in rr)
+    margins = []
+    for c in cases:
+        cr = [r for r in rr if r['case'] == c['name']]
+        margins.append(max(strength(r) for r in cr if r['want_match']) - max(strength(r) for r in cr if not r['want_match']))
+    rob.append(dict(key=key, label=label, n=len(rr), acc=(tp + tn) / len(rr), rec=tp / (tp + fn), prec=tp / (tp + fp) if tp + fp else 1.0,
+                    top1=sum(m > 0 for m in margins), worst=min(margins)))
+strip = ''.join(
+    f'<figure class="deg"><img src="{thumb(("dogpark/" if k == "clean" else f"degraded/{k}/") + "t9_f383.jpg")}" alt=""><figcaption>{esc(l.split(":")[0].split(" (")[0])}</figcaption></figure>'
+    for k, l in COND)
+X0, X1 = 300, 820
+xs3 = lambda v: X0 + (v - 0.5) / 0.5 * (X1 - X0)
+svg = [f'<svg viewBox="0 0 860 {len(rob)*34+56}" class="chart" role="img" aria-label="Accuracy, recall and precision per doorbell condition">']
+for i in range(len(rob)):
+    svg.append(f'<line x1="{X0}" x2="{X1}" y1="{24 + i * 34 + 17}" y2="{24 + i * 34 + 17}" class="grid" opacity=".5"/>')
+for v in [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
+    svg.append(f'<line x1="{xs3(v):.1f}" x2="{xs3(v):.1f}" y1="8" y2="{len(rob)*34+10}" class="grid"/><text x="{xs3(v):.1f}" y="{len(rob)*34+28}" text-anchor="middle" class="tick">{v:.0%}</text>')
+for i, r in enumerate(rob):
+    y = 24 + i * 34
+    svg.append(f'<text x="{X0-12}" y="{y+4}" text-anchor="end" class="lane">{esc(r["label"])}</text>')
+    for v, cls, shape, name, dy in [(r['acc'], 's1', 'c', 'accuracy', -9), (r['rec'], 's2', 's', 'recall', 0), (r['prec'], 's3', 'd', 'precision', 9)]:
+        x = xs3(v)
+        y = 24 + i * 34 + dy  # dodge so equal values never hide each other
+        tip = esc(f'{r["label"]}: {name} {v:.0%}')
+        if shape == 'c':
+            svg.append(f'<circle cx="{x:.1f}" cy="{y}" r="6" class="{cls} ring"><title>{tip}</title></circle>')
+        elif shape == 's':
+            svg.append(f'<rect x="{x-5.5:.1f}" y="{y-5.5}" width="11" height="11" rx="2" class="{cls} ring"><title>{tip}</title></rect>')
+        else:
+            svg.append(f'<path d="M{x:.1f},{y-7} L{x+7:.1f},{y} L{x:.1f},{y+7} L{x-7:.1f},{y} Z" class="{cls} ring"><title>{tip}</title></path>')
+svg.append(f'<text x="{(X0+X1)/2}" y="{len(rob)*34+48}" text-anchor="middle" class="axis">share of the 29 comparisons (one trial per condition)</text></svg>')
+table = ('<table class="cm rob"><tr><th>Condition</th><th>Accuracy</th><th>Recall</th><th>Precision</th><th>Right dog ranked #1</th><th>Smallest winning margin</th></tr>'
+         + ''.join(f'<tr><th>{esc(r["label"])}</th><td>{r["acc"]:.0%}</td><td>{r["rec"]:.0%}</td><td>{r["prec"]:.0%}</td><td>{r["top1"]} / 3</td><td>{r["worst"]:+.2f}</td></tr>' for r in rob)
+         + '</table>')
+sw = lambda body: f'<svg width="14" height="14" viewBox="0 0 14 14" class="chart" style="display:inline;width:14px;vertical-align:-2px;margin-right:6px">{body}</svg>'
+legend = ('<div class="legend">'
+          f'<span>{sw(chr(60) + "circle cx=\"7\" cy=\"7\" r=\"6\" class=\"s1\"/>")}accuracy</span>'
+          f'<span>{sw(chr(60) + "rect x=\"1.5\" y=\"1.5\" width=\"11\" height=\"11\" rx=\"2\" class=\"s2\"/>")}recall</span>'
+          f'<span>{sw(chr(60) + "path d=\"M7,0 L14,7 L7,14 L0,7 Z\" class=\"s3\"/>")}precision</span></div>')
+note = (f'<p class="note">Same 29 labelled comparisons and production matcher; only the <b>camera crops</b> are degraded (the owner\'s reference '
+        f'photo stays clean, as a phone photo would). The right dog stayed the top-ranked candidate in <b>all {sum(r["top1"] for r in rob)} of '
+        f'{3*len(rob)}</b> case-conditions, every margin strictly positive. Recall falls to {rob[-1]["rec"]:.0%} in the worst case, and the thinnest '
+        f'margin was {min(r["worst"] for r in rob):+.2f} (white dog vs white hound, worst case): at night the owner\'s confirm step matters most. '
+        f'Images are generated deterministically by <code>eval/degrade.py</code>.</p>')
+with open(os.path.join(EV, 'data', 'robustness_rows.csv'), 'w', newline='') as f:
+    w = csv.writer(f)
+    w.writerow(['condition', 'case', 'candidate', 'ground_truth', 'spark_verdict', 'spark_confidence', 'correct', 'rationale'])
+    for key, _ in COND[1:]:
+        for r in load(f'robust_{key}.json')['rows']:
+            w.writerow([key, r['case'], r['still'], 'true pet' if r['want_match'] else 'other', 'match' if r['is_match'] else 'reject', r['confidence'], r['want_match'] == r['is_match'], r['rationale']])
+P.append(('robustness', 'Doorbell conditions: does it still find the right dog?', f'<div class="strip">{strip}</div>' + legend + ''.join(svg) + table + note))
+
 # 5. per-case evidence grids
 for c in cases:
     cells = []
@@ -208,9 +267,9 @@ P.append(('coordinator', 'Spark tool loop: the model chose the tools, in order',
 board = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Find My Dog evidence</title>
 <style>
-:root {{ --surface-1:#fcfcfb; --text-primary:#0b0b0b; --text-secondary:#52514e; --line:#e4e4e0; --series-1:#2a78d6; --series-2:#eb6834; --good:#0ca30c; --critical:#d03b3b; color-scheme: light; }}
-@media (prefers-color-scheme: dark) {{ :root:where(:not([data-theme="light"])) {{ --surface-1:#1a1a19; --text-primary:#f0efec; --text-secondary:#c3c2b7; --line:#34342f; --series-1:#3987e5; --series-2:#d95926; color-scheme: dark; }} }}
-:root[data-theme="dark"] {{ --surface-1:#1a1a19; --text-primary:#f0efec; --text-secondary:#c3c2b7; --line:#34342f; --series-1:#3987e5; --series-2:#d95926; color-scheme: dark; }}
+:root {{ --surface-1:#fcfcfb; --text-primary:#0b0b0b; --text-secondary:#52514e; --line:#e4e4e0; --series-1:#2a78d6; --series-2:#eb6834; --series-3:#1baf7a; --good:#0ca30c; --critical:#d03b3b; color-scheme: light; }}
+@media (prefers-color-scheme: dark) {{ :root:where(:not([data-theme="light"])) {{ --surface-1:#1a1a19; --text-primary:#f0efec; --text-secondary:#c3c2b7; --line:#34342f; --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70; color-scheme: dark; }} }}
+:root[data-theme="dark"] {{ --surface-1:#1a1a19; --text-primary:#f0efec; --text-secondary:#c3c2b7; --line:#34342f; --series-1:#3987e5; --series-2:#d95926; --series-3:#199e70; color-scheme: dark; }}
 body {{ margin:0; background:var(--surface-1); color:var(--text-primary); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }}
 main {{ max-width:900px; margin:0 auto; padding:24px 16px 60px; }}
 section {{ border:1px solid var(--line); border-radius:16px; padding:22px 22px 14px; margin:0 0 22px; background:var(--surface-1); }}
@@ -225,13 +284,15 @@ h1 {{ font-size:26px; margin:6px 0 20px; }} h2 {{ font-size:18px; margin:0 0 14p
 .chart {{ width:100%; height:auto; display:block; }}
 .chart .grid {{ stroke:var(--line); stroke-width:1; }} .chart .tick {{ fill:var(--text-secondary); font-size:11px; }}
 .chart .lane, .chart .lab {{ fill:var(--text-primary); font-size:12.5px; }} .chart .axis {{ fill:var(--text-secondary); font-size:12px; }}
-.chart .s1 {{ fill:var(--series-1); }} .chart .s2 {{ fill:var(--series-2); }} .chart .sN {{ fill:var(--text-secondary); opacity:.45; }}
+.chart .s1 {{ fill:var(--series-1); }} .chart .s2 {{ fill:var(--series-2); }} .chart .sN {{ fill:var(--text-secondary); opacity:.45; }} .chart .s3 {{ fill:var(--series-3); }} .chart .ring {{ stroke:var(--surface-1); stroke-width:2; }}
 .chart circle.s1, .chart circle.s2 {{ stroke:var(--surface-1); stroke-width:2; }}
 .chart .line {{ fill:none; stroke-width:2; }} .chart path.s1 {{ stroke:var(--series-1); }} .chart path.s2 {{ stroke:var(--series-2); }}
 .chart .zone {{ fill:var(--series-2); opacity:.10; }} .chart .black {{ fill:var(--text-primary); opacity:.85; }}
 .chart .tickmark {{ stroke:var(--series-1); stroke-width:2; stroke-linecap:round; }}
 .legend {{ display:flex; gap:18px; font-size:13px; color:var(--text-secondary); margin-bottom:6px; }}
-.dot {{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }} .dot.s1 {{ background:var(--series-1); }} .dot.s2 {{ background:var(--series-2); }} .dot.sN {{ background:var(--text-secondary); opacity:.45; }}
+.dot {{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }} .dot.s1 {{ background:var(--series-1); }} .dot.s2 {{ background:var(--series-2); }} .dot.sN {{ background:var(--text-secondary); opacity:.45; }} .dot.s3 {{ background:var(--series-3); }}
+.strip {{ display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }} .deg {{ margin:0; width:132px; font-size:11.5px; color:var(--text-secondary); }} .deg img {{ width:132px; height:110px; object-fit:cover; border-radius:8px; }}
+.cm.rob td {{ font-size:15px; }} .cm.rob th {{ font-size:13px; text-align:left; }}
 .caseRow {{ display:flex; gap:16px; align-items:flex-start; }}
 .ref {{ margin:0; width:170px; flex:none; }} .ref img {{ width:170px; border-radius:10px; border:3px solid var(--series-1); }} .ref figcaption {{ font-size:12.5px; color:var(--text-secondary); }}
 .cands {{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }}

@@ -1,0 +1,70 @@
+[
+  {
+    "name": "goldendoodle",
+    "pet": {
+      "name": "Biscuit",
+      "species": "dog",
+      "description": "Apricot goldendoodle, curly coat, medium-large, floppy ears."
+    },
+    "owner": "eval/fixtures/crops/dogpark/t8_f335.jpg",
+    "positives": [
+      "eval/fixtures/crops/degraded/motion_blur/t8_f351.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t8_f360.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t8_f368.jpg"
+    ],
+    "negatives": [
+      "eval/fixtures/crops/degraded/motion_blur/t9_f383.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t6_f241.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t14_f572.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t14_f602.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t7_f308.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t12_f442.jpg"
+    ]
+  },
+  {
+    "name": "shiba",
+    "pet": {
+      "name": "Miso",
+      "species": "dog",
+      "description": "Red-and-cream shiba inu, curled tail, small to medium size."
+    },
+    "owner": "eval/fixtures/crops/dogpark/t9_f375.jpg",
+    "positives": [
+      "eval/fixtures/crops/degraded/motion_blur/t9_f358.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t9_f383.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t9_f366.jpg"
+    ],
+    "negatives": [
+      "eval/fixtures/crops/degraded/motion_blur/t8_f343.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t6_f241.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t14_f572.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t14_f602.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t7_f308.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t12_f489.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t12_f442.jpg"
+    ]
+  },
+  {
+    "name": "white-dog",
+    "pet": {
+      "name": "Luna",
+      "species": "dog",
+      "description": "White short-haired dog, tall upright ears, red collar, slim build."
+    },
+    "owner": "eval/fixtures/crops/dogpark/t6_f241.jpg",
+    "positives": [
+      "eval/fixtures/crops/degraded/motion_blur/t6_f255.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t6_f262.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t6_f269.jpg"
+    ],
+    "negatives": [
+      "eval/fixtures/crops/degraded/motion_blur/t7_f308.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t8_f343.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t9_f383.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t14_f572.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t14_f602.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t12_f489.jpg",
+      "eval/fixtures/crops/degraded/motion_blur/t12_f442.jpg"
+    ]
+  }
+]

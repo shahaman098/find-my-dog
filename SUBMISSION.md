@@ -47,6 +47,7 @@
 **And it's measured, not claimed** (production code path against the live Meta API, numbers in the repo's README):
 - The true pet was the **top-ranked candidate 9/9 times** against look-alike dogs (92% accuracy over 87 comparisons, 93% recall)
 - SAM 3.1 kept the **same identity through a 1.5 s full-frame blackout** on real doorbell footage, with the dog ≈ 50×50 px
+- Under simulated **doorbell conditions** (night-vision IR, ¼ resolution, motion blur, dusk, all combined) the right dog was **still ranked #1 in 18/18** case-conditions (accuracy 86–93%)
 - A person SAM mislabelled as "dog" was **rejected 9/9 times**: no person is ever confirmed as a pet
 - The benchmark caught two real bugs we then fixed: the poster model invented a phone number (now forbidden) and returned WebP labelled as PNG
 

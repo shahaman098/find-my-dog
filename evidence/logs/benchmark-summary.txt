@@ -48,3 +48,10 @@ poster bytes: 373490
   parkcam01:14  verdict=reject conf=0.85 owner_confirmed=False
   elmdoor01:0   verdict=reject conf=0.90 owner_confirmed=False
 metered cost of this UI session: $0.055
+
+## Robustness: doorbell conditions (crops degraded by eval/degrade.py; 1 trial each)
+  night_ir     run_at=2026-11-04T16:38:12  acc=0.931 P=0.889 R=0.889  TP/FN/FP/TN=8/1/1/19  $0.1968
+  low_res      run_at=2026-11-04T16:39:09  acc=0.897 P=0.8 R=0.889  TP/FN/FP/TN=8/1/2/18  $0.168
+  motion_blur  run_at=2026-11-04T16:40:09  acc=0.897 P=0.8 R=0.889  TP/FN/FP/TN=8/1/2/18  $0.1642
+  dark         run_at=2026-11-04T16:41:05  acc=0.931 P=0.889 R=0.889  TP/FN/FP/TN=8/1/1/19  $0.1708
+  worst_case   run_at=2026-11-04T16:42:26  acc=0.862 P=0.857 R=0.667  TP/FN/FP/TN=6/3/1/19  $0.1681
