@@ -119,7 +119,7 @@ function NewReport({ go }) {
       <Nav />
       <div className="hero">
         <p className="announce"><span className="spark">✨</span>SAM 3.1 watches every clip your street already recorded, with a persistent identity for each animal. Muse Spark knows which one is yours. →</p>
-        <h1 className="heroTitle">Bring them home</h1>
+        <h1 className="heroTitle">Bring them <span className="grad">home</span></h1>
         <form className="inputCard" onSubmit={submit}>
           <input required type="text" placeholder="Your pet's name" value={form.pet_name}
             onChange={e => setForm({ ...form, pet_name: e.target.value })} />
@@ -136,9 +136,9 @@ function NewReport({ go }) {
             </label>
             <Recorder onDone={setVoice} onError={setErr} />
             {voice && <span className="ok">✓ ready</span>}
-            <button className="sendBtn" disabled={busy} title="Start the search">{busy ? '…' : '↑'}</button>
+            <button className="sendBtn" disabled={busy} title="Start the search" aria-label="Start the search">{busy ? <span className="spinner" /> : '↑'}</button>
           </div>
-          {err && <p className="err" style={{ marginTop: 10 }}>{err}</p>}
+          {err && <p className="err" role="alert" style={{ marginTop: 10 }}>{err}</p>}
         </form>
         <div className="heroPills">
           <a className="pill" href="#/demo">▷ Live demo</a>
@@ -210,7 +210,7 @@ function ClipCard({ report, clip, onRefresh }) {
       <div className="row">
         <b>{clip.label}</b>
         <button className="chip chipbtn" onClick={reclock} title="Set recording time">🕐 {clip.captured_clock || 'set time'}</button>
-        <span className="chip">{statusChip}</span>
+        <span className={`chip st-${clip.status}`}>{statusChip}</span>
         <span className="chip">{clip.n_tracks || 0} animals</span>
         <span className="chip">{(clip.duration_s || 0).toFixed(0)}s</span>
       </div>
@@ -431,12 +431,13 @@ function ReportView({ id, share }) {
             </div>
             <p className="sub">Doorbell cams, home cams, dashcams — anything a neighbor will share. Set each clip's recording time for the timeline.</p>
             {(r.clips || []).map(c => <ClipCard key={c.clip_id} report={r} clip={c} onRefresh={refresh} />)}
-            {(r.clips || []).length === 0 && <p className="sub">No clips yet.</p>}
+            {(r.clips || []).length === 0 && <p className="sub empty">🎥 No clips yet — add the first one above.</p>}
           </section>
 
           <section className="card">
             <div className="row"><b>2 · Is one of them {r.pet.name}?</b><span className="spacer" />
               <button className="btn primary" disabled={busy === 'match' || !(r.clips || []).some(c => c.status === 'done')} onClick={runMatch}>
+                {busy === 'match' && <span className="spinner" />}
                 {busy === 'match' ? 'Matching…' : `Run matcher${r.matcher_model && r.matcher_model !== 'mock' ? ` (${r.matcher_model.split(':')[0]})` : ''}`}
               </button>
             </div>
@@ -452,6 +453,7 @@ function ReportView({ id, share }) {
                   <img src={`/api/reports/${id}/stills/${m.clip_id}/${m.object_id}`} />
                   <div>
                     <b>{clip?.label}</b> · {(m.score * 100).toFixed(0)}% · {m.is_match ? 'possible match' : 'no match'}
+                    <div className="scorebar" role="img" aria-label={`match score ${(m.score * 100).toFixed(0)} percent`}><i style={{ width: `${Math.min(100, Math.round(m.score * 100))}%` }} /></div>
                     <p className="sub">{m.rationale}</p>
                     {m.confirmed === null && (
                       <div className="row">
@@ -470,6 +472,7 @@ function ReportView({ id, share }) {
           <section className="card">
             <div className="row"><b>3 · Search plan &amp; alert</b><span className="spacer" />
               <button className="btn primary" disabled={busy === 'analyze' || !sightings.length} onClick={analyze}>
+                {busy === 'analyze' && <span className="spinner" />}
                 {busy === 'analyze' ? 'Spark is coordinating…' : 'Generate plan + poster'}
               </button>
             </div>
@@ -484,7 +487,7 @@ function ReportView({ id, share }) {
             )}
             {r.poster && <img className="poster" src={`/api/reports/${id}/poster`} alt="alert poster" />}
           </section>
-          {err && <p className="err">{err}</p>}
+          {err && <p className="err" role="alert">{err}</p>}
         </>
       )}
     </div>
