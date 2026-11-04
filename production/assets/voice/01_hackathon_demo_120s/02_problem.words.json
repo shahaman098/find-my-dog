@@ -2,186 +2,190 @@
  "scene": "02_problem",
  "text": "When a dog goes missing today, that means knocking on doors, posting in group chats, and asking neighbours to rewind their cameras. Ring searches Ring cameras, but only Ring. Most streets have a mix.",
  "spoken": "When a dog goes missing today, that means knocking on doors, posting in group chats, and asking neighbours to rewind their cameras. Ring searches Ring cameras, but only Ring. Most streets have a mix.",
- "duration": 11.84,
+ "duration": 11.7,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
   "stability": 0.5,
   "similarity_boost": 0.75,
-  "style": 0,
+  "style": 0.0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 1.0
+ },
+ "onetake": {
+  "from": 7.572,
+  "to": 19.272
  },
  "words": [
   {
    "word": "When",
-   "start": 0,
-   "end": 0.08
+   "start": 0.06,
+   "end": 0.508
   },
   {
    "word": "a",
-   "start": 0.16,
-   "end": 0.24
+   "start": 0.548,
+   "end": 0.588
   },
   {
    "word": "dog",
-   "start": 0.3,
-   "end": 0.48
+   "start": 0.648,
+   "end": 0.828
   },
   {
    "word": "goes",
-   "start": 0.512,
-   "end": 0.64
+   "start": 0.876,
+   "end": 1.068
   },
   {
    "word": "missing",
-   "start": 0.68,
-   "end": 0.96
+   "start": 1.118,
+   "end": 1.468
   },
   {
    "word": "today,",
-   "start": 1.013,
-   "end": 1.36
+   "start": 1.521,
+   "end": 1.948
   },
   {
    "word": "that",
-   "start": 1.392,
-   "end": 1.52
+   "start": 1.996,
+   "end": 2.188
   },
   {
    "word": "means",
-   "start": 1.587,
-   "end": 1.92
+   "start": 2.228,
+   "end": 2.428
   },
   {
    "word": "knocking",
-   "start": 1.973,
-   "end": 2.4
+   "start": 2.472,
+   "end": 2.828
   },
   {
    "word": "on",
-   "start": 2.427,
-   "end": 2.48
+   "start": 2.855,
+   "end": 2.908
   },
   {
    "word": "doors,",
-   "start": 2.56,
-   "end": 3.04
+   "start": 3.001,
+   "end": 3.548
   },
   {
    "word": "posting",
-   "start": 3.09,
-   "end": 3.44
+   "start": 3.598,
+   "end": 3.948
   },
   {
    "word": "in",
-   "start": 3.467,
-   "end": 3.52
+   "start": 3.975,
+   "end": 4.028
   },
   {
    "word": "group",
-   "start": 3.573,
-   "end": 3.84
+   "start": 4.081,
+   "end": 4.348
   },
   {
    "word": "chats,",
-   "start": 3.907,
-   "end": 4.32
+   "start": 4.415,
+   "end": 4.828
   },
   {
    "word": "and",
-   "start": 4.34,
-   "end": 4.4
+   "start": 4.868,
+   "end": 4.988
   },
   {
    "word": "asking",
-   "start": 4.457,
-   "end": 4.8
+   "start": 5.045,
+   "end": 5.388
   },
   {
    "word": "neighbours",
-   "start": 4.844,
-   "end": 5.28
+   "start": 5.432,
+   "end": 5.868
   },
   {
    "word": "to",
-   "start": 5.307,
-   "end": 5.36
+   "start": 5.895,
+   "end": 5.948
   },
   {
    "word": "rewind",
-   "start": 5.417,
-   "end": 5.76
+   "start": 6.005,
+   "end": 6.348
   },
   {
    "word": "their",
-   "start": 5.787,
-   "end": 5.92
+   "start": 6.375,
+   "end": 6.508
   },
   {
    "word": "cameras.",
-   "start": 5.99,
-   "end": 6.64
+   "start": 6.568,
+   "end": 7.068
   },
   {
    "word": "Ring",
-   "start": 6.8,
-   "end": 7.44
+   "start": 7.164,
+   "end": 7.548
   },
   {
    "word": "searches",
-   "start": 7.493,
-   "end": 7.92
+   "start": 7.592,
+   "end": 7.948
   },
   {
    "word": "Ring",
-   "start": 7.968,
-   "end": 8.16
+   "start": 8.012,
+   "end": 8.268
   },
   {
    "word": "cameras,",
-   "start": 8.23,
-   "end": 8.8
+   "start": 8.328,
+   "end": 8.828
   },
   {
    "word": "but",
-   "start": 8.88,
-   "end": 9.12
+   "start": 8.888,
+   "end": 9.068
   },
   {
    "word": "only",
-   "start": 9.2,
-   "end": 9.52
+   "start": 9.148,
+   "end": 9.468
   },
   {
    "word": "Ring.",
-   "start": 9.6,
-   "end": 10.32
+   "start": 9.532,
+   "end": 9.868
   },
   {
    "word": "Most",
-   "start": 10.384,
-   "end": 10.64
+   "start": 9.98,
+   "end": 10.428
   },
   {
    "word": "streets",
-   "start": 10.68,
-   "end": 10.96
+   "start": 10.468,
+   "end": 10.748
   },
   {
    "word": "have",
-   "start": 11.008,
-   "end": 11.2
+   "start": 10.796,
+   "end": 10.988
   },
   {
    "word": "a",
-   "start": 11.24,
-   "end": 11.28
+   "start": 11.128,
+   "end": 11.268
   },
   {
    "word": "mix.",
-   "start": 11.38,
-   "end": 11.84
+   "start": 11.338,
+   "end": 11.588
   }
  ]
 }

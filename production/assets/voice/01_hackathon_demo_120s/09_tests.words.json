@@ -2,211 +2,215 @@
  "scene": "09_tests",
  "text": "None of this is staged. These are real, recorded runs: all twelve unit tests passing, an end-to-end test of the whole flow, and a benchmark on real footage, where the right dog ranked first nine times out of nine.",
  "spoken": "None of this is staged. These are real, recorded runs: all twelve unit tests passing, an end-to-end test of the whole flow, and a benchmark on real footage, where the right dog ranked first nine times out of nine.",
- "duration": 12.56,
+ "duration": 13.964,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
   "stability": 0.5,
   "similarity_boost": 0.75,
-  "style": 0,
+  "style": 0.0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 1.0
+ },
+ "onetake": {
+  "from": 123.716,
+  "to": 137.68
  },
  "words": [
   {
    "word": "None",
-   "start": 0,
-   "end": 0.16
+   "start": 0.06,
+   "end": 0.444
   },
   {
    "word": "of",
-   "start": 0.187,
-   "end": 0.24
+   "start": 0.497,
+   "end": 0.604
   },
   {
    "word": "this",
-   "start": 0.272,
-   "end": 0.4
+   "start": 0.668,
+   "end": 0.924
   },
   {
    "word": "is",
-   "start": 0.453,
-   "end": 0.56
+   "start": 0.977,
+   "end": 1.084
   },
   {
    "word": "staged.",
-   "start": 0.64,
-   "end": 1.28
+   "start": 1.164,
+   "end": 1.804
   },
   {
    "word": "These",
-   "start": 1.307,
-   "end": 1.44
+   "start": 1.831,
+   "end": 1.964
   },
   {
    "word": "are",
-   "start": 1.52,
-   "end": 1.76
+   "start": 2.004,
+   "end": 2.124
   },
   {
    "word": "real,",
-   "start": 1.824,
-   "end": 2.16
+   "start": 2.204,
+   "end": 2.604
   },
   {
    "word": "recorded",
-   "start": 2.231,
-   "end": 2.8
+   "start": 2.657,
+   "end": 3.084
   },
   {
    "word": "runs:",
-   "start": 2.896,
-   "end": 3.44
+   "start": 3.196,
+   "end": 3.804
   },
   {
    "word": "all",
-   "start": 3.5,
-   "end": 3.68
+   "start": 3.884,
+   "end": 4.124
   },
   {
    "word": "twelve",
-   "start": 3.726,
-   "end": 4
+   "start": 4.181,
+   "end": 4.524
   },
   {
    "word": "unit",
-   "start": 4.064,
-   "end": 4.32
+   "start": 4.572,
+   "end": 4.764
   },
   {
    "word": "tests",
-   "start": 4.387,
-   "end": 4.72
+   "start": 4.831,
+   "end": 5.164
   },
   {
    "word": "passing,",
-   "start": 4.78,
-   "end": 5.44
+   "start": 5.214,
+   "end": 5.724
   },
   {
    "word": "an",
-   "start": 5.467,
-   "end": 5.52
+   "start": 5.777,
+   "end": 5.884
   },
   {
    "word": "end-to-end",
-   "start": 5.6,
-   "end": 6.08
+   "start": 5.964,
+   "end": 6.604
   },
   {
    "word": "test",
-   "start": 6.128,
-   "end": 6.32
+   "start": 6.668,
+   "end": 6.924
   },
   {
    "word": "of",
-   "start": 6.347,
-   "end": 6.4
+   "start": 6.977,
+   "end": 7.084
   },
   {
    "word": "the",
-   "start": 6.44,
-   "end": 6.56
+   "start": 7.104,
+   "end": 7.164
   },
   {
    "word": "whole",
-   "start": 6.6,
-   "end": 6.8
+   "start": 7.231,
+   "end": 7.564
   },
   {
    "word": "flow,",
-   "start": 6.864,
-   "end": 7.36
+   "start": 7.644,
+   "end": 8.124
   },
   {
    "word": "and",
-   "start": 7.42,
-   "end": 7.6
+   "start": 8.144,
+   "end": 8.204
   },
   {
    "word": "a",
-   "start": 7.64,
-   "end": 7.68
+   "start": 8.244,
+   "end": 8.284
   },
   {
    "word": "benchmark",
-   "start": 7.736,
-   "end": 8.24
+   "start": 8.356,
+   "end": 9.004
   },
   {
    "word": "on",
-   "start": 8.293,
-   "end": 8.4
+   "start": 9.057,
+   "end": 9.164
   },
   {
    "word": "real",
-   "start": 8.448,
-   "end": 8.64
+   "start": 9.244,
+   "end": 9.564
   },
   {
    "word": "footage,",
-   "start": 8.7,
-   "end": 9.2
+   "start": 9.624,
+   "end": 10.204
   },
   {
    "word": "where",
-   "start": 9.227,
-   "end": 9.36
+   "start": 10.231,
+   "end": 10.364
   },
   {
    "word": "the",
-   "start": 9.38,
-   "end": 9.44
+   "start": 10.384,
+   "end": 10.444
   },
   {
    "word": "right",
-   "start": 9.507,
-   "end": 9.84
+   "start": 10.511,
+   "end": 10.844
   },
   {
    "word": "dog",
-   "start": 9.92,
-   "end": 10.16
+   "start": 10.944,
+   "end": 11.244
   },
   {
    "word": "ranked",
-   "start": 10.217,
-   "end": 10.56
+   "start": 11.301,
+   "end": 11.644
   },
   {
    "word": "first",
-   "start": 10.64,
-   "end": 11.04
+   "start": 11.724,
+   "end": 12.124
   },
   {
    "word": "nine",
-   "start": 11.12,
-   "end": 11.44
+   "start": 12.236,
+   "end": 12.684
   },
   {
    "word": "times",
-   "start": 11.507,
-   "end": 11.84
+   "start": 12.764,
+   "end": 13.164
   },
   {
    "word": "out",
-   "start": 11.88,
-   "end": 12
+   "start": 13.204,
+   "end": 13.324
   },
   {
    "word": "of",
-   "start": 12.027,
-   "end": 12.08
+   "start": 13.377,
+   "end": 13.484
   },
   {
    "word": "nine.",
-   "start": 12.144,
-   "end": 12.56
+   "start": 13.548,
+   "end": 13.844
   }
  ]
 }

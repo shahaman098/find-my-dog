@@ -2,361 +2,365 @@
  "scene": "05_live_action",
  "text": "First, the owner. I add Biscuit's photo and a short description: a small tan terrier, last seen near the park. Then the neighbours. I upload two clips they shared: a dog park and a doorbell. SAM 3.1 tracks every animal in each one, frame by frame. That takes about forty seconds of real time, so the waits are sped up, and the speed is always shown in the corner.",
  "spoken": "First, the owner. I add Biscuit's photo and a short description: a small tan terrier, last seen near the park. Then the neighbours. I upload two clips they shared: a dog park and a doorbell. SAM three point one tracks every animal in each one, frame by frame. That takes about forty seconds of real time, so the waits are sped up, and the speed is always shown in the corner.",
- "duration": 23.44,
+ "duration": 24.103,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
   "stability": 0.5,
   "similarity_boost": 0.75,
-  "style": 0,
+  "style": 0.0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 1.0
+ },
+ "onetake": {
+  "from": 44.753,
+  "to": 68.856
  },
  "words": [
   {
    "word": "First,",
-   "start": 0,
-   "end": 0.56
+   "start": 0.06,
+   "end": 0.607
   },
   {
    "word": "the",
-   "start": 0.6,
-   "end": 0.72
+   "start": 0.647,
+   "end": 0.767
   },
   {
    "word": "owner.",
-   "start": 0.773,
-   "end": 1.12
+   "start": 0.834,
+   "end": 1.367
   },
   {
    "word": "I",
-   "start": 1.36,
-   "end": 1.6
+   "start": 1.467,
+   "end": 1.567
   },
   {
    "word": "add",
-   "start": 1.66,
-   "end": 1.84
+   "start": 1.647,
+   "end": 1.887
   },
   {
    "word": "Biscuit's",
-   "start": 1.88,
-   "end": 2.32
+   "start": 1.927,
+   "end": 2.527
   },
   {
    "word": "photo",
-   "start": 2.373,
-   "end": 2.64
+   "start": 2.567,
+   "end": 2.767
   },
   {
    "word": "and",
-   "start": 2.68,
-   "end": 2.8
+   "start": 2.827,
+   "end": 3.007
   },
   {
    "word": "a",
-   "start": 2.84,
-   "end": 2.88
+   "start": 3.047,
+   "end": 3.087
   },
   {
    "word": "short",
-   "start": 2.933,
-   "end": 3.2
+   "start": 3.14,
+   "end": 3.407
   },
   {
    "word": "description:",
-   "start": 3.247,
-   "end": 4.08
+   "start": 3.46,
+   "end": 4.127
   },
   {
    "word": "a",
-   "start": 4.12,
-   "end": 4.16
+   "start": 4.287,
+   "end": 4.447
   },
   {
    "word": "small",
-   "start": 4.227,
-   "end": 4.56
+   "start": 4.514,
+   "end": 4.847
   },
   {
    "word": "tan",
-   "start": 4.64,
-   "end": 4.88
+   "start": 4.947,
+   "end": 5.247
   },
   {
    "word": "terrier,",
-   "start": 4.94,
-   "end": 5.6
+   "start": 5.307,
+   "end": 5.807
   },
   {
    "word": "last",
-   "start": 5.664,
-   "end": 5.92
+   "start": 5.903,
+   "end": 6.287
   },
   {
    "word": "seen",
-   "start": 5.968,
-   "end": 6.16
+   "start": 6.351,
+   "end": 6.607
   },
   {
    "word": "near",
-   "start": 6.208,
-   "end": 6.4
+   "start": 6.671,
+   "end": 6.927
   },
   {
    "word": "the",
-   "start": 6.42,
-   "end": 6.48
+   "start": 6.947,
+   "end": 7.007
   },
   {
    "word": "park.",
-   "start": 6.56,
-   "end": 6.96
+   "start": 7.087,
+   "end": 7.647
   },
   {
    "word": "Then",
-   "start": 7.12,
-   "end": 7.76
+   "start": 7.695,
+   "end": 7.887
   },
   {
    "word": "the",
-   "start": 7.82,
-   "end": 8
+   "start": 7.947,
+   "end": 8.127
   },
   {
    "word": "neighbours.",
-   "start": 8.058,
-   "end": 8.88
+   "start": 8.178,
+   "end": 8.887
   },
   {
    "word": "I",
-   "start": 9,
-   "end": 9.12
+   "start": 8.987,
+   "end": 9.087
   },
   {
    "word": "upload",
-   "start": 9.177,
-   "end": 9.52
+   "start": 9.156,
+   "end": 9.567
   },
   {
    "word": "two",
-   "start": 9.56,
-   "end": 9.68
+   "start": 9.607,
+   "end": 9.727
   },
   {
    "word": "clips",
-   "start": 9.747,
-   "end": 10.08
+   "start": 9.78,
+   "end": 10.047
   },
   {
    "word": "they",
-   "start": 10.112,
-   "end": 10.24
+   "start": 10.079,
+   "end": 10.207
   },
   {
    "word": "shared:",
-   "start": 10.297,
-   "end": 10.8
+   "start": 10.264,
+   "end": 10.767
   },
   {
    "word": "a",
-   "start": 10.84,
-   "end": 10.88
+   "start": 10.807,
+   "end": 10.847
   },
   {
    "word": "dog",
-   "start": 10.96,
-   "end": 11.2
+   "start": 10.927,
+   "end": 11.167
   },
   {
    "word": "park",
-   "start": 11.28,
-   "end": 11.6
+   "start": 11.247,
+   "end": 11.567
   },
   {
    "word": "and",
-   "start": 11.64,
-   "end": 11.76
+   "start": 11.607,
+   "end": 11.727
   },
   {
    "word": "a",
-   "start": 11.8,
-   "end": 11.84
+   "start": 11.767,
+   "end": 11.807
   },
   {
    "word": "doorbell.",
-   "start": 11.888,
-   "end": 12.72
+   "start": 11.871,
+   "end": 12.367
   },
   {
    "word": "SAM",
-   "start": 12.82,
-   "end": 13.12
+   "start": 12.507,
+   "end": 12.927
   },
   {
    "word": "3.1",
-   "start": 13.16,
-   "end": 13.36
+   "start": 12.954,
+   "end": 13.087
   },
   {
    "word": "tracks",
-   "start": 13.4,
-   "end": 13.6
+   "start": 13.14,
+   "end": 13.407
   },
   {
    "word": "every",
-   "start": 13.66,
-   "end": 13.84
+   "start": 13.447,
+   "end": 13.567
   },
   {
    "word": "animal",
-   "start": 13.909,
-   "end": 14.32
+   "start": 13.647,
+   "end": 14.127
   },
   {
    "word": "in",
-   "start": 14.387,
-   "end": 14.72
+   "start": 14.22,
+   "end": 14.687
   },
   {
    "word": "each",
-   "start": 14.789,
-   "end": 15.2
+   "start": 14.767,
+   "end": 15.247
   },
   {
    "word": "one,",
-   "start": 15.253,
-   "end": 15.36
+   "start": 15.3,
+   "end": 15.407
   },
   {
    "word": "frame",
-   "start": 15.408,
-   "end": 15.6
+   "start": 15.487,
+   "end": 15.807
   },
   {
    "word": "by",
-   "start": 15.68,
-   "end": 16
+   "start": 15.867,
+   "end": 16.287
   },
   {
    "word": "frame.",
-   "start": 16.053,
-   "end": 16.32
+   "start": 16.367,
+   "end": 16.767
   },
   {
    "word": "That",
-   "start": 16.373,
-   "end": 16.48
+   "start": 16.847,
+   "end": 17.007
   },
   {
    "word": "takes",
-   "start": 16.547,
-   "end": 16.96
+   "start": 17.087,
+   "end": 17.567
   },
   {
    "word": "about",
-   "start": 17.088,
-   "end": 17.6
+   "start": 17.647,
+   "end": 17.967
   },
   {
    "word": "forty",
-   "start": 17.627,
-   "end": 17.76
+   "start": 18.007,
+   "end": 18.207
   },
   {
    "word": "seconds",
-   "start": 17.813,
-   "end": 18.08
+   "start": 18.26,
+   "end": 18.527
   },
   {
    "word": "of",
-   "start": 18.12,
-   "end": 18.32
+   "start": 18.58,
+   "end": 18.847
   },
   {
    "word": "real",
-   "start": 18.38,
-   "end": 18.8
+   "start": 18.907,
+   "end": 19.327
   },
   {
    "word": "time,",
-   "start": 18.827,
-   "end": 18.88
+   "start": 19.38,
+   "end": 19.487
   },
   {
    "word": "so",
-   "start": 18.912,
-   "end": 19.04
+   "start": 19.551,
+   "end": 19.807
   },
   {
    "word": "the",
-   "start": 19.136,
-   "end": 19.6
+   "start": 19.887,
+   "end": 20.287
   },
   {
    "word": "waits",
-   "start": 19.68,
-   "end": 19.84
+   "start": 20.314,
+   "end": 20.367
   },
   {
    "word": "are",
-   "start": 19.88,
-   "end": 20
+   "start": 20.407,
+   "end": 20.527
   },
   {
    "word": "sped",
-   "start": 20.053,
-   "end": 20.32
+   "start": 20.58,
+   "end": 20.847
   },
   {
    "word": "up,",
-   "start": 20.36,
-   "end": 20.48
+   "start": 20.887,
+   "end": 21.007
   },
   {
    "word": "and",
-   "start": 20.544,
-   "end": 20.8
+   "start": 21.055,
+   "end": 21.247
   },
   {
    "word": "the",
-   "start": 20.88,
-   "end": 21.2
+   "start": 21.327,
+   "end": 21.567
   },
   {
    "word": "speed",
-   "start": 21.26,
-   "end": 21.44
+   "start": 21.607,
+   "end": 21.727
   },
   {
    "word": "is",
-   "start": 21.46,
-   "end": 21.52
+   "start": 21.747,
+   "end": 21.807
   },
   {
    "word": "always",
-   "start": 21.587,
-   "end": 21.92
+   "start": 21.874,
+   "end": 22.207
   },
   {
    "word": "shown",
-   "start": 21.973,
-   "end": 22.08
+   "start": 22.314,
+   "end": 22.527
   },
   {
    "word": "in",
-   "start": 22.126,
-   "end": 22.4
+   "start": 22.607,
+   "end": 23.087
   },
   {
    "word": "the",
-   "start": 22.467,
-   "end": 22.8
+   "start": 23.127,
+   "end": 23.327
   },
   {
    "word": "corner.",
-   "start": 22.827,
-   "end": 22.88
+   "start": 23.38,
+   "end": 23.487
   }
  ]
 }

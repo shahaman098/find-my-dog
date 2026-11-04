@@ -79,6 +79,8 @@ def tmap(anchors):
     return [[round(a, 3), round(b, 3)] for a, b in out]
 
 S = {s['id']: s for s in script['scenes']}
+# hook beats (s): share page until HOOK[0], rewind until HOOK[1], raw clips until HOOK[2], then the before/after split
+HOOK = script.get('hook', [2.0, 3.6, 5.0])
 # ---- HAR: real requests (owner token redacted)
 har = json.load(open(os.path.join(TAKE, 'network.har')))['log']['entries']
 rid = ev['report_id']
@@ -167,12 +169,12 @@ def clamp_map(m):
 term = {k: json.load(open(os.path.join(TERM, f'{k}.json'))) for k in ['npm_test', 'e2e_mock', 'access_prod'] if os.path.exists(os.path.join(TERM, f'{k}.json'))}
 
 data = {
-    'fps': 30, 'duration': script['duration'], 'scenes': [{k: s[k] for k in ['id', 'start', 'end', 'text']} for s in script['scenes']],
+    'fps': 30, 'duration': script['duration'], 'hook': HOOK, 'scenes': [{k: s[k] for k in ['id', 'start', 'end', 'text']} for s in script['scenes']],
     'words': {s['id']: s['words'] for s in script['scenes']}, 'captions': captions,
     'take': {'dir': os.path.relpath(FR, OUT), 'frames': nframes, 'fps': 30, 'duration': take_dur, 'base': ev['base'], 'report_id': rid,
              'events': {k: V(k) for k in E if k not in ('api', 'still', 'dialog')}},
     'maps': {'live': clamp_map(live), 'result': clamp_map(result), 'process': clamp_map(process_),
-             'hook_reverse': clamp_map([[2.0, V('share_reloaded', 2.5)], [3.6, V('clips_selected', 0)]]),
+             'hook_reverse': clamp_map([[HOOK[0], V('share_reloaded', 2.5)], [HOOK[1], V('clips_selected', 0)]]),
              'clean': clamp_map([[S['04_clean_state']['start'], V('health_page', 0.3)], [S['04_clean_state']['start'] + 3.2, V('landing', 0.2)], [S['04_clean_state']['end'], V('typed_name', -2.5)]]),
              'reveal_still': V('landing', 4.0)},
     'raw': {'fountain': {'dir': os.path.relpath(os.path.join(RAWC, 'fountain'), OUT), 'n': len(os.listdir(os.path.join(RAWC, 'fountain'))), 'fps': 10},

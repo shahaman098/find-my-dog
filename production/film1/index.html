@@ -189,19 +189,20 @@ window.setTime = async function (t) {
   pending.length = 0
   for (const s of D.scenes) { const n = $('s' + s.id.slice(0, 2)); const on = t >= s.start && t < s.end; n.style.display = on ? 'block' : 'none'; if (on) n.style.opacity = s.id === '01_hook' ? 1 : clamp(Math.min((t - s.start) / .3, 1), 0, 1) }
 
+  const [H1, H2, H3] = D.hook  // share → rewind → raw clips → before/after split
   if (scene('01_hook', t)) {
     const share = interp([[0, D.maps.hook_reverse[0][1]]], 0)
-    const inRev = t >= 2.0 && t < 3.6, inRaw = t >= 3.6 && t < 5.0, inSplit = t >= 5.0
-    B.h.full.style.display = t < 5.0 ? 'block' : 'none'; B.h.rew.style.display = inRev ? 'block' : 'none'
+    const inRev = t >= H1 && t < H2, inRaw = t >= H2 && t < H3, inSplit = t >= H3
+    B.h.full.style.display = t < H3 ? 'block' : 'none'; B.h.rew.style.display = inRev ? 'block' : 'none'
     for (const n of [B.h.left, B.h.lb, B.h.right, B.h.rb, B.h.div]) n.style.display = inSplit || inRaw ? 'block' : 'none'
-    if (t < 2.0) { setImg(B.h.full.firstChild, takeSrc(share)); B.h.full.firstChild.style.transform = `scale(${1 + .03 * t / 2})` }
+    if (t < H1) { setImg(B.h.full.firstChild, takeSrc(share)); B.h.full.firstChild.style.transform = `scale(${1 + .03 * t / H1})` }
     else if (inRev) { setImg(B.h.full.firstChild, takeSrc(interp(D.maps.hook_reverse, t))); B.h.full.firstChild.style.transform = 'scale(1.03)' }
     if (inRaw || inSplit) {
       B.h.full.style.display = 'none'
-      const k = ease((t - 3.6) / .6)
+      const k = ease((t - H2) / .6)
       B.h.left.style.opacity = k; B.h.lb.style.opacity = k
-      setImg(B.h.f.firstChild, rawSrc('fountain', t - 3.6)); setImg(B.h.d.firstChild, rawSrc('doorbell', t - 3.6))
-      const k2 = ease((t - 5.0) / .6)
+      setImg(B.h.f.firstChild, rawSrc('fountain', t - H2)); setImg(B.h.d.firstChild, rawSrc('doorbell', t - H2))
+      const k2 = ease((t - H3) / .6)
       B.h.right.style.opacity = k2; B.h.rb.style.opacity = k2; B.h.div.style.opacity = k2
       setImg(B.h.right.firstChild, takeSrc(share))
     }
