@@ -2,7 +2,7 @@
  "scene": "11_close",
  "text": "The evidence is in the repo. Find My Dog.",
  "spoken": "The evidence is in the repo. Find My Dog.",
- "duration": 2.64,
+ "duration": 2.72,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -40,23 +40,23 @@
   },
   {
    "word": "repo.",
-   "start": 1.04,
-   "end": 1.44
+   "start": 1.056,
+   "end": 1.52
   },
   {
    "word": "Find",
-   "start": 1.536,
-   "end": 1.92
+   "start": 1.632,
+   "end": 2.08
   },
   {
    "word": "My",
-   "start": 2,
-   "end": 2.16
+   "start": 2.133,
+   "end": 2.24
   },
   {
    "word": "Dog.",
-   "start": 2.26,
-   "end": 2.64
+   "start": 2.34,
+   "end": 2.72
   }
  ]
 }

@@ -1,8 +1,8 @@
 {
  "scene": "05_live_action",
- "text": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM 3.1 tracks every animal in each one.",
- "spoken": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM three point one tracks every animal in each one.",
- "duration": 9.28,
+ "text": "First, the owner. I add Biscuit's photo and a short description: a small tan terrier, last seen near the park. Then the neighbours. I upload two clips they shared: a dog park and a doorbell. SAM 3.1 tracks every animal in each one, frame by frame. That takes about forty seconds of real time, so the waits are sped up, and the speed is always shown in the corner.",
+ "spoken": "First, the owner. I add Biscuit's photo and a short description: a small tan terrier, last seen near the park. Then the neighbours. I upload two clips they shared: a dog park and a doorbell. SAM three point one tracks every animal in each one, frame by frame. That takes about forty seconds of real time, so the waits are sped up, and the speed is always shown in the corner.",
+ "duration": 23.44,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -14,134 +14,349 @@
  },
  "words": [
   {
-   "word": "I",
+   "word": "First,",
    "start": 0,
-   "end": 0.08
+   "end": 0.56
+  },
+  {
+   "word": "the",
+   "start": 0.6,
+   "end": 0.72
+  },
+  {
+   "word": "owner.",
+   "start": 0.773,
+   "end": 1.12
+  },
+  {
+   "word": "I",
+   "start": 1.36,
+   "end": 1.6
   },
   {
    "word": "add",
-   "start": 0.14,
-   "end": 0.32
+   "start": 1.66,
+   "end": 1.84
   },
   {
    "word": "Biscuit's",
-   "start": 0.36,
-   "end": 0.8
-  },
-  {
-   "word": "photo",
-   "start": 0.867,
-   "end": 1.2
-  },
-  {
-   "word": "and",
-   "start": 1.24,
-   "end": 1.36
-  },
-  {
-   "word": "a",
-   "start": 1.4,
-   "end": 1.44
-  },
-  {
-   "word": "description,",
-   "start": 1.493,
+   "start": 1.88,
    "end": 2.32
   },
   {
-   "word": "then",
-   "start": 2.368,
-   "end": 2.56
-  },
-  {
-   "word": "upload",
-   "start": 2.617,
-   "end": 2.96
-  },
-  {
-   "word": "two",
-   "start": 3.04,
-   "end": 3.28
-  },
-  {
-   "word": "neighbour",
-   "start": 3.32,
-   "end": 3.68
-  },
-  {
-   "word": "clips:",
-   "start": 3.76,
-   "end": 4.24
-  },
-  {
-   "word": "a",
-   "start": 4.28,
-   "end": 4.32
-  },
-  {
-   "word": "dog",
-   "start": 4.4,
-   "end": 4.64
-  },
-  {
-   "word": "park",
-   "start": 4.704,
-   "end": 4.96
+   "word": "photo",
+   "start": 2.373,
+   "end": 2.64
   },
   {
    "word": "and",
-   "start": 5,
-   "end": 5.12
+   "start": 2.68,
+   "end": 2.8
   },
   {
    "word": "a",
-   "start": 5.16,
-   "end": 5.2
+   "start": 2.84,
+   "end": 2.88
   },
   {
-   "word": "doorbell.",
-   "start": 5.248,
+   "word": "short",
+   "start": 2.933,
+   "end": 3.2
+  },
+  {
+   "word": "description:",
+   "start": 3.247,
+   "end": 4.08
+  },
+  {
+   "word": "a",
+   "start": 4.12,
+   "end": 4.16
+  },
+  {
+   "word": "small",
+   "start": 4.227,
+   "end": 4.56
+  },
+  {
+   "word": "tan",
+   "start": 4.64,
+   "end": 4.88
+  },
+  {
+   "word": "terrier,",
+   "start": 4.94,
+   "end": 5.6
+  },
+  {
+   "word": "last",
+   "start": 5.664,
    "end": 5.92
   },
   {
-   "word": "SAM",
-   "start": 6.06,
+   "word": "seen",
+   "start": 5.968,
+   "end": 6.16
+  },
+  {
+   "word": "near",
+   "start": 6.208,
+   "end": 6.4
+  },
+  {
+   "word": "the",
+   "start": 6.42,
    "end": 6.48
   },
   {
-   "word": "3.1",
-   "start": 6.507,
-   "end": 6.64
+   "word": "park.",
+   "start": 6.56,
+   "end": 6.96
   },
   {
-   "word": "tracks",
-   "start": 6.68,
-   "end": 6.88
-  },
-  {
-   "word": "every",
-   "start": 6.92,
-   "end": 7.04
-  },
-  {
-   "word": "animal",
+   "word": "Then",
    "start": 7.12,
-   "end": 7.6
+   "end": 7.76
   },
   {
-   "word": "in",
-   "start": 7.667,
+   "word": "the",
+   "start": 7.82,
    "end": 8
   },
   {
-   "word": "each",
-   "start": 8.057,
-   "end": 8.4
+   "word": "neighbours.",
+   "start": 8.058,
+   "end": 8.88
   },
   {
-   "word": "one.",
-   "start": 8.427,
-   "end": 8.48
+   "word": "I",
+   "start": 9,
+   "end": 9.12
+  },
+  {
+   "word": "upload",
+   "start": 9.177,
+   "end": 9.52
+  },
+  {
+   "word": "two",
+   "start": 9.56,
+   "end": 9.68
+  },
+  {
+   "word": "clips",
+   "start": 9.747,
+   "end": 10.08
+  },
+  {
+   "word": "they",
+   "start": 10.112,
+   "end": 10.24
+  },
+  {
+   "word": "shared:",
+   "start": 10.297,
+   "end": 10.8
+  },
+  {
+   "word": "a",
+   "start": 10.84,
+   "end": 10.88
+  },
+  {
+   "word": "dog",
+   "start": 10.96,
+   "end": 11.2
+  },
+  {
+   "word": "park",
+   "start": 11.28,
+   "end": 11.6
+  },
+  {
+   "word": "and",
+   "start": 11.64,
+   "end": 11.76
+  },
+  {
+   "word": "a",
+   "start": 11.8,
+   "end": 11.84
+  },
+  {
+   "word": "doorbell.",
+   "start": 11.888,
+   "end": 12.72
+  },
+  {
+   "word": "SAM",
+   "start": 12.82,
+   "end": 13.12
+  },
+  {
+   "word": "3.1",
+   "start": 13.16,
+   "end": 13.36
+  },
+  {
+   "word": "tracks",
+   "start": 13.4,
+   "end": 13.6
+  },
+  {
+   "word": "every",
+   "start": 13.66,
+   "end": 13.84
+  },
+  {
+   "word": "animal",
+   "start": 13.909,
+   "end": 14.32
+  },
+  {
+   "word": "in",
+   "start": 14.387,
+   "end": 14.72
+  },
+  {
+   "word": "each",
+   "start": 14.789,
+   "end": 15.2
+  },
+  {
+   "word": "one,",
+   "start": 15.253,
+   "end": 15.36
+  },
+  {
+   "word": "frame",
+   "start": 15.408,
+   "end": 15.6
+  },
+  {
+   "word": "by",
+   "start": 15.68,
+   "end": 16
+  },
+  {
+   "word": "frame.",
+   "start": 16.053,
+   "end": 16.32
+  },
+  {
+   "word": "That",
+   "start": 16.373,
+   "end": 16.48
+  },
+  {
+   "word": "takes",
+   "start": 16.547,
+   "end": 16.96
+  },
+  {
+   "word": "about",
+   "start": 17.088,
+   "end": 17.6
+  },
+  {
+   "word": "forty",
+   "start": 17.627,
+   "end": 17.76
+  },
+  {
+   "word": "seconds",
+   "start": 17.813,
+   "end": 18.08
+  },
+  {
+   "word": "of",
+   "start": 18.12,
+   "end": 18.32
+  },
+  {
+   "word": "real",
+   "start": 18.38,
+   "end": 18.8
+  },
+  {
+   "word": "time,",
+   "start": 18.827,
+   "end": 18.88
+  },
+  {
+   "word": "so",
+   "start": 18.912,
+   "end": 19.04
+  },
+  {
+   "word": "the",
+   "start": 19.136,
+   "end": 19.6
+  },
+  {
+   "word": "waits",
+   "start": 19.68,
+   "end": 19.84
+  },
+  {
+   "word": "are",
+   "start": 19.88,
+   "end": 20
+  },
+  {
+   "word": "sped",
+   "start": 20.053,
+   "end": 20.32
+  },
+  {
+   "word": "up,",
+   "start": 20.36,
+   "end": 20.48
+  },
+  {
+   "word": "and",
+   "start": 20.544,
+   "end": 20.8
+  },
+  {
+   "word": "the",
+   "start": 20.88,
+   "end": 21.2
+  },
+  {
+   "word": "speed",
+   "start": 21.26,
+   "end": 21.44
+  },
+  {
+   "word": "is",
+   "start": 21.46,
+   "end": 21.52
+  },
+  {
+   "word": "always",
+   "start": 21.587,
+   "end": 21.92
+  },
+  {
+   "word": "shown",
+   "start": 21.973,
+   "end": 22.08
+  },
+  {
+   "word": "in",
+   "start": 22.126,
+   "end": 22.4
+  },
+  {
+   "word": "the",
+   "start": 22.467,
+   "end": 22.8
+  },
+  {
+   "word": "corner.",
+   "start": 22.827,
+   "end": 22.88
   }
  ]
 }

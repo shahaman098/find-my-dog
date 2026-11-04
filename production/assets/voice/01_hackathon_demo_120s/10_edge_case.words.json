@@ -1,8 +1,8 @@
 {
  "scene": "10_edge_case",
- "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403. Nothing changes.",
- "spoken": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a four oh three. Nothing changes.",
- "duration": 9.04,
+ "text": "One edge case: someone with only the share link tries to confirm a sighting, as if they were the owner. The server refuses with a 403, and the owner's decision stays exactly as it was.",
+ "spoken": "One edge case: someone with only the share link tries to confirm a sighting, as if they were the owner. The server refuses with a four oh three, and the owner's decision stays exactly as it was.",
+ "duration": 12.16,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -14,18 +14,23 @@
  },
  "words": [
   {
-   "word": "Edge",
+   "word": "One",
    "start": 0,
    "end": 0.16
   },
   {
+   "word": "edge",
+   "start": 0.208,
+   "end": 0.4
+  },
+  {
    "word": "case:",
-   "start": 0.224,
-   "end": 0.56
+   "start": 0.464,
+   "end": 0.8
   },
   {
    "word": "someone",
-   "start": 0.67,
+   "start": 0.88,
    "end": 1.44
   },
   {
@@ -35,12 +40,12 @@
   },
   {
    "word": "only",
-   "start": 1.744,
-   "end": 2
+   "start": 1.76,
+   "end": 2.08
   },
   {
    "word": "the",
-   "start": 2.04,
+   "start": 2.1,
    "end": 2.16
   },
   {
@@ -50,73 +55,138 @@
   },
   {
    "word": "link",
-   "start": 2.528,
-   "end": 2.72
+   "start": 2.544,
+   "end": 2.8
   },
   {
    "word": "tries",
-   "start": 2.787,
+   "start": 2.853,
    "end": 3.12
   },
   {
    "word": "to",
-   "start": 3.147,
-   "end": 3.2
+   "start": 3.173,
+   "end": 3.28
   },
   {
    "word": "confirm",
-   "start": 3.25,
-   "end": 3.6
-  },
-  {
-   "word": "a",
-   "start": 3.64,
+   "start": 3.33,
    "end": 3.68
   },
   {
-   "word": "sighting.",
-   "start": 3.742,
-   "end": 4.4
+   "word": "a",
+   "start": 3.72,
+   "end": 3.76
   },
   {
-   "word": "The",
-   "start": 4.44,
+   "word": "sighting,",
+   "start": 3.831,
    "end": 4.56
   },
   {
+   "word": "as",
+   "start": 4.64,
+   "end": 4.8
+  },
+  {
+   "word": "if",
+   "start": 4.88,
+   "end": 5.04
+  },
+  {
+   "word": "they",
+   "start": 5.072,
+   "end": 5.2
+  },
+  {
+   "word": "were",
+   "start": 5.232,
+   "end": 5.36
+  },
+  {
+   "word": "the",
+   "start": 5.4,
+   "end": 5.52
+  },
+  {
+   "word": "owner.",
+   "start": 5.587,
+   "end": 6.08
+  },
+  {
+   "word": "The",
+   "start": 6.2,
+   "end": 6.56
+  },
+  {
    "word": "server",
-   "start": 4.617,
-   "end": 4.96
+   "start": 6.617,
+   "end": 6.96
   },
   {
    "word": "refuses",
-   "start": 5.04,
-   "end": 5.6
+   "start": 7.06,
+   "end": 7.76
   },
   {
    "word": "with",
-   "start": 5.648,
-   "end": 5.84
+   "start": 7.792,
+   "end": 7.92
   },
   {
    "word": "a",
-   "start": 5.92,
-   "end": 6
+   "start": 8,
+   "end": 8.08
   },
   {
-   "word": "403.",
-   "start": 6.048,
-   "end": 6.88
-  },
-  {
-   "word": "Nothing",
-   "start": 7.02,
-   "end": 8
-  },
-  {
-   "word": "changes.",
-   "start": 8.1,
+   "word": "403,",
+   "start": 8.112,
    "end": 9.04
+  },
+  {
+   "word": "and",
+   "start": 9.06,
+   "end": 9.12
+  },
+  {
+   "word": "the",
+   "start": 9.14,
+   "end": 9.2
+  },
+  {
+   "word": "owner's",
+   "start": 9.267,
+   "end": 9.68
+  },
+  {
+   "word": "decision",
+   "start": 9.733,
+   "end": 10.16
+  },
+  {
+   "word": "stays",
+   "start": 10.227,
+   "end": 10.56
+  },
+  {
+   "word": "exactly",
+   "start": 10.64,
+   "end": 11.2
+  },
+  {
+   "word": "as",
+   "start": 11.28,
+   "end": 11.44
+  },
+  {
+   "word": "it",
+   "start": 11.467,
+   "end": 11.52
+  },
+  {
+   "word": "was.",
+   "start": 11.62,
+   "end": 12.16
   }
  ]
 }

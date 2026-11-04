@@ -1,72 +1,72 @@
 {
-  "film": "01_hackathon_demo_120s",
-  "duration": 120,
-  "scenes": [
-    {
-      "id": "01_hook",
-      "start": 0,
-      "end": 8,
-      "text": "What if every camera on your street could help find a lost dog, without anyone scrubbing through footage?"
-    },
-    {
-      "id": "02_problem",
-      "start": 8,
-      "end": 18,
-      "text": "Today that means knocking on doors, posting in group chats, asking neighbours to rewind. Ring searches Ring cameras. Most streets have a mix."
-    },
-    {
-      "id": "03_reveal",
-      "start": 18,
-      "end": 28,
-      "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app."
-    },
-    {
-      "id": "04_clean_state",
-      "start": 28,
-      "end": 40,
-      "text": "I'm starting a brand-new report on a local Worker running this code against the live Meta API. Health shows real models, not mock mode, and nothing is preloaded."
-    },
-    {
-      "id": "05_live_action",
-      "start": 40,
-      "end": 56,
-      "text": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM 3.1 tracks every animal in each one."
-    },
-    {
-      "id": "06_process",
-      "start": 56,
-      "end": 70,
-      "text": "Each clip goes onto a Cloudflare queue. The Worker sends it to SAM 3.1, then Muse Spark compares every tracked animal with Biscuit's photo. This is the real request and response."
-    },
-    {
-      "id": "07_result",
-      "start": 70,
-      "end": 82,
-      "text": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored."
-    },
-    {
-      "id": "08_architecture",
-      "start": 82,
-      "end": 94,
-      "text": "Under the hood: a React app, a Cloudflare Worker, D1, R2 and a queue. Our key decision: the owner confirms every match, not the model."
-    },
-    {
-      "id": "09_tests",
-      "start": 94,
-      "end": 105,
-      "text": "These are real runs: unit tests, an end-to-end test, and a benchmark on real footage where the right dog ranked first nine times out of nine."
-    },
-    {
-      "id": "10_edge_case",
-      "start": 105,
-      "end": 115,
-      "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403. Nothing changes."
-    },
-    {
-      "id": "11_close",
-      "start": 115,
-      "end": 120,
-      "text": "The evidence is in the repo. Find My Dog."
-    }
-  ]
+ "film": "01_hackathon_demo_120s",
+ "duration": 180,
+ "scenes": [
+  {
+   "id": "01_hook",
+   "start": 0,
+   "end": 10,
+   "text": "What if every camera on your street could help find a lost dog, in minutes, without anyone scrubbing through hours of footage?"
+  },
+  {
+   "id": "02_problem",
+   "start": 10,
+   "end": 24,
+   "text": "When a dog goes missing today, that means knocking on doors, posting in group chats, and asking neighbours to rewind their cameras. Ring searches Ring cameras, but only Ring. Most streets have a mix."
+  },
+  {
+   "id": "03_reveal",
+   "start": 24,
+   "end": 36,
+   "text": "This is Find My Dog. It searches footage from any camera, for any pet, and the owner stays in control. Neighbours choose what to share. Here's the real app, recorded in one take."
+  },
+  {
+   "id": "04_clean_state",
+   "start": 36,
+   "end": 52,
+   "text": "I'm starting a brand-new report on a local Worker, running this code against the live Meta API. Health shows real models, not mock mode. There are no saved reports, and nothing is preloaded, so everything you see happens in this take."
+  },
+  {
+   "id": "05_live_action",
+   "start": 52,
+   "end": 80,
+   "text": "First, the owner. I add Biscuit's photo and a short description: a small tan terrier, last seen near the park. Then the neighbours. I upload two clips they shared: a dog park and a doorbell. SAM 3.1 tracks every animal in each one, frame by frame. That takes about forty seconds of real time, so the waits are sped up, and the speed is always shown in the corner."
+  },
+  {
+   "id": "06_process",
+   "start": 80,
+   "end": 102,
+   "text": "Each clip goes onto a Cloudflare queue. The Worker sends it to SAM 3.1, then Muse Spark compares every tracked animal with Biscuit's photo, looking at coat, colour, size and markings, never at people. On the right are the real requests from this take, including the match call and Spark's answer."
+  },
+  {
+   "id": "07_result",
+   "start": 102,
+   "end": 126,
+   "text": "Biscuit ranks first, and Spark explains why, in plain words. The owner stays in charge: I confirm her, and only then does Spark's tool loop write a search plan for where to look next, and call Muse Image to make a poster for the street. Reloading the page proves it's all stored."
+  },
+  {
+   "id": "08_architecture",
+   "start": 126,
+   "end": 144,
+   "text": "Under the hood, it's simple: a React app, one Cloudflare Worker, D1 for reports, R2 for clips, and a queue, so slow video jobs never block the page. Our key design decision: the owner confirms every match, not the model. The AI suggests; a person decides."
+  },
+  {
+   "id": "09_tests",
+   "start": 144,
+   "end": 160,
+   "text": "None of this is staged. These are real, recorded runs: all twelve unit tests passing, an end-to-end test of the whole flow, and a benchmark on real footage, where the right dog ranked first nine times out of nine."
+  },
+  {
+   "id": "10_edge_case",
+   "start": 160,
+   "end": 175,
+   "text": "One edge case: someone with only the share link tries to confirm a sighting, as if they were the owner. The server refuses with a 403, and the owner's decision stays exactly as it was."
+  },
+  {
+   "id": "11_close",
+   "start": 175,
+   "end": 180,
+   "text": "The evidence is in the repo. Find My Dog."
+  }
+ ]
 }

@@ -1,8 +1,8 @@
 {
  "scene": "08_architecture",
- "text": "Under the hood: a React app, a Cloudflare Worker, D1, R2 and a queue. Our key decision: the owner confirms every match, not the model.",
- "spoken": "Under the hood: a React app, a Cloudflare Worker, D one, R two and a queue. Our key decision: the owner confirms every match, not the model.",
- "duration": 10.08,
+ "text": "Under the hood, it's simple: a React app, one Cloudflare Worker, D1 for reports, R2 for clips, and a queue, so slow video jobs never block the page. Our key design decision: the owner confirms every match, not the model. The AI suggests; a person decides.",
+ "spoken": "Under the hood, it's simple: a React app, one Cloudflare Worker, D one for reports, R two for clips, and a queue, so slow video jobs never block the page. Our key design decision: the owner confirms every match, not the model. The AI suggests; a person decides.",
+ "duration": 16.8,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -20,123 +20,228 @@
   },
   {
    "word": "the",
-   "start": 0.2,
-   "end": 0.32
+   "start": 0.18,
+   "end": 0.24
   },
   {
-   "word": "hood:",
-   "start": 0.368,
+   "word": "hood,",
+   "start": 0.288,
    "end": 0.64
   },
   {
-   "word": "a",
-   "start": 0.8,
-   "end": 0.96
+   "word": "it's",
+   "start": 0.667,
+   "end": 0.8
   },
   {
-   "word": "React",
-   "start": 1.027,
+   "word": "simple:",
+   "start": 0.846,
+   "end": 1.28
+  },
+  {
+   "word": "a",
+   "start": 1.32,
    "end": 1.36
   },
   {
+   "word": "React",
+   "start": 1.427,
+   "end": 1.76
+  },
+  {
    "word": "app,",
-   "start": 1.44,
-   "end": 1.84
+   "start": 1.82,
+   "end": 2.16
   },
   {
-   "word": "a",
-   "start": 1.88,
-   "end": 1.92
-  },
-  {
-   "word": "Cloudflare",
-   "start": 1.973,
+   "word": "one",
+   "start": 2.22,
    "end": 2.4
   },
   {
-   "word": "Worker,",
-   "start": 2.469,
-   "end": 2.96
+   "word": "Cloudflare",
+   "start": 2.453,
+   "end": 2.88
   },
   {
-   "word": "D1,",
-   "start": 3.16,
-   "end": 3.84
+   "word": "Worker,",
+   "start": 2.937,
+   "end": 3.52
+  },
+  {
+   "word": "D1",
+   "start": 3.64,
+   "end": 4
+  },
+  {
+   "word": "for",
+   "start": 4.04,
+   "end": 4.16
+  },
+  {
+   "word": "reports,",
+   "start": 4.23,
+   "end": 4.88
   },
   {
    "word": "R2",
-   "start": 4,
-   "end": 4.32
+   "start": 5.04,
+   "end": 5.44
   },
   {
-   "word": "and",
-   "start": 4.38,
-   "end": 4.56
+   "word": "for",
+   "start": 5.48,
+   "end": 5.6
   },
   {
-   "word": "a",
-   "start": 4.64,
-   "end": 4.72
-  },
-  {
-   "word": "queue.",
-   "start": 4.76,
-   "end": 5.76
-  },
-  {
-   "word": "Our",
-   "start": 5.82,
-   "end": 6
-  },
-  {
-   "word": "key",
-   "start": 6.04,
+   "word": "clips,",
+   "start": 5.68,
    "end": 6.16
   },
   {
-   "word": "decision:",
-   "start": 6.222,
-   "end": 7.2
+   "word": "and",
+   "start": 6.2,
+   "end": 6.32
   },
   {
-   "word": "the",
-   "start": 7.22,
-   "end": 7.28
+   "word": "a",
+   "start": 6.36,
+   "end": 6.4
   },
   {
-   "word": "owner",
-   "start": 7.347,
-   "end": 7.68
+   "word": "queue,",
+   "start": 6.467,
+   "end": 6.88
   },
   {
-   "word": "confirms",
-   "start": 7.742,
+   "word": "so",
+   "start": 6.96,
+   "end": 7.12
+  },
+  {
+   "word": "slow",
+   "start": 7.2,
+   "end": 7.52
+  },
+  {
+   "word": "video",
+   "start": 7.573,
+   "end": 7.84
+  },
+  {
+   "word": "jobs",
+   "start": 7.92,
    "end": 8.24
   },
   {
-   "word": "every",
-   "start": 8.28,
-   "end": 8.48
+   "word": "never",
+   "start": 8.307,
+   "end": 8.64
   },
   {
-   "word": "match,",
-   "start": 8.547,
-   "end": 9.12
-  },
-  {
-   "word": "not",
-   "start": 9.18,
-   "end": 9.36
+   "word": "block",
+   "start": 8.693,
+   "end": 8.96
   },
   {
    "word": "the",
-   "start": 9.42,
+   "start": 8.98,
+   "end": 9.04
+  },
+  {
+   "word": "page.",
+   "start": 9.12,
    "end": 9.6
   },
   {
-   "word": "model.",
-   "start": 9.653,
+   "word": "Our",
+   "start": 9.64,
+   "end": 9.76
+  },
+  {
+   "word": "key",
+   "start": 9.84,
    "end": 10.08
+  },
+  {
+   "word": "design",
+   "start": 10.126,
+   "end": 10.4
+  },
+  {
+   "word": "decision:",
+   "start": 10.453,
+   "end": 11.04
+  },
+  {
+   "word": "the",
+   "start": 11.06,
+   "end": 11.12
+  },
+  {
+   "word": "owner",
+   "start": 11.2,
+   "end": 11.6
+  },
+  {
+   "word": "confirms",
+   "start": 11.662,
+   "end": 12.16
+  },
+  {
+   "word": "every",
+   "start": 12.213,
+   "end": 12.48
+  },
+  {
+   "word": "match,",
+   "start": 12.56,
+   "end": 13.12
+  },
+  {
+   "word": "not",
+   "start": 13.2,
+   "end": 13.44
+  },
+  {
+   "word": "the",
+   "start": 13.48,
+   "end": 13.6
+  },
+  {
+   "word": "model.",
+   "start": 13.667,
+   "end": 14.16
+  },
+  {
+   "word": "The",
+   "start": 14.2,
+   "end": 14.32
+  },
+  {
+   "word": "AI",
+   "start": 14.427,
+   "end": 14.64
+  },
+  {
+   "word": "suggests;",
+   "start": 14.711,
+   "end": 15.4
+  },
+  {
+   "word": "a",
+   "start": 15.46,
+   "end": 15.52
+  },
+  {
+   "word": "person",
+   "start": 15.589,
+   "end": 16
+  },
+  {
+   "word": "decides.",
+   "start": 16.08,
+   "end": 16.8
   }
  ]
 }

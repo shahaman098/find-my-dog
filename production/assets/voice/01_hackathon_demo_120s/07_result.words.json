@@ -1,8 +1,8 @@
 {
  "scene": "07_result",
- "text": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.",
- "spoken": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.",
- "duration": 10,
+ "text": "Biscuit ranks first, and Spark explains why, in plain words. The owner stays in charge: I confirm her, and only then does Spark's tool loop write a search plan for where to look next, and call Muse Image to make a poster for the street. Reloading the page proves it's all stored.",
+ "spoken": "Biscuit ranks first, and Spark explains why, in plain words. The owner stays in charge: I confirm her, and only then does Spark's tool loop write a search plan for where to look next, and call Muse Image to make a poster for the street. Reloading the page proves it's all stored.",
+ "duration": 19.68,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -16,142 +16,262 @@
   {
    "word": "Biscuit",
    "start": 0,
-   "end": 0.32
+   "end": 0.48
   },
   {
    "word": "ranks",
-   "start": 0.36,
-   "end": 0.56
+   "start": 0.547,
+   "end": 0.88
   },
   {
    "word": "first,",
-   "start": 0.64,
-   "end": 1.2
+   "start": 0.973,
+   "end": 1.68
   },
   {
-   "word": "with",
-   "start": 1.232,
-   "end": 1.36
-  },
-  {
-   "word": "Spark's",
-   "start": 1.427,
+   "word": "and",
+   "start": 1.72,
    "end": 1.84
   },
   {
-   "word": "reasons.",
-   "start": 1.91,
-   "end": 2.72
+   "word": "Spark",
+   "start": 1.893,
+   "end": 2.16
   },
   {
-   "word": "I",
-   "start": 2.84,
-   "end": 2.96
+   "word": "explains",
+   "start": 2.213,
+   "end": 2.64
   },
   {
-   "word": "confirm",
-   "start": 3.02,
-   "end": 3.44
+   "word": "why,",
+   "start": 2.76,
+   "end": 3.2
   },
   {
-   "word": "her,",
-   "start": 3.48,
-   "end": 3.84
+   "word": "in",
+   "start": 3.253,
+   "end": 3.36
   },
   {
-   "word": "and",
-   "start": 3.88,
-   "end": 4
+   "word": "plain",
+   "start": 3.413,
+   "end": 3.68
   },
   {
-   "word": "Spark's",
-   "start": 4.053,
-   "end": 4.4
+   "word": "words.",
+   "start": 3.76,
+   "end": 4.48
   },
   {
-   "word": "tool",
-   "start": 4.448,
-   "end": 4.64
-  },
-  {
-   "word": "loop",
-   "start": 4.704,
+   "word": "The",
+   "start": 4.6,
    "end": 4.96
   },
   {
-   "word": "writes",
-   "start": 4.994,
-   "end": 5.2
+   "word": "owner",
+   "start": 5.027,
+   "end": 5.36
   },
   {
-   "word": "a",
-   "start": 5.24,
-   "end": 5.28
+   "word": "stays",
+   "start": 5.427,
+   "end": 5.76
   },
   {
-   "word": "search",
-   "start": 5.326,
-   "end": 5.6
+   "word": "in",
+   "start": 5.787,
+   "end": 5.84
   },
   {
-   "word": "plan",
-   "start": 5.68,
-   "end": 6
+   "word": "charge:",
+   "start": 5.931,
+   "end": 6.72
+  },
+  {
+   "word": "I",
+   "start": 6.8,
+   "end": 6.88
+  },
+  {
+   "word": "confirm",
+   "start": 6.94,
+   "end": 7.36
+  },
+  {
+   "word": "her,",
+   "start": 7.46,
+   "end": 7.92
   },
   {
    "word": "and",
-   "start": 6.04,
-   "end": 6.16
+   "start": 7.94,
+   "end": 8
   },
   {
-   "word": "calls",
-   "start": 6.213,
-   "end": 6.48
+   "word": "only",
+   "start": 8.08,
+   "end": 8.4
   },
   {
-   "word": "Muse",
-   "start": 6.544,
-   "end": 6.8
-  },
-  {
-   "word": "Image",
-   "start": 6.853,
-   "end": 7.12
-  },
-  {
-   "word": "for",
-   "start": 7.14,
-   "end": 7.2
-  },
-  {
-   "word": "a",
-   "start": 7.24,
-   "end": 7.28
-  },
-  {
-   "word": "poster.",
-   "start": 7.36,
-   "end": 8.08
-  },
-  {
-   "word": "Reloading",
-   "start": 8.22,
+   "word": "then",
+   "start": 8.496,
    "end": 8.88
   },
   {
+   "word": "does",
+   "start": 8.912,
+   "end": 9.04
+  },
+  {
+   "word": "Spark's",
+   "start": 9.107,
+   "end": 9.52
+  },
+  {
+   "word": "tool",
+   "start": 9.584,
+   "end": 9.84
+  },
+  {
+   "word": "loop",
+   "start": 9.904,
+   "end": 10.16
+  },
+  {
+   "word": "write",
+   "start": 10.2,
+   "end": 10.4
+  },
+  {
+   "word": "a",
+   "start": 10.48,
+   "end": 10.56
+  },
+  {
+   "word": "search",
+   "start": 10.606,
+   "end": 10.88
+  },
+  {
+   "word": "plan",
+   "start": 10.96,
+   "end": 11.28
+  },
+  {
+   "word": "for",
+   "start": 11.32,
+   "end": 11.44
+  },
+  {
+   "word": "where",
+   "start": 11.493,
+   "end": 11.76
+  },
+  {
+   "word": "to",
+   "start": 11.813,
+   "end": 11.92
+  },
+  {
+   "word": "look",
+   "start": 11.952,
+   "end": 12.08
+  },
+  {
+   "word": "next,",
+   "start": 12.176,
+   "end": 13.04
+  },
+  {
+   "word": "and",
+   "start": 13.06,
+   "end": 13.12
+  },
+  {
+   "word": "call",
+   "start": 13.184,
+   "end": 13.44
+  },
+  {
+   "word": "Muse",
+   "start": 13.52,
+   "end": 13.84
+  },
+  {
+   "word": "Image",
+   "start": 13.92,
+   "end": 14.32
+  },
+  {
+   "word": "to",
+   "start": 14.373,
+   "end": 14.48
+  },
+  {
+   "word": "make",
+   "start": 14.512,
+   "end": 14.64
+  },
+  {
+   "word": "a",
+   "start": 14.78,
+   "end": 14.92
+  },
+  {
+   "word": "poster",
+   "start": 14.96,
+   "end": 15.2
+  },
+  {
+   "word": "for",
+   "start": 15.24,
+   "end": 15.36
+  },
+  {
+   "word": "the",
+   "start": 15.38,
+   "end": 15.44
+  },
+  {
+   "word": "street.",
+   "start": 15.509,
+   "end": 16.08
+  },
+  {
+   "word": "Reloading",
+   "start": 16.26,
+   "end": 17.04
+  },
+  {
+   "word": "the",
+   "start": 17.06,
+   "end": 17.12
+  },
+  {
+   "word": "page",
+   "start": 17.232,
+   "end": 17.68
+  },
+  {
    "word": "proves",
-   "start": 8.926,
-   "end": 9.2
+   "start": 17.771,
+   "end": 18.32
   },
   {
    "word": "it's",
-   "start": 9.227,
-   "end": 9.44
+   "start": 18.4,
+   "end": 18.64
+  },
+  {
+   "word": "all",
+   "start": 18.72,
+   "end": 18.96
   },
   {
    "word": "stored.",
-   "start": 9.497,
-   "end": 10
+   "start": 19.04,
+   "end": 19.68
   }
  ]
 }

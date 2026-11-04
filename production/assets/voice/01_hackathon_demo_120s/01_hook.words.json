@@ -1,8 +1,8 @@
 {
  "scene": "01_hook",
- "text": "What if every camera on your street could help find a lost dog, without anyone scrubbing through footage?",
- "spoken": "What if every camera on your street could help find a lost dog, without anyone scrubbing through footage?",
- "duration": 5.2,
+ "text": "What if every camera on your street could help find a lost dog, in minutes, without anyone scrubbing through hours of footage?",
+ "spoken": "What if every camera on your street could help find a lost dog, in minutes, without anyone scrubbing through hours of footage?",
+ "duration": 7.52,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -16,92 +16,112 @@
   {
    "word": "What",
    "start": 0,
-   "end": 0.08
+   "end": 0.16
   },
   {
    "word": "if",
-   "start": 0.16,
-   "end": 0.32
+   "start": 0.24,
+   "end": 0.4
   },
   {
    "word": "every",
-   "start": 0.373,
-   "end": 0.64
+   "start": 0.467,
+   "end": 0.8
   },
   {
    "word": "camera",
-   "start": 0.697,
-   "end": 1.04
-  },
-  {
-   "word": "on",
-   "start": 1.067,
-   "end": 1.12
-  },
-  {
-   "word": "your",
-   "start": 1.152,
+   "start": 0.869,
    "end": 1.28
   },
   {
+   "word": "on",
+   "start": 1.307,
+   "end": 1.36
+  },
+  {
+   "word": "your",
+   "start": 1.408,
+   "end": 1.6
+  },
+  {
    "word": "street",
-   "start": 1.337,
-   "end": 1.68
+   "start": 1.657,
+   "end": 2
   },
   {
    "word": "could",
-   "start": 1.72,
-   "end": 1.92
+   "start": 2.04,
+   "end": 2.24
   },
   {
    "word": "help",
-   "start": 1.968,
-   "end": 2.16
-  },
-  {
-   "word": "find",
-   "start": 2.208,
-   "end": 2.4
-  },
-  {
-   "word": "a",
-   "start": 2.44,
+   "start": 2.288,
    "end": 2.48
   },
   {
-   "word": "lost",
+   "word": "find",
    "start": 2.544,
    "end": 2.8
   },
   {
-   "word": "dog,",
-   "start": 2.88,
+   "word": "a",
+   "start": 2.84,
+   "end": 2.88
+  },
+  {
+   "word": "lost",
+   "start": 2.96,
    "end": 3.28
   },
   {
-   "word": "without",
-   "start": 3.31,
-   "end": 3.52
+   "word": "dog,",
+   "start": 3.36,
+   "end": 3.84
   },
   {
-   "word": "anyone",
-   "start": 3.589,
+   "word": "in",
+   "start": 3.893,
    "end": 4
   },
   {
+   "word": "minutes,",
+   "start": 4.07,
+   "end": 4.72
+  },
+  {
+   "word": "without",
+   "start": 4.76,
+   "end": 5.04
+  },
+  {
+   "word": "anyone",
+   "start": 5.097,
+   "end": 5.44
+  },
+  {
    "word": "scrubbing",
-   "start": 4.053,
-   "end": 4.48
+   "start": 5.507,
+   "end": 6
   },
   {
    "word": "through",
-   "start": 4.5,
-   "end": 4.64
+   "start": 6.03,
+   "end": 6.24
+  },
+  {
+   "word": "hours",
+   "start": 6.307,
+   "end": 6.64
+  },
+  {
+   "word": "of",
+   "start": 6.693,
+   "end": 6.8
   },
   {
    "word": "footage?",
-   "start": 4.7,
-   "end": 5.2
+   "start": 6.86,
+   "end": 7.52
   }
  ]
 }
