@@ -1,7 +1,9 @@
 # CV Submission — pre-drafted answers
 
 **Submit at:** https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/submit
-**Deadline:** Wed Nov 4, 9:00 PM ET per our notes, but one public listing says **5 Nov 06:30 IST = 01:00 GMT / 8:00 PM ET**. Plan for the earlier one. **Target: submit by 5 PM ET (22:00 GMT).**
+**Deadline (official event page):** Wed Nov 4, **9:00 PM ET = 02:00 GMT Nov 5**. **Target: submit by 5 PM ET (22:00 GMT).** Judging Nov 4–8; **live finals + winners at the closing ceremony on Nov 9**, so be ready to pitch live.
+
+**Track:** official wording is *Indie: "for individual builders and students", judged on creativity, technical ambition, and whether it works* vs *Startup: "for teams and founders building a real product", judged on technical execution and whether it holds up in production*. Solo entry → **enter Indie** ("for individual builders and students"; check the rules page before submitting).
 
 ## Checklist before submitting
 
@@ -15,8 +17,14 @@
 - [ ] Video shows only work built during the event
 - [ ] Music: royalty-free license saved to `video/MUSIC-LICENSE.md`
 - [ ] Contributor listed: Aman Kumar Sah
-- [ ] X demo post link submitted in the form (engagement counts through Nov 8 EOD)
+- [ ] X demo post link submitted in the form if the form asks (an engagement prize is **not** listed on the official page; don't rely on it)
 - [ ] Credits claimed individually (card + $150 spend limit) — deadline is the same moment
+
+## How we meet the Indie judging criteria (use these words in the form and the video)
+
+- **Creativity:** lost-pet search over the footage a street *already* has. It appears in no published idea list for this hackathon, and the only shipped camera-based product (Ring) is single-brand, dogs-only and default-on.
+- **Technical ambition:** SAM 3.1 video tracking with persistent IDs → Muse Spark structured matching → Spark tool loop that calls Muse Image, on Cloudflare Workers + D1 + R2 + Queues, with an owner-token access model.
+- **Whether it works:** deployed live; measured on real footage (true pet ranked #1 9/9, 92% accuracy, identity held through a blackout, 21/21 correct through the real UI) with screenshots, logs and failures in `EVIDENCE.md`.
 
 ## Pre-drafted answers
 
