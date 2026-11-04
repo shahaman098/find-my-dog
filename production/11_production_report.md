@@ -2,7 +2,7 @@
 
 Covers how Films 1–3 were made, the QA gate each one passed, what that gate caught, and what the films disclose. Companion documents: `08_architecture_diagram.svg`, `09_evidence_manifest.md` (claim → evidence), `10_script_and_timeline.md` (narration, time maps, take events).
 
-Source revision for the take and the final renders: `bca5498` (Film 1, Film 3) and `87046af` (Film 2). All three films were final and delivered at 20:00 GMT on 4 Nov 2026.
+Source revision for the take and the final renders: `fbeb8df` (Film 1, Film 3) and `ff51bd0` (Film 2). All three films were final and delivered at 20:00 GMT on 4 Nov 2026.
 
 ## Deliverables
 
@@ -56,16 +56,16 @@ The `--allow-black` range used for the delivered Film 3 was passed by hand and n
 
 | Film | QA failure | Fix (commit) |
 |---|---|---|
-| 1 | Frozen stretch > 4 s while waiting for SAM: the word "SAM" was anchored to clip upload, not to when tracking began | Anchor moved to `clip_cards_visible`, the real start of tracking. No cuts, no slow motion (`2546f58`) |
-| 3 | Held UI frame read as frozen | Slow camera push kept on the held UI; real frames unchanged (`bca5498`) |
-| 3 | Intentional black opening and end card failed the black check | `qa.py --allow-black` for named ranges only, so any other black still fails (`bca5498`) |
-| 2 | Held evidence panels read as frozen | Slow camera push across evidence scenes (`87046af`) |
+| 1 | Frozen stretch > 4 s while waiting for SAM: the word "SAM" was anchored to clip upload, not to when tracking began | Anchor moved to `clip_cards_visible`, the real start of tracking. No cuts, no slow motion (`b1d8c29`) |
+| 3 | Held UI frame read as frozen | Slow camera push kept on the held UI; real frames unchanged (`fbeb8df`) |
+| 3 | Intentional black opening and end card failed the black check | `qa.py --allow-black` for named ranges only, so any other black still fails (`fbeb8df`) |
+| 2 | Held evidence panels read as frozen | Slow camera push across evidence scenes (`ff51bd0`) |
 
 ### Other measured fixes before final
 
-- **Narration buried under music.** Music sat only ~2.6 LU below the voice. The voice-first remix (music -13 dB, speech-band cut, harder ducking, voice presence) measured 16.4 / 15.2 / 15.7 LU of separation for Films 1 / 2 / 3 (`a753161`).
-- **Cursor.** Headless automation does not move the OS cursor. The capture now draws a real-style arrow / hand / I-beam taken from the page's CSS, driven by the real input events (`8ef60af`).
-- **Scene 04 narration re-locked.** It originally said "on the deployed site". The take was recorded on a local Worker (same commit, live Meta API), so the line was changed to say that. No other line changed (`d46cbc0`).
+- **Narration buried under music.** Music sat only ~2.6 LU below the voice. The voice-first remix (music -13 dB, speech-band cut, harder ducking, voice presence) measured 16.4 / 15.2 / 15.7 LU of separation for Films 1 / 2 / 3 (`d5cad5e`).
+- **Cursor.** Headless automation does not move the OS cursor. The capture now draws a real-style arrow / hand / I-beam taken from the page's CSS, driven by the real input events (`81b859e`).
+- **Scene 04 narration re-locked.** It originally said "on the deployed site". The take was recorded on a local Worker (same commit, live Meta API), so the line was changed to say that. No other line changed (`88634bb`).
 
 ### Narration fit
 
