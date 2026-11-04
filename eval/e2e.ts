@@ -40,6 +40,10 @@ async function main() {
   const report = await j<any>(await fetch(`${BASE}/api/reports`, { method: 'POST', body: form }))
   assert(!!report.report_id, `report created ${report.report_id}`)
   assert(!!report.pet.photo_url, 'pet photo stored')
+  assert(typeof report.owner_token === 'string' && report.owner_token.length >= 32, 'owner token issued at creation')
+  const OWN = { 'X-Owner-Token': report.owner_token }
+  const pub = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}`))
+  assert(!('owner_token' in pub), 'owner token never returned by GET')
 
   // 2. upload fixture clip (if present) and wait for the pipeline
   const clipPath = fileURLToPath(new URL('./fixtures/dog_clip.mp4', import.meta.url))
@@ -66,22 +70,26 @@ async function main() {
     console.log('skip clip upload: no fixture')
   }
 
-  // 3. match
-  const afterMatch = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}/match`, { method: 'POST' }))
+  // 3. match (owner-only: a stranger with the share link is refused)
+  const stranger = await fetch(`${BASE}/api/reports/${report.report_id}/match`, { method: 'POST', headers: { 'X-Owner-Token': 'nope' } })
+  assert(stranger.status === 403, 'non-owner cannot run matcher', `got ${stranger.status}`)
+  const afterMatch = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}/match`, { method: 'POST', headers: OWN }))
   assert(Array.isArray(afterMatch.matches) && afterMatch.matches.length > 0, `matches produced (${afterMatch.matches.length})`)
 
   // 4. confirm the best match
   const best = afterMatch.matches.find((m: any) => m.is_match) ?? afterMatch.matches[0]
   await j(await fetch(`${BASE}/api/reports/${report.report_id}/matches/confirm`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...OWN },
     body: JSON.stringify({ clip_id: best.clip_id, object_id: best.object_id, confirmed: true }),
   }))
   const s2 = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}`))
   assert(s2.matches.some((m: any) => m.confirmed === true), 'match confirmed')
+  const rematch = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}/match`, { method: 'POST', headers: OWN }))
+  assert(rematch.matches.some((m: any) => m.confirmed === true), 're-running matcher keeps confirmations')
 
   // 5. analyze (tool loop in real mode; canned in mock)
-  const analysis = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}/analyze`, { method: 'POST' }))
+  const analysis = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}/analyze`, { method: 'POST', headers: OWN }))
   assert(!!analysis.next_search?.headline, `search plan: "${analysis.next_search?.headline}"`)
   assert(!!analysis.poster, 'poster generated')
 
@@ -92,6 +100,19 @@ async function main() {
   assert(poster.ok, 'poster fetchable')
   const photo = await fetch(`${BASE}${report.pet.photo_url}`)
   assert(photo.ok, 'pet photo fetchable')
+  const s3 = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}`))
+  assert(s3.poster_url === tl.poster, 'owner view exposes poster_url')
+
+  // 7. the seeded demo report is read-only for everyone
+  const demo = await j<any>(await fetch(`${BASE}/api/demo`))
+  if (demo.id) {
+    const d = await fetch(`${BASE}/api/reports/${demo.id}/analyze`, { method: 'POST' })
+    assert(d.status === 403, 'demo report is read-only', `got ${d.status}`)
+    const dc = await fetch(`${BASE}/api/reports/${demo.id}/clips`, { method: 'POST', body: new FormData() })
+    assert(dc.status === 403, 'demo report refuses new clips', `got ${dc.status}`)
+  } else {
+    console.log('skip demo read-only check: no seeded demo report on this deployment')
+  }
 
   console.log(`\nE2E PASS (${health.mock ? 'mock' : 'real'} mode) — search cost so far: $${tl.cost?.usd ?? 0}`)
 }

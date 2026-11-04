@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            web/package-lock.json
+
+      - name: Install
+        run: |
+          npm ci
+          npm ci --prefix web
+
+      - name: Typecheck worker
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build web
+        run: npm run build --prefix web
+
+      - name: Synthesise fixtures
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          ffmpeg -loglevel error -f lavfi -i color=c=tan:s=400x300 -frames:v 1 eval/fixtures/pet.jpg
+          ffmpeg -loglevel error -f lavfi -i testsrc=size=320x240:rate=10 -t 3 -pix_fmt yuv420p -movflags +faststart eval/fixtures/dog_clip.mp4
+
+      - name: E2E (mock mode, local Worker)
+        run: |
+          npx wrangler dev --local --port 8787 --var FMD_MOCK:1 > wrangler.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf localhost:8787/api/health && break; sleep 2; done
+          node eval/e2e.ts http://localhost:8787
+
+      - name: Worker log on failure
+        if: failure()
+        run: tail -100 wrangler.log || true

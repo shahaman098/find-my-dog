@@ -240,6 +240,10 @@ a.pill:hover, button.pill:hover { border-color: var(--blue); color: var(--blue);
 }
 .chipbtn { cursor: pointer; }
 .chipbtn:hover { border-color: var(--blue); color: var(--blue); }
+.chipbtn:disabled { cursor: default; }
+.chipbtn:disabled:hover { border-color: var(--line); color: inherit; }
+.banner { margin: 0 0 16px; padding: 12px 16px; border-radius: 16px; background: var(--blue-soft); color: var(--ink); border: 1px solid var(--line); font-size: 14px; }
+.banner a { color: var(--blue); font-weight: 600; }
 .okchip { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
 .st-queued { background: var(--amber-soft); border-color: var(--amber); color: var(--amber); }
 .st-uploading, .st-tracking, .st-extracting { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }

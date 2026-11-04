@@ -1,9 +1,11 @@
 import { Hono } from 'hono'
+import { createMiddleware } from 'hono/factory'
 import type { Clip, Env, MatchVerdict, PipelineMessage, ReportState, Sighting } from './types'
 import { createState, readState, updateState } from './store'
 import { emptyCost, addCost } from './cost'
 import { mockTracks, mockTranscript, mockMatch, mockPlan, MOCK_POSTER_SVG } from './mock'
 import { trackVideo, sparkStructured, glimmerStructured, toolLoop, transcribe, generatePoster, type ContentPart } from './meta'
+import { byClock } from './clock'
 
 const app = new Hono<{ Bindings: Env }>()
 
@@ -14,16 +16,53 @@ function mockMode(env: Env): boolean {
   return env.FMD_MOCK === '1' || !env.META_API_KEY
 }
 
-function newId(): string {
-  const a = new Uint8Array(6)
+function randomHex(bytes: number): string {
+  const a = new Uint8Array(bytes)
   crypto.getRandomValues(a)
   return [...a].map((b) => b.toString(16).padStart(2, '0')).join('')
 }
+
+const newId = () => randomHex(6)
+
+/** Cloudflare's request-body ceiling on Free/Pro plans; reject earlier with a readable error. */
+const MAX_UPLOAD_BYTES = 100 * 1024 * 1024
+
+/** Who may change a report:
+ *  - the seeded demo report is read-only for everyone (judges can't break it, or burn credits on it);
+ *  - owner-only actions need the X-Owner-Token issued at creation (legacy reports without one stay open);
+ *  - anyone holding the neighbor link may add a clip. */
+function ownerTokenMatches(expected: string, given: string | undefined): boolean {
+  if (!given) return false
+  const a = new TextEncoder().encode(expected)
+  const b = new TextEncoder().encode(given)
+  return a.byteLength === b.byteLength && crypto.subtle.timingSafeEqual(a, b)
+}
+
+const notDemo = createMiddleware<{ Bindings: Env }>(async (c, next) => {
+  if (c.env.DEMO_REPORT_ID && c.req.param('id') === c.env.DEMO_REPORT_ID) {
+    return c.json({ error: 'This is the read-only demo report. Start your own report to run the full pipeline.' }, 403)
+  }
+  await next()
+})
+
+const ownerOnly = createMiddleware<{ Bindings: Env }>(async (c, next) => {
+  const id = c.req.param('id') ?? ''
+  if (c.env.DEMO_REPORT_ID && id === c.env.DEMO_REPORT_ID) {
+    return c.json({ error: 'This is the read-only demo report. Start your own report to run the full pipeline.' }, 403)
+  }
+  const s = await readState(c.env.DB, id)
+  if (!s) return c.json({ error: 'report not found' }, 404)
+  if (s.owner_token && !ownerTokenMatches(s.owner_token, c.req.header('X-Owner-Token'))) {
+    return c.json({ error: 'Only the owner can do this. Open the report on the device that filed it.' }, 403)
+  }
+  await next()
+})
 
 function freshState(reportId: string): ReportState {
   return {
     report_id: reportId,
     created_at: Date.now(),
+    owner_token: randomHex(16),
     pet: { name: '', species: 'dog', description: '', photo_key: '' },
     transcript: null,
     transcript_error: null,
@@ -46,9 +85,10 @@ app.post('/api/reports', async (c) => {
   state.pet.species = String(form.get('species') ?? 'dog')
   state.pet.description = String(form.get('description') ?? '')
   const photo = form.get('photo') as File | null
-  if (!photo) return c.json({ error: 'photo required' }, 400)
+  if (!photo || photo.size === 0) return c.json({ error: 'photo required' }, 400)
+  if (photo.type && !photo.type.startsWith('image/')) return c.json({ error: 'photo must be an image' }, 400)
   state.pet.photo_key = `${state.report_id}/pet_photo.jpg`
-  await c.env.MEDIA.put(state.pet.photo_key, await photo.arrayBuffer(), { httpMetadata: { contentType: photo.type || 'image/jpeg' } })
+  await c.env.MEDIA.put(state.pet.photo_key, photo, { httpMetadata: { contentType: photo.type || 'image/jpeg' } })
 
   const voice = form.get('voice_note') as File | null
   if (voice && voice.size > 0) {
@@ -66,17 +106,24 @@ app.post('/api/reports', async (c) => {
     }
   }
   await createState(c.env.DB, state)
-  return c.json(publicState(state))
+  // The only response that ever carries the owner token.
+  return c.json({ ...publicState(state), owner_token: state.owner_token })
 })
 
 app.get('/api/reports/:id', async (c) => {
   const s = await readState(c.env.DB, c.req.param('id'))
   if (!s) return c.json({ error: 'report not found' }, 404)
-  return c.json(publicState(s))
+  return c.json({ ...publicState(s), demo: s.report_id === c.env.DEMO_REPORT_ID })
 })
 
 function publicState(s: ReportState) {
-  return { ...s, pet: { ...s.pet, photo_url: `/api/reports/${s.report_id}/pet_photo` } }
+  const { owner_token: _secret, ...rest } = s
+  return {
+    ...rest,
+    pet: { ...s.pet, photo_url: `/api/reports/${s.report_id}/pet_photo` },
+    poster_url: s.poster_key ? `/api/reports/${s.report_id}/poster` : null,
+    demo: false as boolean,
+  }
 }
 
 app.get('/api/reports/:id/pet_photo', async (c) => {
@@ -88,7 +135,7 @@ app.get('/api/reports/:id/pet_photo', async (c) => {
 })
 
 // stills (client-side cropped from the clip, uploaded here)
-app.put('/api/reports/:id/stills/:clipId/:objectId', async (c) => {
+app.put('/api/reports/:id/stills/:clipId/:objectId', ownerOnly, async (c) => {
   const { id, clipId, objectId } = c.req.param()
   const s = await readState(c.env.DB, id)
   if (!s) return c.json({ error: 'not found' }, 404)
@@ -116,15 +163,17 @@ app.get('/api/reports/:id/stills/:clipId/:objectId', async (c) => {
 
 // ---- clips ----
 
-app.post('/api/reports/:id/clips', async (c) => {
+app.post('/api/reports/:id/clips', notDemo, async (c) => {
   const s = await readState(c.env.DB, c.req.param('id'))
   if (!s) return c.json({ error: 'report not found' }, 404)
   const form = await c.req.formData()
   const file = form.get('file') as File | null
-  if (!file) return c.json({ error: 'file required' }, 400)
+  if (!file || file.size === 0) return c.json({ error: 'file required' }, 400)
+  if (file.size > MAX_UPLOAD_BYTES) return c.json({ error: 'clip too large (100 MB max) — trim it to the moments around the sighting' }, 413)
+  if (file.type && !file.type.startsWith('video/')) return c.json({ error: 'clip must be a video file' }, 400)
   const clipId = newId()
   const key = `${s.report_id}/clips/${clipId}_${file.name.replace(/[^\w.-]/g, '_')}`
-  await c.env.MEDIA.put(key, await file.arrayBuffer(), { httpMetadata: { contentType: file.type || 'video/mp4' } })
+  await c.env.MEDIA.put(key, file, { httpMetadata: { contentType: file.type || 'video/mp4' } })
   // fps/duration come from the client (mp4box); defaults are honest fallbacks.
   const fps = Number(form.get('fps')) || 30
   const duration = Number(form.get('duration')) || 0
@@ -154,7 +203,6 @@ app.get('/api/reports/:id/clips/:clipId', async (c) => {
   const s = await readState(c.env.DB, id)
   const clip = s?.clips.find((cl) => cl.clip_id === clipId)
   if (!s || !clip) return c.json({ error: 'not found' }, 404)
-  const key = clip.filename ? `${id}/clips/` : ''
   // stored under {report}/clips/{clip_id}_{filename}
   const list = await c.env.MEDIA.list({ prefix: `${id}/clips/${clipId}_` })
   const obj = list.objects[0] ? await c.env.MEDIA.get(list.objects[0].key) : null
@@ -163,26 +211,33 @@ app.get('/api/reports/:id/clips/:clipId', async (c) => {
     headers: {
       'Content-Type': obj.httpMetadata?.contentType ?? 'video/mp4',
       'Cache-Control': 'public, max-age=3600',
-      'X-Media-Key': key,
     },
   })
 })
 
-app.delete('/api/reports/:id/clips/:clipId', async (c) => {
+app.delete('/api/reports/:id/clips/:clipId', ownerOnly, async (c) => {
   const { id, clipId } = c.req.param()
-  return c.json(await updateState(c.env.DB, id, (s) => {
+  const st = await updateState(c.env.DB, id, (s) => {
     s.clips = s.clips.filter((cl) => cl.clip_id !== clipId)
     s.matches = s.matches.filter((m) => m.clip_id !== clipId)
-  }))
+  })
+  // Withdrawn footage is actually deleted, not just hidden.
+  const [media, stills] = await Promise.all([
+    c.env.MEDIA.list({ prefix: `${id}/clips/${clipId}_` }),
+    c.env.MEDIA.list({ prefix: `${id}/stills/${clipId}_` }),
+  ])
+  const keys = [...media.objects, ...stills.objects].map((o) => o.key)
+  if (keys.length) await c.env.MEDIA.delete(keys)
+  return c.json(publicState(st))
 })
 
-app.patch('/api/reports/:id/clips/:clipId', async (c) => {
+app.patch('/api/reports/:id/clips/:clipId', ownerOnly, async (c) => {
   const { id, clipId } = c.req.param()
   const s = await readState(c.env.DB, id)
   if (!s) return c.json({ error: 'report not found' }, 404)
   if (!s.clips.some((x) => x.clip_id === clipId)) return c.json({ error: 'clip not found' }, 404)
   const body = await c.req.json().catch(() => ({}))
-  return c.json(await updateState(c.env.DB, id, (s) => {
+  return c.json(publicState(await updateState(c.env.DB, id, (s) => {
     const cl = s.clips.find((x) => x.clip_id === clipId)
     if (!cl) return
     if (typeof body.label === 'string') cl.label = body.label
@@ -190,7 +245,7 @@ app.patch('/api/reports/:id/clips/:clipId', async (c) => {
     if (typeof body.fps === 'number' && body.fps > 0) cl.fps = body.fps
     if (typeof body.duration === 'number' && body.duration > 0) cl.duration_s = body.duration
     if (body.still_done === true) cl.still_done = true
-  }))
+  })))
 })
 
 // ---- matching ----
@@ -221,7 +276,7 @@ function matchPrompt(pet: ReportState['pet'], transcript: string | null, trackRe
   ] as ContentPart[]
 }
 
-app.post('/api/reports/:id/match', async (c) => {
+app.post('/api/reports/:id/match', ownerOnly, async (c) => {
   const s0 = await readState(c.env.DB, c.req.param('id'))
   if (!s0) return c.json({ error: 'report not found' }, 404)
   const candidates: Array<{ clip: Clip; objectId: number }> = []
@@ -239,7 +294,7 @@ app.post('/api/reports/:id/match', async (c) => {
       return { clip_id: clip.clip_id, object_id: objectId, is_match: v.is_match, score: v.confidence, rationale: v.rationale, confirmed: null }
     })
     const st = await updateState(c.env.DB, s0.report_id, (s) => {
-      s.matches = verdicts
+      s.matches = keepConfirmations(s.matches, verdicts)
       s.matcher_model = 'mock'
     })
     return c.json(publicState(st))
@@ -308,12 +363,18 @@ app.post('/api/reports/:id/match', async (c) => {
     return c.json({ error: `matcher failed: ${String(e?.message ?? e).slice(0, 300)}` }, 502)
   }
   const st = await updateState(c.env.DB, s0.report_id, (s) => {
-    s.matches = verdicts
+    s.matches = keepConfirmations(s.matches, verdicts)
     s.matcher_model = modelUsed
     addCost(s, { spark_in: usage.input, spark_out: usage.output })
   })
   return c.json(publicState(st))
 })
+
+/** Re-running the matcher (e.g. after a new clip arrives) must not erase the owner's decisions. */
+function keepConfirmations(prev: MatchVerdict[], next: MatchVerdict[]): MatchVerdict[] {
+  const decided = new Map(prev.filter((m) => m.confirmed !== null).map((m) => [`${m.clip_id}:${m.object_id}`, m.confirmed]))
+  return next.map((m) => ({ ...m, confirmed: decided.get(`${m.clip_id}:${m.object_id}`) ?? null }))
+}
 
 function toVerdict(clipId: string, objectId: number, parsed: any): MatchVerdict {
   return {
@@ -330,22 +391,27 @@ async function b64Of(env: Env, key: string): Promise<string> {
   const obj = await env.MEDIA.get(key)
   if (!obj) throw new Error(`missing object ${key}`)
   const buf = await obj.arrayBuffer()
+  const mime = obj.httpMetadata?.contentType?.startsWith('image/') ? obj.httpMetadata.contentType : 'image/jpeg'
   let bin = ''
   const bytes = new Uint8Array(buf)
   const chunk = 0x8000
   for (let i = 0; i < bytes.length; i += chunk) {
     bin += String.fromCharCode(...bytes.subarray(i, i + chunk))
   }
-  return 'data:image/jpeg;base64,' + btoa(bin)
+  return `data:${mime};base64,` + btoa(bin)
 }
 
-app.post('/api/reports/:id/matches/confirm', async (c) => {
+app.post('/api/reports/:id/matches/confirm', ownerOnly, async (c) => {
   const { id } = c.req.param()
-  const { clip_id, object_id, confirmed } = await c.req.json()
-  return c.json(await updateState(c.env.DB, id, (s) => {
+  const body = await c.req.json().catch(() => null)
+  if (!body || typeof body.clip_id !== 'string' || typeof body.object_id !== 'number') {
+    return c.json({ error: 'clip_id (string) and object_id (number) required' }, 400)
+  }
+  const { clip_id, object_id, confirmed } = body
+  return c.json(publicState(await updateState(c.env.DB, id, (s) => {
     const m = s.matches.find((mm) => mm.clip_id === clip_id && mm.object_id === object_id)
     if (m) m.confirmed = !!confirmed
-  }))
+  })))
 })
 
 // ---- timeline + agentic plan ----
@@ -369,7 +435,7 @@ function sightingsOf(s: ReportState): Sighting[] {
       media_url: clip.media_url,
     })
   }
-  out.sort((a, b) => (a.clock < b.clock ? -1 : 1))
+  out.sort((a, b) => byClock(a.clock, b.clock))
   return out
 }
 
@@ -410,7 +476,7 @@ const TOOLS = [
   },
 ]
 
-app.post('/api/reports/:id/analyze', async (c) => {
+app.post('/api/reports/:id/analyze', ownerOnly, async (c) => {
   const s0 = await readState(c.env.DB, c.req.param('id'))
   if (!s0) return c.json({ error: 'not found' }, 404)
   const sightings = sightingsOf(s0)
@@ -526,7 +592,8 @@ export default {
           msg.ack()
           continue
         }
-        const concept = s.pet.species === 'cat' ? 'cat' : 'dog'
+        // SAM 3.1 takes a noun-phrase concept; "animal" covers rabbits, ferrets, etc.
+        const concept = s.pet.species === 'cat' ? 'cat' : s.pet.species === 'dog' ? 'dog' : 'animal'
         if (mockMode(env)) {
           await setClip((cl) => {
             cl.status = 'tracking'
@@ -554,16 +621,20 @@ export default {
             cl.tracks = tracks
             cl.n_tracks = tracks.length
             cl.status = 'done'
+            cl.error = null
           })
           await updateState(env.DB, reportId, (st) => addCost(st, { sam_frames: framesBilled }))
         }
         msg.ack()
       } catch (e) {
+        // max_retries is 2 (wrangler.jsonc), so attempts 1–2 will be retried; show "error" only on the last.
+        const finalAttempt = msg.attempts >= 3
         await setClip((cl) => {
-          cl.status = 'error'
-          cl.error = String(e).slice(0, 400)
+          cl.status = finalAttempt ? 'error' : 'queued'
+          cl.error = finalAttempt ? String(e).slice(0, 400) : `retrying after: ${String(e).slice(0, 200)}`
         }).catch(() => {})
-        msg.retry()
+        if (finalAttempt) msg.ack()
+        else msg.retry({ delaySeconds: 5 })
       }
     }
   },

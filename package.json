@@ -6,6 +6,8 @@
     "dev": "wrangler dev",
     "deploy": "npm run build --prefix web && wrangler deploy",
     "types": "wrangler types",
+    "test": "node --test eval/unit.test.ts",
+    "typecheck": "tsc -p .",
     "gates": "node eval/gates.ts",
     "e2e": "node eval/e2e.ts"
   },

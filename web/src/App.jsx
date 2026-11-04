@@ -2,15 +2,58 @@ import React, { useEffect, useRef, useState } from 'react'
 import { blobToWavBlob } from './wav.js'
 import { probeVideo, extractStill } from './probe.js'
 
-const api = (path, opts) => fetch(`/api${path}`, opts).then(async r => {
-  if (!r.ok) {
-    const body = await r.json().catch(() => ({}))
-    const e = new Error(body.error || (await r.text().catch(() => '')).slice(0, 200) || `HTTP ${r.status}`)
-    e.status = r.status
-    throw e
+/** Owner token: issued once when the report is filed, kept on this device, sent on owner-only calls. */
+const tokenKey = id => `fmd_owner_${id}`
+const getToken = id => { try { return localStorage.getItem(tokenKey(id)) } catch { return null } }
+const setToken = (id, t) => { try { localStorage.setItem(tokenKey(id), t) } catch { /* private mode: token lives for this tab only */ } memTokens[id] = t }
+const memTokens = {}
+const ownerToken = id => getToken(id) ?? memTokens[id] ?? null
+const ownerHeaders = id => { const t = ownerToken(id); return t ? { 'X-Owner-Token': t } : {} }
+
+const MAX_UPLOAD_MB = 100
+
+const api = (path, opts = {}) => {
+  const id = path.match(/^\/reports\/(\w+)/)?.[1]
+  const headers = { ...(id ? ownerHeaders(id) : {}), ...(opts.headers || {}) }
+  return fetch(`/api${path}`, { ...opts, headers }).then(async r => {
+    if (!r.ok) {
+      const text = await r.text().catch(() => '')
+      let msg = ''
+      try { msg = JSON.parse(text).error } catch { msg = text.slice(0, 200) }
+      const e = new Error(msg || `HTTP ${r.status}`)
+      e.status = r.status
+      throw e
+    }
+    return r.json()
+  })
+}
+
+/** Downscale the owner's photo to a ≤1600px JPEG: faster upload, fewer model tokens, PNG/WebP normalised.
+ * Falls back to the original file if the browser can't decode it. */
+async function normalisePhoto(file) {
+  try {
+    const bmp = await createImageBitmap(file)
+    const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height))
+    const canvas = document.createElement('canvas')
+    canvas.width = Math.round(bmp.width * scale)
+    canvas.height = Math.round(bmp.height * scale)
+    canvas.getContext('2d').drawImage(bmp, 0, 0, canvas.width, canvas.height)
+    const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9))
+    return blob ? new File([blob], 'pet_photo.jpg', { type: 'image/jpeg' }) : file
+  } catch {
+    return file
   }
-  return r.json()
-})
+}
+
+function CopyLink({ href, label, title }) {
+  const [copied, setCopied] = useState(false)
+  async function copy() {
+    const url = new URL(href, location.href).toString()
+    try { await navigator.clipboard.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 1800) }
+    catch { prompt('Copy this link:', url) }
+  }
+  return <button type="button" className="pill" onClick={copy} title={title}>{copied ? '✓ Copied' : label}</button>
+}
 
 function useHashRoute() {
   const [hash, setHash] = useState(location.hash)
@@ -107,9 +150,10 @@ function NewReport({ go }) {
       fd.set('pet_name', form.pet_name)
       fd.set('species', form.species)
       fd.set('description', form.description)
-      if (photo) fd.set('photo', photo)
+      if (photo) fd.set('photo', await normalisePhoto(photo))
       if (voice) fd.set('voice_note', await blobToWavBlob(voice), 'voice.wav')
       const r = await api('/reports', { method: 'POST', body: fd })
+      if (r.owner_token) setToken(r.report_id, r.owner_token)
       go(`#/r/${r.report_id}`)
     } catch (e) { setErr(e.message) } finally { setBusy(false) }
   }
@@ -171,7 +215,7 @@ async function extractStillsFor(report, clip, file) {
     try {
       const best = t.detections.reduce((a, b) => ((b.confidence ?? 0) > (a.confidence ?? 0) ? b : a))
       const blob = await extractStill(file, best.t, best.box)
-      const resp = await fetch(`/api/reports/${report.report_id}/stills/${clip.clip_id}/${t.object_id}`, { method: 'PUT', body: blob })
+      const resp = await fetch(`/api/reports/${report.report_id}/stills/${clip.clip_id}/${t.object_id}`, { method: 'PUT', body: blob, headers: ownerHeaders(report.report_id) })
       if (resp.ok) ok++
     } catch (e) { console.warn('still extract failed', e) }
   }
@@ -181,12 +225,12 @@ async function extractStillsFor(report, clip, file) {
   return ok > 0
 }
 
-function ClipCard({ report, clip, onRefresh }) {
+function ClipCard({ report, clip, onRefresh, canEdit }) {
   const [busy, setBusy] = useState(false)
   const [missing, setMissing] = useState(() => new Set())
   useEffect(() => {
     let stale = false
-    if (clip.status === 'done' && !clip.still_done) {
+    if (canEdit && clip.status === 'done' && !clip.still_done) {
       setBusy(true)
       mediaFor(clip)
         .then(file => extractStillsFor(report, clip, file))
@@ -200,6 +244,7 @@ function ClipCard({ report, clip, onRefresh }) {
   const still = id => `/api/reports/${report.report_id}/stills/${clip.clip_id}/${id}`
   const statusChip = { queued: '⏳ queued', uploading: '⬆️', tracking: '👁 SAM 3.1 tracking…', extracting: '✂️', done: '✅ done', error: '❌' }[clip.status] || clip.status
   async function reclock(e) {
+    if (!canEdit) return
     const clock = prompt('When was this recorded? (e.g. 7:42 PM)', clip.captured_clock)
     if (clock === null) return
     await api(`/reports/${report.report_id}/clips/${clip.clip_id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ captured_clock: clock }) })
@@ -209,12 +254,13 @@ function ClipCard({ report, clip, onRefresh }) {
     <div className="card">
       <div className="row">
         <b>{clip.label}</b>
-        <button className="chip chipbtn" onClick={reclock} title="Set recording time">🕐 {clip.captured_clock || 'set time'}</button>
+        <button className="chip chipbtn" onClick={reclock} disabled={!canEdit} title={canEdit ? 'Set recording time' : 'Recording time'}>🕐 {clip.captured_clock || 'set time'}</button>
         <span className={`chip st-${clip.status}`}>{statusChip}</span>
         <span className="chip">{clip.n_tracks || 0} animals</span>
         <span className="chip">{(clip.duration_s || 0).toFixed(0)}s</span>
       </div>
       {clip.status === 'error' && <p className="err">{clip.error}</p>}
+      {clip.status === 'queued' && clip.error && <p className="sub small">↻ Retrying shortly…</p>}
       {clip.status === 'done' && (
         <div className="gallery">
           {(clip.tracks || []).map(t => (
@@ -311,6 +357,7 @@ function NeighborGive({ id }) {
     e.preventDefault()
     const file = e.target.file.files[0]
     if (!file) return
+    if (file.size > MAX_UPLOAD_MB * 1024 * 1024) { setErr(`That clip is over ${MAX_UPLOAD_MB} MB — trim it to the moments around the sighting and try again.`); return }
     setErr('')
     try {
       const probe = await probeVideo(file).catch(() => ({ fps: 30, duration: 0 }))
@@ -325,13 +372,14 @@ function NeighborGive({ id }) {
       setDone(true)
     } catch (e2) { setErr(e2.message) }
   }
-  if (err) return <div className="card center"><p className="err">{err}</p></div>
+  if (err && !r) return <div className="card center"><p className="err">{err}</p></div>
   if (!r) return <div className="card center">Loading…</div>
   return (
     <div>
       <Nav />
       <div className="card center">
         <h1>🤝 Help find {r.pet.name}</h1>
+        {err && <p className="err" role="alert">{err}</p>}
         <p className="sub">A neighbor is searching for their lost {r.pet.species}. If your camera might have caught them, share the clip — it stays within this search only.</p>
         {done ? (
           <p className="ok">✅ Thank you! Your clip is being searched now.</p>
@@ -352,6 +400,7 @@ function NeighborGive({ id }) {
 }
 
 function ReportView({ id, share }) {
+  const canEdit = !!ownerToken(id)
   const [r, setR] = useState(null)
   const [err, setErr] = useState('')
   const [connLost, setConnLost] = useState(false)
@@ -373,6 +422,7 @@ function ReportView({ id, share }) {
 
   async function addClips(e) {
     for (const f of [...e.target.files]) {
+      if (f.size > MAX_UPLOAD_MB * 1024 * 1024) { setErr(`${f.name} is over ${MAX_UPLOAD_MB} MB — trim it and add it again.`); continue }
       const probe = await probeVideo(f).catch(() => ({ fps: 30, duration: 0 }))
       const clipIdHint = f.name
       const fd = new FormData()
@@ -417,26 +467,38 @@ function ReportView({ id, share }) {
         {connLost && <span className="chip">⚠ reconnecting…</span>}
         <span className="chip">search cost ${r.cost?.usd?.toFixed?.(2) ?? '0.00'}</span>
         <span className="spacer" />
-        {sightings.length > 0 && <a className="pill" href={`#/r/${id}/share`}>🔗 Share page</a>}
-        <a className="pill" href={`#/r/${id}/give`}>🤝 Neighbor link</a>
+        {share
+          ? (canEdit && <a className="pill" href={`#/r/${id}`}>← Search console</a>)
+          : sightings.length > 0 && <a className="pill" href={`#/r/${id}/share`}>🔗 Share page</a>}
+        {!r.demo && <CopyLink href={`#/r/${id}/give`} label="🤝 Copy neighbor link" title="Neighbors open this to add their camera clips" />}
+        {canEdit && !share && <CopyLink href={`#/r/${id}/k/${ownerToken(id)}`} label="🔑 Owner link" title="Private: opens this search with owner controls on another device" />}
       </header>
+      {!share && !canEdit && (
+        <p className="banner" role="status">
+          {r.demo
+            ? <>👀 You're viewing the seeded demo search (read-only, real model output). <a href="#/">Start your own report</a> to run the full pipeline.</>
+            : <>👀 View only. Matching and confirmations happen on the owner's device.</>}
+        </p>
+      )}
 
       {share ? <ShareView id={id} r={r} /> : (
         <>
           <section className="card">
             <div className="row"><b>1 · Neighborhood footage</b><span className="spacer" />
-              <label className="btn filelabel">+ Add clips
-                <input type="file" accept="video/*" multiple onChange={addClips} />
-              </label>
+              {!r.demo && (
+                <label className="btn filelabel">+ Add clips
+                  <input type="file" accept="video/*" multiple onChange={addClips} />
+                </label>
+              )}
             </div>
             <p className="sub">Doorbell cams, home cams, dashcams — anything a neighbor will share. Set each clip's recording time for the timeline.</p>
-            {(r.clips || []).map(c => <ClipCard key={c.clip_id} report={r} clip={c} onRefresh={refresh} />)}
+            {(r.clips || []).map(c => <ClipCard key={c.clip_id} report={r} clip={c} onRefresh={refresh} canEdit={canEdit} />)}
             {(r.clips || []).length === 0 && <p className="sub empty">🎥 No clips yet — add the first one above.</p>}
           </section>
 
           <section className="card">
             <div className="row"><b>2 · Is one of them {r.pet.name}?</b><span className="spacer" />
-              <button className="btn primary" disabled={busy === 'match' || !(r.clips || []).some(c => c.status === 'done')} onClick={runMatch}>
+              <button className="btn primary" disabled={!canEdit || busy === 'match' || !(r.clips || []).some(c => c.status === 'done')} onClick={runMatch}>
                 {busy === 'match' && <span className="spinner" />}
                 {busy === 'match' ? 'Matching…' : `Run matcher${r.matcher_model && r.matcher_model !== 'mock' ? ` (${r.matcher_model.split(':')[0]})` : ''}`}
               </button>
@@ -455,7 +517,7 @@ function ReportView({ id, share }) {
                     <b>{clip?.label}</b> · {(m.score * 100).toFixed(0)}% · {m.is_match ? 'possible match' : 'no match'}
                     <div className="scorebar" role="img" aria-label={`match score ${(m.score * 100).toFixed(0)} percent`}><i style={{ width: `${Math.min(100, Math.round(m.score * 100))}%` }} /></div>
                     <p className="sub">{m.rationale}</p>
-                    {m.confirmed === null && (
+                    {canEdit && m.confirmed === null && (
                       <div className="row">
                         <button className="btn primary" onClick={() => confirm(m, true)}>✓ That's {r.pet.name}</button>
                         <button className="btn" onClick={() => confirm(m, false)}>✗ Not them</button>
@@ -471,7 +533,7 @@ function ReportView({ id, share }) {
 
           <section className="card">
             <div className="row"><b>3 · Search plan &amp; alert</b><span className="spacer" />
-              <button className="btn primary" disabled={busy === 'analyze' || !sightings.length} onClick={analyze}>
+              <button className="btn primary" disabled={!canEdit || busy === 'analyze' || !sightings.length} onClick={analyze}>
                 {busy === 'analyze' && <span className="spinner" />}
                 {busy === 'analyze' ? 'Spark is coordinating…' : 'Generate plan + poster'}
               </button>
@@ -485,7 +547,7 @@ function ReportView({ id, share }) {
                 <ul>{(r.next_search.steps || []).map((s, i) => <li key={i}>{s}</li>)}</ul>
               </div>
             )}
-            {r.poster && <img className="poster" src={`/api/reports/${id}/poster`} alt="alert poster" />}
+            {r.poster_url && <img className="poster" src={r.poster_url} alt="alert poster" />}
           </section>
           {err && <p className="err" role="alert">{err}</p>}
         </>
@@ -498,6 +560,8 @@ export default function App() {
   const hash = useHashRoute()
   const go = h => { location.hash = h }
   if (hash === '#/demo') return <DemoLanding />
+  const owner = hash.match(/^#\/r\/(\w+)\/k\/(\w+)$/)
+  if (owner) { setToken(owner[1], owner[2]); location.replace(`#/r/${owner[1]}`); return null }
   const give = hash.match(/^#\/r\/(\w+)\/give$/)
   if (give) return <NeighborGive id={give[1]} />
   const m = hash.match(/^#\/r\/(\w+)(\/share)?$/)

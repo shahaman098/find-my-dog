@@ -1,5 +1,7 @@
 # Find My Dog 🐾
 
+[![CI](https://github.com/shahaman098/find-my-dog/actions/workflows/ci.yml/badge.svg)](https://github.com/shahaman098/find-my-dog/actions/workflows/ci.yml)
+
 **Your pet is missing. Every camera on your street already filmed the answer.**
 
 Find My Dog is an owner-initiated, consent-first search engine for neighborhood camera
@@ -15,11 +17,11 @@ timeline, a concrete next-search plan, and a shareable alert poster.
 
 ## Why not just Ring Search Party?
 
-Amazon's Search Party (Feb 2026) proved the need — and drew the map of its gaps:
+Ring's Search Party for Dogs (launched autumn 2025; Amazon reports 99 dogs home in its first 90 days) proved the need — and drew the map of its gaps:
 
 | | Ring Search Party | Find My Dog |
 |---|---|---|
-| Cameras | Ring outdoor cams only, default-on | **Any footage you have or are given** — Ring exports, Nest, CCTV, dashcams |
+| Cameras | Scans Ring outdoor cams, default-on | **Any footage you have or are given** — Ring exports, Nest, CCTV, dashcams |
 | Pets | Dogs only | **Any pet** — dogs, cats, anything with a photo |
 | Consent | Opt-out (default-on scanning) | **Opt-in, owner-initiated, time-boxed** |
 | Output | "Possible match" alert | **Evidence-linked sighting timeline + search plan + poster** |
@@ -49,6 +51,15 @@ Owner-initiated and time-boxed to the search window. Footage is ingested only fr
 cameras the owner or a consenting neighbor shares. **No person or face identification
 exists anywhere in the pipeline** — animals are matched by appearance attributes only.
 
+Access model, enforced server-side (`worker/src/index.ts`):
+
+- **Owner token** — issued once when a report is filed, kept on the owner's device, required
+  for every decision: matching, confirming, planning, editing or deleting clips. A share link
+  or neighbor link alone cannot change anything.
+- **Neighbors can only add** — the neighbor link accepts a clip upload, nothing else.
+- **Withdrawn footage is deleted** — removing a clip deletes its video and stills from storage.
+- **The public demo is read-only** — the seeded report can be viewed, never modified.
+
 ## Architecture
 
 Cloudflare Workers (TypeScript + Hono), D1 (state), R2 (media), Queues (pipeline),
@@ -62,11 +73,12 @@ worker/src/
 ├─ sam.ts      SAM output grammar parser (<Nf>id<|box…|>) → tracks with timestamps
 ├─ analyze     agentic Spark tool loop: suggest_next_search + make_poster  (in index.ts)
 ├─ cost.ts     itemized per-report cost meter
+├─ clock.ts    "7:42 PM" / "19:42" → chronological sighting order
 ├─ mock.ts     deterministic full-pipeline simulation (FMD_MOCK=1)
 └─ store.ts    D1-backed report state
 web/src/       report form (voice → WAV) · clip ingest · track gallery · confirm ·
                neighbor upload page · share page (timeline ribbon + cost + poster)
-eval/          gates.ts (G1 persistence / G2 match accuracy) · e2e.ts (full pipeline)
+eval/          gates.ts (G1 persistence / G2 match accuracy) · e2e.ts (full pipeline) · unit.test.ts
 ```
 
 ## Run it
@@ -82,6 +94,18 @@ Deploy: `npm run deploy` (provisions R2/D1/Queue automatically).
 
 Without a `META_API_KEY` the Worker runs in **mock mode** — the full pipeline works
 deterministically so the product is always demonstrable.
+
+## Tests
+
+```bash
+npm test                          # unit: SAM grammar parser, track merging, clock ordering, cost meter
+npm run typecheck                 # strict TypeScript over the Worker
+node eval/e2e.ts http://localhost:8787   # full pipeline + access model (mock or real mode)
+```
+
+The E2E asserts the whole flow — report → clip → SAM tracks → match → confirm → plan → poster —
+plus the access model: the owner token is never returned by reads, non-owners get 403,
+re-running the matcher keeps confirmations, and the demo report refuses writes.
 
 ## Verify the core claims (gates)
 

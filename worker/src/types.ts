@@ -64,6 +64,8 @@ export interface Sighting {
 export interface ReportState {
   report_id: string
   created_at: number
+  /** Secret returned once at creation; required for owner-only actions. Absent on legacy reports. */
+  owner_token?: string
   pet: { name: string; species: string; description: string; photo_key: string }
   transcript: string | null
   transcript_error: string | null
