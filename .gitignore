@@ -23,3 +23,5 @@ production/film2/audio_plan.json
 production/film3/data.js
 production/film3/audio_plan.json
 production/film3/assets/
+.dev.vars
+.env.local
