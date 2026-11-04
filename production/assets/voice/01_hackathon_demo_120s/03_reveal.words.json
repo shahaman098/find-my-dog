@@ -1,142 +1,132 @@
 {
  "scene": "03_reveal",
- "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app, running live.",
- "spoken": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app, running live.",
- "duration": 7.430396,
+ "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app.",
+ "spoken": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app.",
+ "duration": 7.894792,
  "format": "pcm_48000",
  "model": "eleven_multilingual_v2",
  "settings": {
   "stability": 0.65,
-  "similarity_boost": 0.85,
-  "style": 0.15,
+  "similarity_boost": 0.9,
+  "style": 0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 0.88
  },
  "words": [
   {
    "word": "This",
    "start": 0,
-   "end": 0.197
+   "end": 0.221
   },
   {
    "word": "is",
-   "start": 0.255,
-   "end": 0.337
+   "start": 0.29,
+   "end": 0.395
   },
   {
    "word": "Find",
-   "start": 0.418,
-   "end": 0.685
+   "start": 0.476,
+   "end": 0.755
   },
   {
    "word": "My",
-   "start": 0.778,
-   "end": 0.917
+   "start": 0.824,
+   "end": 0.929
   },
   {
    "word": "Dog.",
-   "start": 1.01,
-   "end": 1.3
+   "start": 1.022,
+   "end": 1.509
   },
   {
    "word": "It",
-   "start": 1.324,
-   "end": 1.44
+   "start": 1.707,
+   "end": 1.869
   },
   {
    "word": "searches",
-   "start": 1.498,
-   "end": 1.846
+   "start": 1.927,
+   "end": 2.276
   },
   {
    "word": "footage",
-   "start": 1.916,
-   "end": 2.241
+   "start": 2.357,
+   "end": 2.752
   },
   {
    "word": "from",
-   "start": 2.264,
-   "end": 2.403
+   "start": 2.786,
+   "end": 2.926
   },
   {
    "word": "any",
-   "start": 2.473,
-   "end": 2.635
+   "start": 3.007,
+   "end": 3.216
   },
   {
    "word": "camera,",
-   "start": 2.694,
-   "end": 3.286
+   "start": 3.286,
+   "end": 3.808
   },
   {
    "word": "for",
-   "start": 3.437,
-   "end": 3.576
+   "start": 3.866,
+   "end": 4.029
   },
   {
    "word": "any",
-   "start": 3.634,
-   "end": 3.796
+   "start": 4.098,
+   "end": 4.284
   },
   {
    "word": "pet,",
-   "start": 3.878,
-   "end": 4.133
-  },
-  {
-   "word": "with",
-   "start": 4.156,
-   "end": 4.319
-  },
-  {
-   "word": "the",
-   "start": 4.354,
-   "end": 4.435
-  },
-  {
-   "word": "owner",
-   "start": 4.528,
+   "start": 4.365,
    "end": 4.807
   },
   {
-   "word": "in",
-   "start": 4.865,
-   "end": 4.946
-  },
-  {
-   "word": "control.",
-   "start": 5.027,
-   "end": 5.619
-  },
-  {
-   "word": "Here's",
-   "start": 5.77,
-   "end": 6.026
+   "word": "with",
+   "start": 5.004,
+   "end": 5.19
   },
   {
    "word": "the",
-   "start": 6.049,
-   "end": 6.118
+   "start": 5.224,
+   "end": 5.294
+  },
+  {
+   "word": "owner",
+   "start": 5.387,
+   "end": 5.677
+  },
+  {
+   "word": "in",
+   "start": 5.747,
+   "end": 5.805
+  },
+  {
+   "word": "control.",
+   "start": 5.875,
+   "end": 6.478
+  },
+  {
+   "word": "Here's",
+   "start": 6.606,
+   "end": 6.873
+  },
+  {
+   "word": "the",
+   "start": 6.896,
+   "end": 6.966
   },
   {
    "word": "real",
-   "start": 6.188,
-   "end": 6.42
+   "start": 7.036,
+   "end": 7.256
   },
   {
-   "word": "app,",
-   "start": 6.502,
-   "end": 6.734
-  },
-  {
-   "word": "running",
-   "start": 6.769,
-   "end": 7.036
-  },
-  {
-   "word": "live.",
-   "start": 7.105,
-   "end": 7.43
+   "word": "app.",
+   "start": 7.349,
+   "end": 7.895
   }
  ]
 }

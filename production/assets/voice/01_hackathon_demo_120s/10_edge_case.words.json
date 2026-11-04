@@ -1,16 +1,16 @@
 {
  "scene": "10_edge_case",
- "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403, and nothing changes.",
- "spoken": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a four oh three, and nothing changes.",
- "duration": 7.105313,
+ "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403. Nothing changes.",
+ "spoken": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a four oh three. Nothing changes.",
+ "duration": 8.080542,
  "format": "pcm_48000",
  "model": "eleven_multilingual_v2",
  "settings": {
   "stability": 0.65,
-  "similarity_boost": 0.85,
-  "style": 0.15,
+  "similarity_boost": 0.9,
+  "style": 0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 0.88
  },
  "words": [
   {
@@ -20,108 +20,103 @@
   },
   {
    "word": "case:",
-   "start": 0.337,
-   "end": 0.72
+   "start": 0.36,
+   "end": 0.836
   },
   {
    "word": "someone",
-   "start": 0.743,
-   "end": 1.207
+   "start": 1.068,
+   "end": 1.486
   },
   {
    "word": "with",
-   "start": 1.242,
-   "end": 1.416
+   "start": 1.521,
+   "end": 1.649
   },
   {
    "word": "only",
-   "start": 1.486,
-   "end": 1.73
+   "start": 1.707,
+   "end": 1.962
   },
   {
    "word": "the",
-   "start": 1.776,
-   "end": 1.846
+   "start": 2.02,
+   "end": 2.09
   },
   {
    "word": "share",
-   "start": 1.892,
-   "end": 2.125
+   "start": 2.148,
+   "end": 2.415
   },
   {
    "word": "link",
-   "start": 2.171,
-   "end": 2.345
+   "start": 2.485,
+   "end": 2.647
   },
   {
    "word": "tries",
-   "start": 2.38,
-   "end": 2.624
+   "start": 2.682,
+   "end": 2.961
   },
   {
    "word": "to",
-   "start": 2.67,
-   "end": 2.728
+   "start": 3.019,
+   "end": 3.088
   },
   {
    "word": "confirm",
-   "start": 2.786,
-   "end": 3.146
+   "start": 3.158,
+   "end": 3.553
   },
   {
    "word": "a",
-   "start": 3.193,
-   "end": 3.216
+   "start": 3.611,
+   "end": 3.634
   },
   {
    "word": "sighting.",
-   "start": 3.274,
-   "end": 3.808
+   "start": 3.704,
+   "end": 4.261
   },
   {
    "word": "The",
-   "start": 3.959,
-   "end": 4.075
+   "start": 4.458,
+   "end": 4.586
   },
   {
    "word": "server",
-   "start": 4.133,
-   "end": 4.458
+   "start": 4.656,
+   "end": 5.016
   },
   {
    "word": "refuses",
-   "start": 4.505,
-   "end": 4.992
+   "start": 5.074,
+   "end": 5.584
   },
   {
    "word": "with",
-   "start": 5.05,
-   "end": 5.201
+   "start": 5.642,
+   "end": 5.77
   },
   {
    "word": "a",
-   "start": 5.236,
-   "end": 5.259
+   "start": 5.805,
+   "end": 5.828
   },
   {
-   "word": "403,",
-   "start": 5.317,
-   "end": 6.049
+   "word": "403.",
+   "start": 5.898,
+   "end": 6.745
   },
   {
-   "word": "and",
-   "start": 6.084,
-   "end": 6.2
-  },
-  {
-   "word": "nothing",
-   "start": 6.281,
-   "end": 6.56
+   "word": "Nothing",
+   "start": 6.92,
+   "end": 7.256
   },
   {
    "word": "changes.",
-   "start": 6.606,
-   "end": 7.105
+   "start": 7.314,
+   "end": 8.081
   }
  ]
 }

@@ -1,162 +1,157 @@
 {
  "scene": "04_clean_state",
- "text": "I'm starting a brand-new report on a local Worker running this exact code against the live Meta API. Health reports real models, not mock mode, and nothing is preloaded.",
- "spoken": "I'm starting a brand-new report on a local Worker running this exact code against the live Meta API. Health reports real models, not mock mode, and nothing is preloaded.",
- "duration": 9.845271,
+ "text": "I'm starting a brand-new report on a local Worker running this code against the live Meta API. Health shows real models, not mock mode, and nothing is preloaded.",
+ "spoken": "I'm starting a brand-new report on a local Worker running this code against the live Meta API. Health shows real models, not mock mode, and nothing is preloaded.",
+ "duration": 10.634729,
  "format": "pcm_48000",
  "model": "eleven_multilingual_v2",
  "settings": {
   "stability": 0.65,
-  "similarity_boost": 0.85,
-  "style": 0.15,
+  "similarity_boost": 0.9,
+  "style": 0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 0.88
  },
  "words": [
   {
    "word": "I'm",
    "start": 0,
-   "end": 0.174
+   "end": 0.244
   },
   {
    "word": "starting",
-   "start": 0.221,
-   "end": 0.58
+   "start": 0.302,
+   "end": 0.708
   },
   {
    "word": "a",
-   "start": 0.639,
-   "end": 0.662
+   "start": 0.766,
+   "end": 0.789
   },
   {
    "word": "brand-new",
-   "start": 0.743,
-   "end": 1.115
+   "start": 0.859,
+   "end": 1.324
   },
   {
    "word": "report",
-   "start": 1.161,
-   "end": 1.486
+   "start": 1.405,
+   "end": 1.823
   },
   {
    "word": "on",
-   "start": 1.544,
-   "end": 1.614
+   "start": 1.881,
+   "end": 1.95
   },
   {
    "word": "a",
-   "start": 1.66,
-   "end": 1.683
+   "start": 2.02,
+   "end": 2.043
   },
   {
    "word": "local",
-   "start": 1.753,
-   "end": 2.055
+   "start": 2.113,
+   "end": 2.45
   },
   {
    "word": "Worker",
-   "start": 2.125,
-   "end": 2.531
+   "start": 2.531,
+   "end": 2.926
   },
   {
    "word": "running",
-   "start": 2.81,
-   "end": 3.1
+   "start": 2.995,
+   "end": 3.239
   },
   {
    "word": "this",
-   "start": 3.135,
-   "end": 3.262
-  },
-  {
-   "word": "exact",
-   "start": 3.32,
-   "end": 3.634
+   "start": 3.274,
+   "end": 3.402
   },
   {
    "word": "code",
-   "start": 3.657,
-   "end": 3.889
+   "start": 3.471,
+   "end": 3.75
   },
   {
    "word": "against",
-   "start": 3.924,
-   "end": 4.226
+   "start": 3.773,
+   "end": 4.052
   },
   {
    "word": "the",
-   "start": 4.261,
-   "end": 4.331
+   "start": 4.087,
+   "end": 4.156
   },
   {
    "word": "live",
-   "start": 4.389,
-   "end": 4.644
+   "start": 4.238,
+   "end": 4.528
   },
   {
    "word": "Meta",
-   "start": 4.702,
-   "end": 4.957
+   "start": 4.586,
+   "end": 4.841
   },
   {
    "word": "API.",
-   "start": 5.004,
-   "end": 5.677
+   "start": 4.911,
+   "end": 5.666
   },
   {
    "word": "Health",
-   "start": 5.851,
-   "end": 6.118
+   "start": 5.898,
+   "end": 6.235
   },
   {
-   "word": "reports",
-   "start": 6.165,
-   "end": 6.583
+   "word": "shows",
+   "start": 6.293,
+   "end": 6.641
   },
   {
    "word": "real",
-   "start": 6.699,
-   "end": 6.943
+   "start": 6.78,
+   "end": 7.082
   },
   {
    "word": "models,",
-   "start": 7.012,
-   "end": 7.465
+   "start": 7.163,
+   "end": 7.663
   },
   {
    "word": "not",
-   "start": 7.5,
-   "end": 7.697
+   "start": 7.697,
+   "end": 7.906
   },
   {
    "word": "mock",
-   "start": 7.814,
-   "end": 8.034
+   "start": 7.988,
+   "end": 8.231
   },
   {
    "word": "mode,",
-   "start": 8.115,
-   "end": 8.382
+   "start": 8.324,
+   "end": 8.649
   },
   {
    "word": "and",
-   "start": 8.406,
-   "end": 8.522
+   "start": 8.673,
+   "end": 8.8
   },
   {
    "word": "nothing",
-   "start": 8.603,
-   "end": 8.905
+   "start": 8.905,
+   "end": 9.265
   },
   {
    "word": "is",
-   "start": 8.951,
-   "end": 9.021
+   "start": 9.323,
+   "end": 9.404
   },
   {
    "word": "preloaded.",
-   "start": 9.091,
-   "end": 9.845
+   "start": 9.474,
+   "end": 10.635
   }
  ]
 }

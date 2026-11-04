@@ -2,156 +2,156 @@
  "scene": "07_result",
  "text": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.",
  "spoken": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.",
- "duration": 8.870021,
+ "duration": 10.681188,
  "format": "pcm_48000",
  "model": "eleven_multilingual_v2",
  "settings": {
   "stability": 0.65,
-  "similarity_boost": 0.85,
-  "style": 0.15,
+  "similarity_boost": 0.9,
+  "style": 0,
   "use_speaker_boost": true,
-  "speed": 1
+  "speed": 0.88
  },
  "words": [
   {
    "word": "Biscuit",
    "start": 0,
-   "end": 0.337
+   "end": 0.476
   },
   {
    "word": "ranks",
-   "start": 0.383,
-   "end": 0.604
+   "start": 0.557,
+   "end": 0.871
   },
   {
    "word": "first,",
-   "start": 0.685,
-   "end": 0.952
+   "start": 0.94,
+   "end": 1.312
   },
   {
    "word": "with",
-   "start": 0.975,
-   "end": 1.103
+   "start": 1.347,
+   "end": 1.533
   },
   {
    "word": "Spark's",
-   "start": 1.126,
-   "end": 1.463
+   "start": 1.567,
+   "end": 1.997
   },
   {
    "word": "reasons.",
-   "start": 1.533,
-   "end": 1.904
+   "start": 2.078,
+   "end": 2.717
   },
   {
    "word": "I",
-   "start": 1.939,
-   "end": 1.985
+   "start": 2.891,
+   "end": 2.961
   },
   {
    "word": "confirm",
-   "start": 2.078,
-   "end": 2.508
+   "start": 3.053,
+   "end": 3.483
   },
   {
    "word": "her,",
-   "start": 2.589,
-   "end": 2.902
+   "start": 3.564,
+   "end": 3.82
   },
   {
    "word": "and",
-   "start": 3.077,
-   "end": 3.228
+   "start": 3.843,
+   "end": 4.029
   },
   {
    "word": "Spark's",
-   "start": 3.274,
-   "end": 3.669
+   "start": 4.087,
+   "end": 4.481
   },
   {
    "word": "tool",
-   "start": 3.715,
-   "end": 3.889
+   "start": 4.54,
+   "end": 4.783
   },
   {
    "word": "loop",
-   "start": 3.959,
-   "end": 4.133
+   "start": 4.853,
+   "end": 5.074
   },
   {
    "word": "writes",
-   "start": 4.214,
-   "end": 4.493
+   "start": 5.155,
+   "end": 5.422
   },
   {
    "word": "a",
-   "start": 4.528,
-   "end": 4.551
-  },
-  {
-   "word": "search",
-   "start": 4.609,
-   "end": 4.841
-  },
-  {
-   "word": "plan",
-   "start": 4.899,
-   "end": 5.085
-  },
-  {
-   "word": "and",
-   "start": 5.143,
-   "end": 5.213
-  },
-  {
-   "word": "calls",
-   "start": 5.271,
+   "start": 5.48,
    "end": 5.503
   },
   {
-   "word": "Muse",
+   "word": "search",
    "start": 5.573,
-   "end": 5.782
+   "end": 5.851
+  },
+  {
+   "word": "plan",
+   "start": 5.909,
+   "end": 6.2
+  },
+  {
+   "word": "and",
+   "start": 6.269,
+   "end": 6.374
+  },
+  {
+   "word": "calls",
+   "start": 6.455,
+   "end": 6.745
+  },
+  {
+   "word": "Muse",
+   "start": 6.827,
+   "end": 7.117
   },
   {
    "word": "Image",
-   "start": 5.828,
-   "end": 6.118
+   "start": 7.175,
+   "end": 7.512
   },
   {
    "word": "for",
-   "start": 6.153,
-   "end": 6.269
-  },
-  {
-   "word": "a",
-   "start": 6.304,
-   "end": 6.327
-  },
-  {
-   "word": "poster.",
-   "start": 6.385,
-   "end": 6.92
-  },
-  {
-   "word": "Reloading",
-   "start": 7.129,
+   "start": 7.546,
    "end": 7.674
   },
   {
+   "word": "a",
+   "start": 7.732,
+   "end": 7.755
+  },
+  {
+   "word": "poster.",
+   "start": 7.814,
+   "end": 8.44
+  },
+  {
+   "word": "Reloading",
+   "start": 8.673,
+   "end": 9.253
+  },
+  {
    "word": "proves",
-   "start": 7.744,
-   "end": 8.011
+   "start": 9.334,
+   "end": 9.706
   },
   {
    "word": "it's",
-   "start": 8.057,
-   "end": 8.162
+   "start": 9.776,
+   "end": 9.892
   },
   {
    "word": "stored.",
-   "start": 8.185,
-   "end": 8.87
+   "start": 9.915,
+   "end": 10.681
   }
  ]
 }
