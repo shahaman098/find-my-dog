@@ -146,7 +146,9 @@ live = tmap([
     (s5['start'], V('typed_name', -2.5)),
     (word_time('05_live_action', 'photo'), V('photo_attached', -0.3)),
     (word_time('05_live_action', 'upload'), V('clips_selected', -0.6)),
-    (word_time('05_live_action', 'SAM'), V('clocks_set', 0.5)),
+    # SAM starts tracking as soon as the clips are uploaded (HAR: 'tracking' right after the clip POSTs), so the word
+    # 'SAM' is pinned to the clip cards appearing; the clock-setting then plays while SAM works.
+    (word_time('05_live_action', 'SAM'), V('clip_cards_visible', 0.5)),
     (s5['end'], V('tracking_done', 2.0)),
 ])
 result = tmap([
