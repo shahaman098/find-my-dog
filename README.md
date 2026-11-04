@@ -13,6 +13,7 @@
 [![Access checks](https://img.shields.io/badge/access%20checks-12%2F12-2ea44f)](evidence/logs/access-control-real.txt)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
+**[🎬 Watch the 3-min demo](https://www.youtube.com/watch?v=HVPD8go8QDU)** ·
 **[▶ Live demo](https://find-my-dog.kiritokris.workers.dev/#/demo)** ·
 **[📊 Evidence pack](EVIDENCE.md)** ·
 **[🧠 Every prompt and tool](worker/src/prompts.ts)** ·
@@ -21,13 +22,17 @@
 
 *Meta Global AI Developer Hackathon 2026 · Problem statement: **"Build for Your World"***
 
-<img src="evidence/img/app-landing-light.jpg" alt="Find My Dog landing page: 'Lost your pet? Your street already saw them.', next to a report form styled as a MISSING poster with a photo slot, the pet's name, species, description and a voice note" width="860">
+<a href="https://www.youtube.com/watch?v=HVPD8go8QDU"><img src="https://img.youtube.com/vi/HVPD8go8QDU/maxresdefault.jpg" alt="Watch the 3-minute Find My Dog demo on YouTube: one continuous take of a real search, from the owner's report to SAM 3.1 tracks, Spark's ranked matches, the plan and the poster" width="860"></a>
+
+**[▶ Watch the 3-minute demo on YouTube](https://www.youtube.com/watch?v=HVPD8go8QDU)**: one continuous take of a real search, with waiting time sped up and labelled.
 
 </div>
 
 ---
 
 ## ⚡ Judges: the 60-second version
+
+Short on time? The **[3-minute demo video](https://www.youtube.com/watch?v=HVPD8go8QDU)** shows a full real search end to end. Then:
 
 1. **Open the [live demo](https://find-my-dog.kiritokris.workers.dev/#/demo).** It's a real report with SAM 3.1 tracks, Spark verdicts, a plan and a poster. It's read-only, so nobody can vandalise it.
 2. **Look at the numbers below.** Every one was measured on the live Meta API through the production code path, and each links to its raw data.
