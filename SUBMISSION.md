@@ -23,9 +23,9 @@
 
 ## How we meet the Indie judging criteria (use these words in the form and the video)
 
-- **Creativity:** lost-pet search over the footage a street *already* has. It appears in no published idea list for this hackathon, and the only shipped camera-based product (Ring) is single-brand, dogs-only and default-on.
+- **Creativity:** lost-pet search over the footage a street *already* has, with a report form designed as a lost-pet poster and SAM-style colours that follow each animal through the search. It appears in no published idea list for this hackathon, and the only shipped camera-based product (Ring) is single-brand, dogs-only and default-on.
 - **Technical ambition:** SAM 3.1 video tracking with persistent IDs → Muse Spark structured matching → Spark tool loop that calls Muse Image, on Cloudflare Workers + D1 + R2 + Queues, with an owner-token access model.
-- **Whether it works:** deployed live; measured on real footage (true pet ranked #1 9/9, 92% accuracy, identity held through a blackout, 21/21 correct through the real UI) with screenshots, logs and failures in `EVIDENCE.md`.
+- **Whether it works:** deployed live; measured on real footage (true pet ranked #1 9/9, 92% accuracy, #1 in 15/15 simulated doorbell conditions, identity held through a blackout, 21/21 correct through the real UI) with screenshots, logs and failures in `EVIDENCE.md`.
 
 ## Pre-drafted answers
 
@@ -43,7 +43,7 @@
 - Muse Glimmer (open weights, Apache-2.0) — optional matcher on Baseten; the product falls back to hosted Spark automatically (explain in demo if disabled)
 - Muse Code — used to build parts of this project
 
-**What makes it more than a basic integration?** Four models chained where each does what only it can do: SAM's persistent video tracking has no equivalent in any other stack; Spark's structured matching is human-confirmed, never asserted; the coordinator step is a real tool loop, not a hardcoded chain; and the whole pipeline runs on Cloudflare Workers with an itemized cost meter (≈$3/search) shown live.
+**What makes it more than a basic integration?** Four models chained where each does what only it can do: SAM 3.1's text-prompted video tracking finds every animal and keeps its identity across frames, which is what makes a clip searchable; Spark's structured matching is human-confirmed, never asserted; the coordinator step is a real tool loop, not a hardcoded chain; and the whole pipeline runs on Cloudflare Workers with an itemized cost meter (≈$3/search) shown live.
 
 **And it's measured, not claimed** (production code path against the live Meta API, numbers in the repo's README):
 - The true pet was the **top-ranked candidate 9/9 times** against look-alike dogs (92% accuracy over 87 comparisons, 93% recall)
@@ -61,13 +61,12 @@
 **Technical depth highlights for judges to inspect in the repo:**
 - `worker/src/sam.ts` — parser for SAM 3.1's streamed `<Nf>id<|box…|>` grammar → tracks with exact timestamps (frame N at fps f)
 - `worker/src/index.ts` — queue-driven pipeline, structured matching with Glimmer→Spark fallback, agentic tool loop
-- `eval/gates.ts` — scripted acceptance gates (persistence through occlusion; ≥8/10 match accuracy)
 - `EVIDENCE.md` — every claim with its screenshot, chart, raw data and log, including real-model UI screenshots, failures and the bugs the evidence exposed
 - `eval/benchmark.ts` + `eval/results/` — real-model benchmark that imports the production parser, prompts and clients (no mocks)
 - `worker/src/prompts.ts` — every prompt, schema and tool definition, shared by the Worker and the benchmark
 - `eval/e2e.ts` — end-to-end pipeline test, runs against dev and production
 - Mock mode (`FMD_MOCK`) — deterministic full-pipeline simulation used for CI-style verification
-- Access model — owner token on every decision, neighbors can only add clips, withdrawn footage is deleted, public demo is read-only (all asserted in `eval/e2e.ts`)
+- Access model — owner token on every decision, neighbors can only add clips, withdrawn footage is deleted, public demo is read-only (asserted in `eval/e2e.ts` and the 12 / 12 real-mode access checks in `evidence/logs/access-control-real.txt`)
 - `eval/unit.test.ts` — unit tests for the SAM grammar parser, track merging, clock ordering, cost meter (`npm test`)
 
 **X post (demo thread) — draft:**

@@ -125,6 +125,26 @@ async function main() {
   const s3 = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}`))
   assert(s3.poster_url === tl.poster, 'owner view exposes poster_url')
 
+  // 6b. withdrawing a clip deletes its footage and stills (not just hides them); only the owner can withdraw
+  const wc = s3.clips?.[0]
+  if (wc) {
+    const base = `${BASE}/api/reports/${report.report_id}/clips/${wc.clip_id}`
+    const stillUrl = (oid: number) => `${BASE}/api/reports/${report.report_id}/stills/${wc.clip_id}/${oid}`
+    const tracked = (wc.tracks || []).map((t: any) => t.object_id)
+    assert((await fetch(base)).ok, 'clip media served before withdrawal')
+    const before = await Promise.all(tracked.map(async (oid: number) => (await fetch(stillUrl(oid))).status))
+    assert(tracked.length > 0 && before.every((s: number) => s === 200), `clip has ${tracked.length} still(s) before withdrawal`, before.join(','))
+    const sd = await fetch(base, { method: 'DELETE', headers: { 'X-Owner-Token': 'nope' } })
+    assert(sd.status === 403, 'non-owner cannot withdraw a clip', `got ${sd.status}`)
+    const od = await fetch(base, { method: 'DELETE', headers: OWN })
+    assert(od.ok, 'owner withdraws the clip', `got ${od.status}`)
+    assert((await fetch(base)).status === 404, 'withdrawn clip media is gone (404)')
+    const stillCodes = await Promise.all(tracked.map(async (oid: number) => (await fetch(stillUrl(oid))).status))
+    assert(stillCodes.every((s: number) => s === 404), `withdrawn clip's ${tracked.length} still(s) are gone (404)`, stillCodes.join(','))
+    const s4 = await j<any>(await fetch(`${BASE}/api/reports/${report.report_id}`))
+    assert(!s4.clips.some((c: any) => c.clip_id === wc.clip_id) && !s4.matches.some((m: any) => m.clip_id === wc.clip_id), 'withdrawn clip and its matches leave the report')
+  }
+
   // 7. the seeded demo report is read-only for everyone
   const demo = await j<any>(await fetch(`${BASE}/api/demo`))
   if (demo.id) {

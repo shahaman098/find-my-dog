@@ -1,9 +1,9 @@
-# 2026-11-04 16:11:08 UTC  $ node eval/e2e.ts http://localhost:8787
+# 2026-11-04 22:54:11 UTC  $ node eval/e2e.ts http://localhost:8787
 
 ok: health ok
    mode: MOCK, matcher: spark
 ok: pet photo fixture exists
-ok: report created 937693afde99
+ok: report created 61e46aef34a0
 ok: pet photo stored
 ok: owner token issued at creation
 ok: owner token never returned by GET
@@ -19,6 +19,13 @@ ok: timeline has 1 sighting(s)
 ok: poster fetchable
 ok: pet photo fetchable
 ok: owner view exposes poster_url
+ok: clip media served before withdrawal
+ok: clip has 2 still(s) before withdrawal
+ok: non-owner cannot withdraw a clip
+ok: owner withdraws the clip
+ok: withdrawn clip media is gone (404)
+ok: withdrawn clip's 2 still(s) are gone (404)
+ok: withdrawn clip and its matches leave the report
 skip demo read-only check: no seeded demo report on this deployment
 
 E2E PASS (mock mode) — search cost so far: $0

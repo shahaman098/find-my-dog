@@ -41,7 +41,7 @@
 | 🫥 | SAM 3.1 kept the **same track ID through a 1.5 s full-frame blackout** | [`doorcam_occluded.tracks.json`](eval/results/doorcam_occluded.tracks.json) |
 | 🔍 | SAM found a dog of **≈ 50 × 50 px (0.3 % of the frame)** on a real doorbell, among adults, a child and a stroller: **0 tracks on people** | [`doorcam.tracks.json`](eval/results/doorcam.tracks.json) |
 | 🙅 | A person SAM mislabelled as "dog" was **rejected 9 / 9 times**. No person is ever confirmed as a pet | [`match.json`](eval/results/match.json) |
-| 🖥️ | **21 / 21** Spark verdicts correct through the real UI across 3 runs, with plan and poster generated live | [EVIDENCE §3](EVIDENCE.md#3-the-product-running-on-real-models) |
+| 🖥️ | **21 / 21** Spark verdicts correct through the real UI across 3 runs (7 / 7 in the run whose full state is kept in the repo), with plan and poster generated live | [`real_ui_state.json`](evidence/real_ui_state.json) |
 | 🤖 | The coordinator is a **real tool loop**: Spark chose `suggest_next_search` → `make_poster` itself | [`plan.json`](eval/results/plan.json) |
 | 🔐 | **12 / 12** access-control checks pass on the real-mode Worker | [log](evidence/logs/access-control-real.txt) |
 | 🌐 | The **deployed site passes the full end-to-end test in real mode** | [log](evidence/logs/e2e-production.txt) |
@@ -280,7 +280,7 @@ All tracks: [`evidence/data/sam_tracks.csv`](evidence/data/sam_tracks.csv) · ra
 | Check | Result | Log |
 |---|---|---|
 | Deployed site, **real mode**: report → clip → SAM tracks → Spark match → confirm → plan → Muse Image poster, and the demo stays read-only | **PASS** ($0.04) | [`e2e-production.txt`](evidence/logs/e2e-production.txt) |
-| Real models through the UI, 3 separate runs × 7 candidates | **21 / 21** verdicts correct | [EVIDENCE §3](EVIDENCE.md#3-the-product-running-on-real-models) |
+| Real models through the UI, 3 separate runs × 7 candidates | **21 / 21** verdicts correct (the kept run: 7 / 7) | [EVIDENCE §3](EVIDENCE.md#3-the-product-running-on-real-models) |
 | Full pipeline + access model (mock mode, also in CI) | **PASS** | [`e2e-mock.txt`](evidence/logs/e2e-mock.txt) |
 | Strict TypeScript over the Worker | exit 0 | [`typecheck.txt`](evidence/logs/typecheck.txt) |
 | Unit tests (SAM grammar, track merge, clock order, cost meter, image sniffing, public-URL check) | **12 / 12** | [`unit-tests.txt`](evidence/logs/unit-tests.txt) |
@@ -438,8 +438,8 @@ node eval/e2e.ts http://localhost:8787     # full pipeline + access model (mock 
 ```
 
 The E2E asserts the whole flow (report → clip → SAM tracks → match → confirm → plan → poster) plus the access model:
-the owner token is never returned by reads, non-owners get 403, re-running the matcher keeps confirmations, and the
-demo report refuses writes. **CI runs typecheck, unit tests, the web build and the mock E2E on every push.**
+the owner token is never returned by reads, non-owners get 403, re-running the matcher keeps confirmations, a withdrawn
+clip's video and stills really are deleted (404 afterwards), and the demo report refuses writes. **CI runs typecheck, unit tests, the web build and the mock E2E on every push.**
 
 ## 🔁 Reproduce every number
 

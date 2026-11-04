@@ -8,11 +8,11 @@ For the closing ceremony on **9 Nov**. Every number below comes from `EVIDENCE.m
 >
 > **Find My Dog** turns that footage into a search party. Neighbours share clips from *any* camera. **SAM 3.1** tracks every animal with a persistent ID. **Muse Spark** compares each one with the owner's photo and explains why. The owner, never the model, confirms the match. Then Spark's tool loop writes a search plan and calls **Muse Image** for a poster.
 >
-> And we measured it on real footage. The right dog ranked first **nine times out of nine** against look-alikes, and still first in **18 of 18** simulated doorbell conditions. SAM held the dog's identity through a full blackout. No face recognition, ever.
+> And we measured it on real footage. The right dog ranked first **nine times out of nine** against look-alikes, and still first in **15 of 15** simulated doorbell conditions. SAM held the dog's identity through a full blackout. No face recognition, ever.
 >
 > It's live, it's open source, and every claim has its evidence in the repo.
 
-**Show on screen while speaking:** `https://find-my-dog.kiritokris.workers.dev/#/demo` (read-only demo report: no setup, can't be vandalised). Backup: Film 3 (60 s), with the sound off if you're talking over it.
+**Show on screen while speaking:** `https://find-my-dog.kiritokris.workers.dev/#/demo` (read-only demo report: no setup, can't be vandalised). Backup: Film 1 (180 s, current UI) muted, or Film 3 (60 s; it shows the earlier blue UI).
 
 ## Live demo plan (if you get more than 60 s)
 

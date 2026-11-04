@@ -13,7 +13,7 @@ calling the **live Meta API** on 4 Nov 2026. Charts are generated from the raw J
 | 3 | No person is ever confirmed as a pet | the person SAM labelled "dog" was **rejected 9 / 9** | [§1](#1-matching-benchmark-muse-spark) |
 | 4 | SAM 3.1 keeps identity through an occlusion | **same track ID** after a 1.5 s full-frame blackout | [§2](#2-sam-31-tracking), [`doorcam_occluded.tracks.json`](eval/results/doorcam_occluded.tracks.json) |
 | 5 | SAM finds small animals on real doorbell footage | a dog about **50 × 50 px** (median box, 0.3% of the frame) among adults, a child and a stroller; 0 tracks on people | [§2](#2-sam-31-tracking) |
-| 6 | It works end to end through the real UI | **21 / 21** Spark verdicts correct over 3 separate real runs; plan + poster generated | [§3](#3-the-product-running-on-real-models) |
+| 6 | It works end to end through the real UI | **21 / 21** Spark verdicts correct over 3 separate real runs; plan + poster generated. The last run's full state is kept ([`real_ui_state.json`](evidence/real_ui_state.json): 7 / 7); the first two were metered (§9) but their outputs were not saved | [§3](#3-the-product-running-on-real-models) |
 | 7 | The coordinator is a real tool loop | Spark itself chose `suggest_next_search` → `make_poster` | [§3](#3-the-product-running-on-real-models), [`plan.json`](eval/results/plan.json) |
 | 8 | Only the owner can decide; the demo can't be vandalised | **12 / 12** access checks pass on the real-mode Worker | [§5](#5-access-control-real-mode-worker), [log](evidence/logs/access-control-real.txt) |
 | 8b | The deployed site runs the full real pipeline | `node eval/e2e.ts https://find-my-dog.kiritokris.workers.dev` **passes in real mode**: SAM 3.1 tracks, Spark matches, owner confirms, plan + Muse Image poster, demo read-only ($0.04) | [log](evidence/logs/e2e-production.txt) |
@@ -100,7 +100,7 @@ the exact track frames, SAM's doorbell box, and the Muse Image poster cut from t
 
 **Spark ranks every tracked animal against the reference photo and explains why.** Biscuit came first. Four other dogs,
 a different tan dog on the Elm St doorbell, and the mislabelled person were all rejected. 21 / 21 verdicts were correct
-across 3 runs.
+across 3 runs; this run's 7 verdicts, with Spark's full rationales, are in [`real_ui_state.json`](evidence/real_ui_state.json).
 
 ![Ranked matches](evidence/img/real-02-spark-match-ranked.jpg)
 
