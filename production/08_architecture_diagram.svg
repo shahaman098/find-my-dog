@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="DM Sans, Inter, system-ui, sans-serif">
+  <title>Find My Dog architecture (from wrangler.jsonc, worker/src, web/src)</title>
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7d93ff"/></marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1426"/><stop offset="1" stop-color="#090b10"/></linearGradient>
+    <style>
+      .box { fill: rgba(255,255,255,0.035); stroke: rgba(255,255,255,0.16); stroke-width: 1.5; }
+      .zone { fill: none; stroke: rgba(125,147,255,0.35); stroke-width: 1.2; stroke-dasharray: 5 6; }
+      .meta { fill: rgba(77,107,254,0.10); stroke: rgba(125,147,255,0.55); stroke-width: 1.5; }
+      .h { font-family: Montserrat, DM Sans, system-ui, sans-serif; font-weight: 500; font-size: 22px; fill: #f3f5fa; }
+      .t { font-size: 15px; fill: #aeb6ca; }
+      .code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; fill: #8f97ab; }
+      .zl { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .18em; fill: #7d93ff; }
+      .edge { stroke: #7d93ff; stroke-width: 2; fill: none; marker-end: url(#arw); }
+      .opt { stroke: #8f97ab; stroke-dasharray: 6 6; }
+      .n { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; fill: #0b0d12; font-weight: 700; }
+      .nb { fill: #7d93ff; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- zones -->
+  <rect x="40" y="70" width="330" height="760" rx="22" class="zone"/>
+  <text x="62" y="100" class="zl">BROWSER</text>
+  <rect x="420" y="70" width="640" height="760" rx="22" class="zone"/>
+  <text x="442" y="100" class="zl">CLOUDFLARE · find-my-dog worker</text>
+  <rect x="1110" y="70" width="450" height="760" rx="22" class="zone"/>
+  <text x="1132" y="100" class="zl">META MODEL API · api.meta.ai/v1</text>
+
+  <!-- browser -->
+  <g id="n-spa"><rect x="70" y="130" width="270" height="250" rx="16" class="box"/>
+    <text x="92" y="168" class="h">React SPA</text>
+    <text x="92" y="196" class="t">Vite build, served as ASSETS</text>
+    <text x="92" y="232" class="code">web/src/App.jsx</text>
+    <text x="92" y="256" class="code">owner token in localStorage</text>
+    <text x="92" y="280" class="code">X-Owner-Token on owner calls</text>
+    <text x="92" y="318" class="t">report · clips · matches ·</text>
+    <text x="92" y="340" class="t">confirm · plan · share page</text></g>
+  <g id="n-browserwork"><rect x="70" y="420" width="270" height="180" rx="16" class="box"/>
+    <text x="92" y="458" class="h">In-browser media</text>
+    <text x="92" y="488" class="code">wav.js  voice note → 16 kHz WAV</text>
+    <text x="92" y="512" class="code">probe.js  fps/duration (mp4 boxes)</text>
+    <text x="92" y="536" class="code">probe.js  crop still at SAM box</text>
+    <text x="92" y="572" class="t">no ffmpeg on the server</text></g>
+  <g id="n-owner"><rect x="70" y="640" width="270" height="150" rx="16" class="box"/>
+    <text x="92" y="678" class="h">Owner decides</text>
+    <text x="92" y="708" class="t">every match is confirmed or</text>
+    <text x="92" y="730" class="t">rejected by a person, never</text>
+    <text x="92" y="752" class="t">by the model</text></g>
+
+  <!-- worker -->
+  <g id="n-api"><rect x="450" y="130" width="300" height="300" rx="16" class="box"/>
+    <text x="472" y="168" class="h">Hono API</text>
+    <text x="472" y="196" class="code">worker/src/index.ts</text>
+    <text x="472" y="232" class="code">POST /api/reports</text>
+    <text x="472" y="256" class="code">POST /api/reports/:id/clips</text>
+    <text x="472" y="280" class="code">PUT  …/stills/:clip/:obj</text>
+    <text x="472" y="304" class="code">POST …/match      ownerOnly</text>
+    <text x="472" y="328" class="code">POST …/matches/confirm</text>
+    <text x="472" y="352" class="code">POST …/analyze    ownerOnly</text>
+    <text x="472" y="376" class="code">GET  …/timeline · /api/health</text>
+    <text x="472" y="410" class="t">demo report read-only (notDemo)</text></g>
+  <g id="n-queue"><rect x="450" y="470" width="300" height="150" rx="16" class="box"/>
+    <text x="472" y="508" class="h">Queue consumer</text>
+    <text x="472" y="536" class="code">PIPELINE · findmydog-pipeline</text>
+    <text x="472" y="560" class="code">max_retries 2, batch 1</text>
+    <text x="472" y="594" class="t">one SAM job per uploaded clip</text></g>
+  <g id="n-d1"><rect x="790" y="130" width="240" height="140" rx="16" class="box"/>
+    <text x="812" y="168" class="h">D1</text>
+    <text x="812" y="196" class="code">binding DB · findmydog</text>
+    <text x="812" y="226" class="t">one JSON state per report:</text>
+    <text x="812" y="248" class="t">clips, tracks, matches, plan</text></g>
+  <g id="n-r2"><rect x="790" y="300" width="240" height="160" rx="16" class="box"/>
+    <text x="812" y="338" class="h">R2</text>
+    <text x="812" y="366" class="code">binding MEDIA</text>
+    <text x="812" y="396" class="t">pet photo, clips, stills,</text>
+    <text x="812" y="418" class="t">poster (type sniffed)</text>
+    <text x="812" y="440" class="t">deleted clip = deleted media</text></g>
+  <g id="n-media"><rect x="790" y="490" width="240" height="130" rx="16" class="box"/>
+    <text x="812" y="528" class="h">Clip URL for SAM</text>
+    <text x="812" y="556" class="code">GET …/clips/:clipId</text>
+    <text x="812" y="584" class="t">SAM fetches the video here</text></g>
+  <g id="n-cost"><rect x="450" y="660" width="580" height="130" rx="16" class="box"/>
+    <text x="472" y="698" class="h">Cost meter + mock mode</text>
+    <text x="472" y="726" class="code">worker/src/cost.ts · worker/src/mock.ts</text>
+    <text x="472" y="756" class="t">itemised $ per report · FMD_MOCK=1 / no key = deterministic simulation</text></g>
+
+  <!-- meta -->
+  <g id="n-sam"><rect x="1140" y="130" width="390" height="140" rx="16" class="meta"/>
+    <text x="1162" y="168" class="h">SAM 3.1</text>
+    <text x="1162" y="196" class="code">/responses · stream · input_video</text>
+    <text x="1162" y="226" class="t">text-prompted tracking, persistent IDs</text>
+    <text x="1162" y="248" class="code">sam.ts parses &lt;Nf&gt;id&lt;|box…|&gt;</text></g>
+  <g id="n-spark"><rect x="1140" y="300" width="390" height="170" rx="16" class="meta"/>
+    <text x="1162" y="338" class="h">Muse Spark 1.3</text>
+    <text x="1162" y="366" class="code">/responses · json_schema strict</text>
+    <text x="1162" y="396" class="t">match verdict per tracked animal</text>
+    <text x="1162" y="420" class="t">tool loop: suggest_next_search,</text>
+    <text x="1162" y="442" class="t">make_poster   (prompts.ts)</text></g>
+  <g id="n-image"><rect x="1140" y="500" width="390" height="110" rx="16" class="meta"/>
+    <text x="1162" y="538" class="h">Muse Image</text>
+    <text x="1162" y="566" class="code">/images/generations · 1024×1536</text>
+    <text x="1162" y="592" class="t">called by Spark's make_poster</text></g>
+  <g id="n-asr"><rect x="1140" y="640" width="390" height="80" rx="16" class="meta"/>
+    <text x="1162" y="676" class="h">Muse Voice Transcribe</text>
+    <text x="1162" y="704" class="code">/asr/transcribe · voice note</text></g>
+  <g id="n-glimmer"><rect x="1140" y="740" width="390" height="70" rx="16" class="box opt" fill="none"/>
+    <text x="1162" y="772" class="t">Muse Glimmer on Baseten (optional)</text>
+    <text x="1162" y="794" class="code">not enabled in production</text></g>
+
+  <!-- edges: demonstrated path, routed through the gaps between boxes -->
+  <path id="e1" class="edge" d="M340,220 L450,220"/>
+  <path id="e2" class="edge" d="M750,200 L790,200"/>
+  <path id="e3" class="edge" d="M750,345 L790,375"/>
+  <path id="e4" class="edge" d="M600,430 L600,470"/>
+  <path id="e5" class="edge" d="M750,600 L770,600 L770,640 L1070,640 L1070,190 L1140,190"/>
+  <path id="e6" class="edge" d="M1140,250 L1088,250 L1088,560 L1030,560"/>
+  <path id="e7" class="edge" d="M340,520 C400,520 400,280 450,280"/>
+  <path id="e8" class="edge" d="M640,130 L640,114 L1102,114 L1102,380 L1140,380"/>
+  <path id="e9" class="edge" d="M1335,470 L1335,500"/>
+  <path id="e11" class="edge" d="M340,715 C405,715 405,395 450,395"/>
+  <g id="labels">
+    <circle cx="395" cy="220" r="12" class="nb"/><text x="391" y="225" class="n">1</text>
+    <circle cx="620" cy="450" r="12" class="nb"/><text x="616" y="455" class="n">2</text>
+    <circle cx="1070" cy="420" r="12" class="nb"/><text x="1066" y="425" class="n">3</text>
+    <circle cx="384" cy="440" r="12" class="nb"/><text x="380" y="445" class="n">4</text>
+    <circle cx="880" cy="114" r="12" class="nb"/><text x="876" y="119" class="n">5</text>
+    <circle cx="1360" cy="485" r="12" class="nb"/><text x="1356" y="490" class="n">6</text>
+  </g>
+  <text x="40" y="862" class="code">1 report + clips → API, state to D1, media to R2 · 2 one queue job per clip · 3 SAM 3.1 fetches the clip from the Worker, returns tracks</text>
+  <text x="40" y="884" class="code">4 browser crops a still per track · 5 Spark judges each still vs the owner photo; owner confirms · 6 Spark requests make_poster; the Worker calls Muse Image and stores it in R2</text>
+</svg>

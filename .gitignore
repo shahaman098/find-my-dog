@@ -14,3 +14,7 @@ eval/fixtures/*.gif
 eval/results/*.raw.txt
 eval/results/*.png
 eval/results/*.webp
+production/out/
+production/work/
+production/film1/data.js
+production/film1/audio_plan.json

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Find My Dog: The Proof (render timeline)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=block">
+<style>
+  :root { --bg:#0b0d12; --ink:#f3f5fa; --sub:#8f97ab; --line:rgba(255,255,255,.12); --acc:#4d6bfe; --acc2:#7d93ff; --good:#3ecf8e; --bad:#ff6b6b; }
+  * { box-sizing:border-box; margin:0; }
+  html, body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); color:var(--ink); font-family:Montserrat, system-ui, sans-serif; }
+  #stage { position:absolute; inset:0; overflow:hidden;
+    background: radial-gradient(60% 50% at 20% 0%, rgba(60,90,180,.28), transparent 70%), radial-gradient(50% 50% at 90% 100%, rgba(40,60,130,.22), transparent 70%), var(--bg); }
+  #stage::after { content:''; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size:80px 80px; }
+  .scene { position:absolute; inset:0; display:none; z-index:1; }
+  .mono { font-family:'DM Mono', ui-monospace, monospace; }
+  .eyebrow { position:absolute; left:80px; top:48px; font-family:'DM Mono', monospace; font-size:17px; letter-spacing:.22em; color:var(--acc2); text-transform:uppercase; }
+  .win { position:absolute; border-radius:18px; overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px rgba(0,0,0,.55); background:#000; }
+  .win img { width:100%; height:100%; object-fit:cover; display:block; }
+  .badge { position:absolute; padding:8px 14px; border-radius:999px; background:rgba(11,13,18,.82); border:1px solid var(--line); font-family:'DM Mono', monospace; font-size:17px; color:var(--ink); white-space:nowrap; backdrop-filter:blur(6px); }
+  .badge b { color:var(--acc2); font-weight:500; }
+  .panel { position:absolute; border-radius:16px; background:rgba(15,19,30,.92); border:1px solid var(--line); padding:20px 22px; font-family:'DM Mono', monospace; font-size:16px; line-height:1.55; color:#cfd5e4; overflow:hidden; }
+  .panel h4 { font-family:Montserrat; font-weight:500; font-size:17px; color:var(--sub); letter-spacing:.06em; margin-bottom:12px; text-transform:uppercase; }
+  .row { display:grid; grid-template-columns:72px 1fr 52px; gap:10px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,.05); opacity:.35; transition:none; }
+  .row.on { opacity:1; } .row.hot { background:rgba(77,107,254,.16); border-radius:6px; }
+  .m { color:var(--acc2); } .ok { color:var(--good); } .er { color:var(--bad); } .dim { color:var(--sub); }
+  .json { white-space:pre-wrap; color:#dfe4f1; font-size:15px; }
+  #cap { position:absolute; left:50%; bottom:40px; transform:translateX(-50%); max-width:1500px; padding:12px 26px; border-radius:14px; background:rgba(5,6,10,.78);
+    font-family:Montserrat; font-weight:500; font-size:34px; line-height:1.25; color:#fff; text-align:center; z-index:50; display:none; }
+  #cap .w.sp { color:#fff; } #cap .w { color:rgba(255,255,255,.62); }
+  .title { position:absolute; font-family:Montserrat; font-weight:400; color:var(--ink); }
+  .card { position:absolute; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid var(--line); padding:22px 26px; font-size:26px; color:var(--ink); }
+  .card small { display:block; font-size:18px; color:var(--sub); margin-top:6px; }
+  .src { position:absolute; font-family:'DM Mono', monospace; font-size:15px; color:var(--sub); }
+  .logo { display:flex; align-items:center; gap:22px; font-family:Montserrat; font-weight:600; color:var(--acc2); letter-spacing:-1px; }
+  .term { position:absolute; border-radius:14px; background:#07090d; border:1px solid var(--line); padding:18px 22px 22px; font-family:'DM Mono', monospace; font-size:16px; line-height:1.5; color:#d6dbe7; overflow:hidden; white-space:pre; }
+  .term .bar { color:var(--sub); font-size:14px; margin-bottom:10px; }
+  .term .cmd { color:var(--acc2); }
+  svg.arch { position:absolute; left:240px; top:100px; width:1440px; height:810px; }
+  svg.arch .hl > rect { stroke:#9db0ff !important; stroke-width:3 !important; filter:drop-shadow(0 0 14px rgba(125,147,255,.75)); }
+  .divider { position:absolute; width:2px; background:linear-gradient(transparent, var(--acc2), transparent); }
+</style></head>
+<body><div id="stage">
+  <div class="scene" id="s01"></div><div class="scene" id="s02"></div><div class="scene" id="s03"></div><div class="scene" id="s04"></div>
+  <div class="scene" id="s05"></div><div class="scene" id="s06"></div><div class="scene" id="s07"></div><div class="scene" id="s08"></div>
+  <div class="scene" id="s09"></div><div class="scene" id="s10"></div><div class="scene" id="s11"></div>
+  <div id="cap"></div>
+</div>
+<script src="data.js"></script>
+<script>
+const D = window.DATA, T = D.take
+const $ = (id) => document.getElementById(id)
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x))
+const ease = (x) => { x = clamp(x, 0, 1); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2 }
+const fade = (t, a, b, d = .35) => clamp(Math.min((t - a) / d, (b - t) / d), 0, 1)
+const pad = (n, w) => String(n).padStart(w, '0')
+const mmss = (s) => `${Math.floor(s / 60)}:${pad(Math.floor(s % 60), 2)}`
+const sc = (id) => D.scenes.find((s) => s.id === id)
+const wt = (id, prefix, nth = 0) => (D.words[id].filter((w) => w.w.toLowerCase().startsWith(prefix.toLowerCase()))[nth] || D.words[id][0]).s
+function interp(map, t) {
+  if (t <= map[0][0]) return map[0][1]
+  for (let i = 1; i < map.length; i++) if (t <= map[i][0]) { const [a1, b1] = map[i - 1], [a2, b2] = map[i]; return b1 + (b2 - b1) * (t - a1) / Math.max(a2 - a1, 1e-6) }
+  return map[map.length - 1][1]
+}
+function speedAt(map, t) {
+  for (let i = 1; i < map.length; i++) if (t <= map[i][0]) { const [a1, b1] = map[i - 1], [a2, b2] = map[i]; return (b2 - b1) / Math.max(a2 - a1, 1e-6) }
+  return 1
+}
+const takeSrc = (takeT) => `${T.dir}/${pad(clamp(Math.round(takeT * T.fps) + 1, 1, T.frames), 6)}.jpg`
+const rawSrc = (name, t) => { const r = D.raw[name]; return `${r.dir}/${pad(clamp(Math.floor(t * r.fps) % r.n + 1, 1, r.n), 5)}.jpg` }
+const pending = []
+function setImg(img, src) { if (img.getAttribute('src') !== src) { img.setAttribute('src', src); pending.push(img.decode().catch(() => {})) } }
+function el(parent, html) { const d = document.createElement('div'); d.innerHTML = html.trim(); const n = d.firstChild; parent.appendChild(n); return n }
+function win(parent, x, y, w, h) { const n = el(parent, `<div class="win" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><img></div>`); return n }
+const PAW = '<svg width="72" height="72" viewBox="0 0 24 24"><g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2" ry="2.6"/><ellipse cx="10" cy="5.8" rx="2" ry="2.6"/><ellipse cx="14.5" cy="5.8" rx="2" ry="2.6"/><ellipse cx="18.5" cy="9.5" rx="2" ry="2.6"/><path d="M12.2 11.2c-3 0-6.2 3.6-6.2 6.3 0 1.9 1.5 2.6 3 2.6 1.3 0 2.2-.6 3.2-.6s1.9.6 3.2.6c1.5 0 3-.7 3-2.6 0-2.7-3.2-6.3-6.2-6.3z"/></g></svg>'
+const host = T.base.replace(/^https?:\/\//, '')
+const tt = (s) => `t+${mmss(Math.max(0, s))}`
+
+// ---------- build static DOM ----------
+const B = {}
+{ // 01 hook
+  const s = $('s01'); B.h = {}
+  B.h.full = win(s, 0, 0, 1920, 1080); B.h.full.style.borderRadius = '0'
+  B.h.rew = el(s, '<div class="badge" style="left:80px;top:60px">◀◀ rewinding the real take</div>')
+  B.h.left = el(s, '<div style="position:absolute;left:80px;top:150px;width:760px;height:780px"></div>')
+  B.h.f = win(B.h.left, 0, 40, 760, 360); B.h.d = win(B.h.left, 0, 420, 760, 360)
+  B.h.lb = el(s, '<div class="badge" style="left:80px;top:120px"><b>BEFORE</b> · two neighbours\' clips (people blurred)</div>')
+  B.h.right = win(s, 900, 190, 940, 529)
+  B.h.rb = el(s, '<div class="badge" style="left:900px;top:120px"><b>AFTER</b> · ranked match, plan and poster</div>')
+  B.h.div = el(s, '<div class="divider" style="left:860px;top:160px;height:780px"></div>')
+}
+{ // 02 problem
+  const s = $('s02'); B.p = {}
+  el(s, '<div class="eyebrow">The problem · illustration</div>')
+  B.p.t = el(s, '<div class="title" style="left:80px;top:120px;font-size:60px;width:1100px;line-height:1.15">The footage exists.<br>Nobody can search it.</div>')
+  B.p.c = [['🚪', 'Knock on doors', 'one house at a time'], ['💬', 'Post in group chats', 'and wait for replies'], ['⏪', 'Ask neighbours to rewind', 'hours of video, by hand']]
+    .map(([i, a, b], k) => el(s, `<div class="card" style="left:80px;top:${360 + k * 150}px;width:760px"><span style="font-size:34px;margin-right:16px">${i}</span>${a}<small>${b}</small></div>`))
+  B.p.ring = el(s, '<div class="card" style="left:980px;top:360px;width:860px"><span class="dim" style="font-size:20px">Ring Search Party</span><br>scans <b>Ring</b> outdoor cameras</div>')
+  B.p.mix = el(s, '<div class="card" style="left:980px;top:520px;width:860px"><span class="dim" style="font-size:20px">A real street</span><br>Ring · Nest · CCTV · dashcams · phones</div>')
+  B.p.stat = el(s, '<div class="card" style="left:980px;top:700px;width:860px;font-size:24px">49% of owners who found their lost dog did so by <b>searching the neighbourhood</b>.<small class="mono">ASPCA national lost-pet survey, 2012</small></div>')
+}
+{ // 03 reveal
+  const s = $('s03'); B.r = {}
+  B.r.logo = el(s, `<div class="logo" style="position:absolute;left:0;right:0;top:400px;justify-content:center;font-size:110px">${PAW}<span>findmydog</span></div>`)
+  B.r.tag = el(s, '<div class="title" style="left:0;right:0;top:560px;text-align:center;font-size:36px;color:var(--sub)">Search every camera on the street. The owner stays in control.</div>')
+  B.r.w = win(s, 240, 100, 1440, 810)
+  B.r.b = el(s, `<div class="badge" style="left:240px;top:46px"><b>LIVE</b> · ${host}</div>`)
+}
+{ // 04 clean state
+  const s = $('s04'); B.c = {}
+  el(s, '<div class="eyebrow">Clean state · production</div>')
+  B.c.w = win(s, 80, 110, 1260, 709)
+  B.c.p = el(s, '<div class="panel" style="left:1380px;top:110px;width:460px;height:420px"><h4>Health check</h4><div class="json" id="healthjson"></div></div>')
+  B.c.u = el(s, `<div class="badge" style="left:80px;top:840px">${host} · report not yet created</div>`)
+  B.c.note = el(s, '<div class="panel" style="left:1380px;top:560px;width:460px;height:260px"><h4>What this proves</h4><div style="font-family:Montserrat;font-size:21px;line-height:1.45;color:#dfe4f1">Real models (<span class="m">mock:false</span>), deployed code, empty form. Everything after this is one continuous take.</div></div>')
+}
+{ // 05 live action
+  const s = $('s05'); B.l = {}
+  el(s, '<div class="eyebrow">Live action · one continuous take · time-compressed, not cut</div>')
+  B.l.w = win(s, 240, 100, 1440, 810)
+  B.l.sp = el(s, '<div class="badge" style="right:240px;top:44px"></div>')
+}
+{ // 06 process
+  const s = $('s06'); B.x = {}
+  el(s, '<div class="eyebrow">Request trace · recorded network log (HAR)</div>')
+  B.x.w = win(s, 80, 110, 1100, 619)
+  B.x.p = el(s, '<div class="panel" style="left:1220px;top:110px;width:620px;height:820px"><h4>The take\'s real requests</h4><div id="rows"></div><div class="json" id="matchjson" style="margin-top:16px"></div></div>')
+  B.x.lab = el(s, '<div class="badge" style="left:80px;top:750px"></div>')
+}
+{ // 07 result
+  const s = $('s07'); B.o = {}
+  el(s, '<div class="eyebrow">Result · same take</div>')
+  B.o.w = win(s, 240, 100, 1440, 810)
+  B.o.sp = el(s, '<div class="badge" style="right:240px;top:44px"></div>')
+  B.o.p = el(s, '<div class="panel" style="left:1100px;top:520px;width:560px;height:330px"><h4>After reload · stored state</h4><div class="json" id="tljson"></div></div>')
+}
+{ // 08 architecture
+  const s = $('s08'); B.a = {}
+  el(s, '<div class="eyebrow">Architecture · from wrangler.jsonc and worker/src</div>')
+  const d = document.createElement('div'); d.innerHTML = D.arch_svg; const svg = d.querySelector('svg'); svg.classList.add('arch'); s.appendChild(svg); B.a.svg = svg
+}
+{ // 09 tests
+  const s = $('s09'); B.t = {}
+  el(s, '<div class="eyebrow">Test evidence · recorded terminal sessions, replayed at real speed</div>')
+  B.t.a = el(s, '<div class="term" style="left:80px;top:110px;width:860px;height:430px"></div>')
+  B.t.b = el(s, '<div class="term" style="left:80px;top:570px;width:860px;height:380px"></div>')
+  B.t.c = el(s, `<div class="win" style="left:980px;top:150px;width:860px;height:431px;background:#fcfcfb"><img src="${D.strength_chart}" style="object-fit:contain"></div>`)
+  B.t.cap = el(s, '<div class="panel" style="left:980px;top:610px;width:860px;height:200px;font-family:Montserrat;font-size:24px;line-height:1.45;color:#dfe4f1"><h4>Benchmark · production code path · live Meta API</h4>Right dog ranked first <b style="color:#fff">9 / 9</b> · accuracy <b style="color:#fff">92%</b> over 87 comparisons · <span class="dim">EVIDENCE.md §1</span></div>')
+}
+{ // 10 edge case
+  const s = $('s10'); B.e = {}
+  el(s, '<div class="eyebrow">Edge case test · someone with only the share link</div>')
+  B.e.w = win(s, 80, 110, 1000, 563)
+  B.e.lab = el(s, '<div class="badge" style="left:80px;top:690px">no owner token → <b>view only</b>, no confirm buttons</div>')
+  B.e.t = el(s, '<div class="term" style="left:1120px;top:110px;width:720px;height:820px;white-space:pre-wrap"></div>')
+}
+{ // 11 close
+  const s = $('s11'); B.z = {}
+  B.z.logo = el(s, `<div class="logo" style="position:absolute;left:0;right:0;top:360px;justify-content:center;font-size:120px">${PAW}<span>findmydog</span></div>`)
+  B.z.tag = el(s, '<div class="title" style="left:0;right:0;top:540px;text-align:center;font-size:48px">Bring them home.</div>')
+  B.z.ev = el(s, '<div class="src" style="left:0;right:0;top:660px;text-align:center;font-size:24px">github.com/shahaman098/find-my-dog · EVIDENCE.md · find-my-dog.kiritokris.workers.dev</div>')
+}
+
+// network panel content (static, from the HAR)
+const N = D.network
+const rowsSpec = []
+if (N.report) rowsSpec.push({ t: N.report.take_t, txt: `<span class="m">POST</span> /api/reports`, st: N.report.status, ray: N.report.ray })
+for (const c of N.clips) rowsSpec.push({ t: c.take_t, txt: `<span class="m">POST</span> …/clips  <span class="dim">→ queue</span>`, st: c.status, ray: c.ray })
+for (const p of N.polls) rowsSpec.push({ t: p.take_t, txt: `<span class="m">GET</span> report · <span class="dim">${p.clip.slice(0, 14)}</span> ${p.status}${p.status === 'done' ? ` · ${p.tracks} tracks` : ''}`, st: 200, ray: p.ray })
+if (N.match) rowsSpec.push({ t: N.match.take_t, txt: `<span class="m">POST</span> …/match  <span class="dim">(Muse Spark)</span>`, st: N.match.status, ray: N.match.ray, hot: true })
+rowsSpec.sort((a, b) => a.t - b.t)
+const rowsEl = $('rows')
+const rowEls = rowsSpec.slice(-14).map((r) => el(rowsEl, `<div class="row${r.hot ? ' hotrow' : ''}"><span class="dim">${tt(r.t)}</span><span>${r.txt}${r.ray ? `<br><span class="dim" style="font-size:13px">cf-ray ${r.ray}</span>` : ''}</span><span class="${r.st < 400 ? 'ok' : 'er'}">${r.st}</span></div>`))
+const mv = N.match && N.match.view
+$('matchjson').textContent = mv ? JSON.stringify({ matcher_model: mv.matcher_model, top: mv.matches[0] }, null, 1) : ''
+const hj = { request: `GET ${host}/api/health`, response: T.events && T.events.deploy_verified !== undefined ? undefined : undefined }
+$('healthjson').innerHTML = `<span class="dim">GET</span> /api/health\n<span class="ok">200</span>\n\n` + JSON.stringify({ ok: true, mock: false, matcher: 'spark' }, null, 1).replace('"mock": false', '<span class="m">"mock": false</span>')
+const tl = N.timeline_after_reload
+$('tljson').textContent = tl ? `GET …/timeline  ${tl.status}  cf-ray ${tl.ray || '—'}\n` + JSON.stringify(tl.view, null, 1) : ''
+
+function termRender(node, rec, t, title) {
+  if (!rec) { node.innerHTML = `<div class="bar">${title}</div><span class="dim">(not recorded)</span>`; return }
+  const out = rec.chunks.filter((c) => c.t <= t).map((c) => c.s).join('')
+  const lines = out.split('\n'); const keep = lines.slice(-Math.floor((parseFloat(node.style.height) - 70) / 24))
+  node.innerHTML = `<div class="bar">${title} · recorded ${rec.started.slice(0, 16).replace('T', ' ')} UTC · exit ${t >= rec.duration ? rec.exit_code : '…'}</div><span class="cmd">$ ${rec.command}</span>\n` +
+    keep.join('\n').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(# pass \d+|E2E PASS[^\n]*|ok: [^\n]*|PASS [^\n]*)/g, '<span class="ok">$1</span>').replace(/(# fail [1-9]\d*|FAIL[^\n]*|403)/g, '<span class="er">$1</span>')
+}
+
+// ---------- per-frame update ----------
+function scene(id, t) { const s = sc(id); return t >= s.start && t < s.end }
+window.setTime = async function (t) {
+  pending.length = 0
+  for (const s of D.scenes) { const n = $('s' + s.id.slice(0, 2)); const on = t >= s.start && t < s.end; n.style.display = on ? 'block' : 'none'; if (on) n.style.opacity = s.id === '01_hook' ? 1 : clamp(Math.min((t - s.start) / .3, 1), 0, 1) }
+
+  if (scene('01_hook', t)) {
+    const share = interp([[0, D.maps.hook_reverse[0][1]]], 0)
+    const inRev = t >= 2.0 && t < 3.6, inRaw = t >= 3.6 && t < 5.0, inSplit = t >= 5.0
+    B.h.full.style.display = t < 5.0 ? 'block' : 'none'; B.h.rew.style.display = inRev ? 'block' : 'none'
+    for (const n of [B.h.left, B.h.lb, B.h.right, B.h.rb, B.h.div]) n.style.display = inSplit || inRaw ? 'block' : 'none'
+    if (t < 2.0) { setImg(B.h.full.firstChild, takeSrc(share)); B.h.full.firstChild.style.transform = `scale(${1 + .03 * t / 2})` }
+    else if (inRev) { setImg(B.h.full.firstChild, takeSrc(interp(D.maps.hook_reverse, t))); B.h.full.firstChild.style.transform = 'scale(1.03)' }
+    if (inRaw || inSplit) {
+      B.h.full.style.display = 'none'
+      const k = ease((t - 3.6) / .6)
+      B.h.left.style.opacity = k; B.h.lb.style.opacity = k
+      setImg(B.h.f.firstChild, rawSrc('fountain', t - 3.6)); setImg(B.h.d.firstChild, rawSrc('doorbell', t - 3.6))
+      const k2 = ease((t - 5.0) / .6)
+      B.h.right.style.opacity = k2; B.h.rb.style.opacity = k2; B.h.div.style.opacity = k2
+      setImg(B.h.right.firstChild, takeSrc(share))
+    }
+  }
+  if (scene('02_problem', t)) {
+    const keys = [['02_problem', 'knocking'], ['02_problem', 'posting'], ['02_problem', 'rewind']]
+    B.p.c.forEach((c, i) => { const a = wt(...keys[i]); c.style.opacity = ease((t - a + .2) / .45); c.style.transform = `translateY(${(1 - ease((t - a + .2) / .45)) * 16}px)` })
+    const ar = wt('02_problem', 'Ring'), am = wt('02_problem', 'Most')
+    B.p.ring.style.opacity = ease((t - ar + .2) / .45); B.p.mix.style.opacity = ease((t - am + .2) / .45)
+    B.p.stat.style.opacity = ease((t - (am + .6)) / .5)
+  }
+  if (scene('03_reveal', t)) {
+    const s = sc('03_reveal'), cut = wt('03_reveal', 'Here')
+    const logoOn = t < cut - .2
+    B.r.logo.style.opacity = logoOn ? ease((t - s.start) / .6) : 0; B.r.tag.style.opacity = logoOn ? ease((t - s.start - .6) / .6) : 0
+    B.r.w.style.display = B.r.b.style.display = logoOn ? 'none' : 'block'
+    if (!logoOn) { const k = ease((t - cut + .2) / .7); B.r.w.style.opacity = k; B.r.w.style.transform = `scale(${.96 + .04 * k})`; setImg(B.r.w.firstChild, takeSrc(D.maps.reveal_still)) }
+  }
+  if (scene('04_clean_state', t)) {
+    setImg(B.c.w.firstChild, takeSrc(interp(D.maps.clean, t)))
+    const hk = wt('04_clean_state', 'health'); B.c.p.style.opacity = ease((t - hk + .3) / .4); B.c.note.style.opacity = ease((t - wt('04_clean_state', 'nothing') + .2) / .4)
+  }
+  if (scene('05_live_action', t)) {
+    const tk = interp(D.maps.live, t), sp = speedAt(D.maps.live, t)
+    setImg(B.l.w.firstChild, takeSrc(tk))
+    const real = tk - D.maps.live[0][1]
+    B.l.sp.innerHTML = sp > 1.05 ? `▶▶ <b>${sp.toFixed(0)}×</b> · real time ${mmss(real)}` : sp < .05 ? `❚❚ holding · real time ${mmss(real)}` : `▶ <b>1×</b> · real time ${mmss(real)}`
+  }
+  if (scene('06_process', t)) {
+    const tk = interp(D.maps.process, t)
+    setImg(B.x.w.firstChild, takeSrc(tk))
+    rowEls.forEach((r, i) => { const spec = rowsSpec.slice(-14)[i]; r.classList.toggle('on', spec.t <= tk); r.classList.toggle('hot', !!spec.hot && spec.t <= tk) })
+    $('matchjson').style.opacity = N.match && tk >= (D.take.events.matches_visible ?? 1e9) - .2 ? 1 : 0
+    B.x.lab.innerHTML = `left: the same take at 1× · right: real requests, real cf-ray IDs`
+  }
+  if (scene('07_result', t)) {
+    const tk = interp(D.maps.result, t), sp = speedAt(D.maps.result, t)
+    setImg(B.o.w.firstChild, takeSrc(tk))
+    B.o.sp.innerHTML = sp > 1.05 ? `▶▶ <b>${sp.toFixed(0)}×</b> · real time ${mmss(tk - D.maps.result[0][1])}` : sp < .05 ? `❚❚ holding` : `▶ <b>1×</b>`
+    B.o.p.style.opacity = ease((t - wt('07_result', 'Reloading') - .6) / .4)
+  }
+  if (scene('08_architecture', t)) {
+    const hl = [['n-spa', 'React'], ['n-browserwork', 'React'], ['n-api', 'Worker'], ['n-d1', 'D1'], ['n-r2', 'R2'], ['n-queue', 'queue'], ['n-sam', 'queue'], ['n-owner', 'owner']]
+    for (const [id, w] of hl) { const n = B.a.svg.querySelector('#' + id); if (n) n.classList.toggle('hl', t >= wt('08_architecture', w) - .1 && (id === 'n-owner' || t < wt('08_architecture', 'Our') + .2 || ['n-owner'].includes(id))) }
+    B.a.svg.style.opacity = ease((t - sc('08_architecture').start) / .5)
+  }
+  if (scene('09_tests', t)) {
+    const s = sc('09_tests'), a = wt('09_tests', 'unit'), b = wt('09_tests', 'end-to-end')
+    termRender(B.t.a, D.terminal.npm_test, Math.max(0, t - a), 'unit tests · node --test')
+    termRender(B.t.b, D.terminal.e2e_mock, Math.max(0, (t - b) * 1.0), 'end-to-end · mock-mode Worker')
+    B.t.c.style.opacity = B.t.cap.style.opacity = ease((t - wt('09_tests', 'benchmark') + .2) / .5)
+  }
+  if (scene('10_edge_case', t)) {
+    setImg(B.e.w.firstChild, D.stills.stranger_view)
+    termRender(B.e.t, D.terminal.access_prod, Math.max(0, t - wt('10_edge_case', 'server') + 1.2), 'access checks · production')
+  }
+  if (scene('11_close', t)) {
+    const s = sc('11_close'); B.z.logo.style.opacity = ease((t - s.start) / .6); B.z.tag.style.opacity = ease((t - s.start - .5) / .6); B.z.ev.style.opacity = ease((t - s.start - .9) / .6)
+  }
+
+  // captions: current line, words light up as spoken
+  const cap = D.captions.find((c) => t >= c.s - .05 && t < c.e)
+  const capEl = $('cap')
+  if (cap) { capEl.style.display = 'block'; capEl.innerHTML = cap.words.map((w) => `<span class="w${t >= w.s ? ' sp' : ''}">${w.w}</span>`).join(' ') } else capEl.style.display = 'none'
+  await Promise.all(pending)
+}
+</script></body></html>
