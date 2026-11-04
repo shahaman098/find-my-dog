@@ -11,6 +11,7 @@
 [![Runtime models](https://img.shields.io/badge/runtime%20models-100%25%20Meta-0866ff)](#-the-meta-stack)
 [![Unit tests](https://img.shields.io/badge/unit%20tests-12%2F12-2ea44f)](evidence/logs/unit-tests.txt)
 [![Access checks](https://img.shields.io/badge/access%20checks-12%2F12-2ea44f)](evidence/logs/access-control-real.txt)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 **[▶ Live demo](https://find-my-dog.kiritokris.workers.dev/#/demo)** ·
 **[📊 Evidence pack](EVIDENCE.md)** ·
@@ -288,7 +289,7 @@ need**, and showed where the gaps are:
 | Pets | Dogs only | **Any pet**: dogs, cats, anything with a photo |
 | Consent | Opt-out (default-on scanning) | **Opt-in, owner-initiated, scoped to one search** |
 | Output | "Possible match" alert | **Ranked evidence with reasons + sighting timeline + search plan + poster** |
-| Openness | Closed | **Open code, with its benchmark in the repo** |
+| Openness | Closed | **Open source (MIT), with its benchmark in the repo** |
 
 ## 🏗 Architecture
 
@@ -448,6 +449,8 @@ verdict can be checked against its animal.
 ## 👥 Team
 
 **Aman Kumar Sah**, Meta Global AI Developer Hackathon, November 2026.
+
+Released under the [MIT License](LICENSE).
 
 <div align="center">
 
