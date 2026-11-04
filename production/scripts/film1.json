@@ -1,6 +1,6 @@
 {
  "film": "01_hackathon_demo_120s",
- "duration": 180.0,
+ "duration": 180,
  "scenes": [
   {
    "id": "01_hook",
