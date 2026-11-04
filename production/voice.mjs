@@ -1,5 +1,5 @@
 /** Voice-first narration: one ElevenLabs request per scene, with character timestamps -> word timings.
- *   ELEVENLABS_API_KEY=... node production/voice.mjs production/scripts/film1.json [sceneId ...]
+ *   ELEVENLABS_API_KEY=... [EL_SPEED=0.88 EL_SIMILARITY=0.9 EL_STYLE=0 EL_STABILITY=0.65] node production/voice.mjs production/scripts/film1.json [sceneId ...]
  * Writes production/out/voice/<film>/<scene>.wav + <scene>.words.json and a timing report.
  * The key is read from the environment only and never logged.
  */
@@ -11,7 +11,9 @@ const KEY = process.env.ELEVENLABS_API_KEY
 if (!KEY) { console.error('ELEVENLABS_API_KEY missing'); process.exit(2) }
 const VOICE = 'dxT8yYZS41hHdsvjw7XV'
 const MODEL = process.env.EL_MODEL ?? 'eleven_multilingual_v2'
-const SETTINGS = { stability: 0.65, similarity_boost: 0.85, style: 0.15, use_speaker_boost: true, speed: Number(process.env.EL_SPEED ?? 1.0) }
+// Tunable per run (EL_SPEED 0.7-1.2; lower = slower). Defaults are the settings the delivered films used.
+const num = (k, d) => Number(process.env[k] ?? d)
+const SETTINGS = { stability: num('EL_STABILITY', 0.65), similarity_boost: num('EL_SIMILARITY', 0.85), style: num('EL_STYLE', 0.15), use_speaker_boost: true, speed: num('EL_SPEED', 1.0) }
 // Consistent pronunciation: spoken forms only; captions keep the written forms.
 const SAY = [[/SAM 3\.1/g, 'SAM three point one'], [/\bD1\b/g, 'D one'], [/\bR2\b/g, 'R two'], [/\b403\b/g, 'four oh three'], [/Muse Spark/g, 'Muse Spark']]
 
