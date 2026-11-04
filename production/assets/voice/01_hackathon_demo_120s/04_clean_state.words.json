@@ -2,7 +2,7 @@
  "scene": "04_clean_state",
  "text": "I'm starting a brand-new report on a local Worker, running this code against the live Meta API. Health shows real models, not mock mode. There are no saved reports, and nothing is preloaded, so everything you see happens in this take.",
  "spoken": "I'm starting a brand-new report on a local Worker, running this code against the live Meta API. Health shows real models, not mock mode. There are no saved reports, and nothing is preloaded, so everything you see happens in this take.",
- "duration": 14.313,
+ "duration": 14.527,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -13,214 +13,214 @@
   "speed": 1.0
  },
  "onetake": {
-  "from": 30.46,
-  "to": 44.773
+  "from": 30.98,
+  "to": 45.507
  },
  "words": [
   {
    "word": "I'm",
    "start": 0.06,
-   "end": 0.26
+   "end": 0.3
   },
   {
    "word": "starting",
-   "start": 0.296,
-   "end": 0.58
+   "start": 0.344,
+   "end": 0.7
   },
   {
    "word": "a",
-   "start": 0.66,
-   "end": 0.74
+   "start": 0.74,
+   "end": 0.78
   },
   {
    "word": "brand-new",
-   "start": 0.78,
-   "end": 1.14
+   "start": 0.833,
+   "end": 1.26
   },
   {
    "word": "report",
-   "start": 1.197,
-   "end": 1.54
+   "start": 1.329,
+   "end": 1.74
   },
   {
    "word": "on",
-   "start": 1.593,
-   "end": 1.7
+   "start": 1.793,
+   "end": 1.9
   },
   {
    "word": "a",
-   "start": 1.74,
-   "end": 1.78
+   "start": 1.94,
+   "end": 1.98
   },
   {
    "word": "local",
-   "start": 1.847,
-   "end": 2.18
+   "start": 2.047,
+   "end": 2.38
   },
   {
    "word": "Worker,",
-   "start": 2.249,
-   "end": 2.9
+   "start": 2.46,
+   "end": 3.1
   },
   {
    "word": "running",
-   "start": 2.95,
-   "end": 3.3
+   "start": 3.15,
+   "end": 3.5
   },
   {
    "word": "this",
-   "start": 3.364,
-   "end": 3.62
+   "start": 3.548,
+   "end": 3.74
   },
   {
    "word": "code",
-   "start": 3.684,
-   "end": 3.94
+   "start": 3.804,
+   "end": 4.06
   },
   {
    "word": "against",
-   "start": 4.0,
-   "end": 4.42
+   "start": 4.1,
+   "end": 4.38
   },
   {
    "word": "the",
-   "start": 4.44,
-   "end": 4.5
+   "start": 4.42,
+   "end": 4.54
   },
   {
    "word": "live",
-   "start": 4.58,
-   "end": 4.9
+   "start": 4.62,
+   "end": 4.94
   },
   {
    "word": "Meta",
-   "start": 4.98,
-   "end": 5.3
+   "start": 5.004,
+   "end": 5.26
   },
   {
    "word": "API.",
-   "start": 5.42,
-   "end": 5.86
+   "start": 5.38,
+   "end": 5.82
   },
   {
    "word": "Health",
-   "start": 5.929,
-   "end": 6.34
+   "start": 5.889,
+   "end": 6.3
   },
   {
    "word": "shows",
-   "start": 6.393,
-   "end": 6.66
+   "start": 6.367,
+   "end": 6.7
   },
   {
    "word": "real",
-   "start": 6.724,
-   "end": 6.98
+   "start": 6.764,
+   "end": 7.02
   },
   {
    "word": "models,",
-   "start": 7.06,
-   "end": 7.62
+   "start": 7.089,
+   "end": 7.66
   },
   {
    "word": "not",
-   "start": 7.68,
-   "end": 7.86
+   "start": 7.72,
+   "end": 7.9
   },
   {
    "word": "mock",
-   "start": 7.94,
-   "end": 8.26
+   "start": 7.964,
+   "end": 8.22
   },
   {
    "word": "mode.",
-   "start": 8.324,
-   "end": 8.66
+   "start": 8.284,
+   "end": 8.7
   },
   {
    "word": "There",
-   "start": 8.7,
-   "end": 8.9
+   "start": 8.713,
+   "end": 8.78
   },
   {
    "word": "are",
-   "start": 8.96,
-   "end": 9.14
+   "start": 8.82,
+   "end": 8.94
   },
   {
    "word": "no",
-   "start": 9.193,
-   "end": 9.3
+   "start": 9.02,
+   "end": 9.18
   },
   {
    "word": "saved",
-   "start": 9.367,
-   "end": 9.7
+   "start": 9.26,
+   "end": 9.66
   },
   {
    "word": "reports,",
-   "start": 9.76,
-   "end": 10.26
+   "start": 9.71,
+   "end": 10.14
   },
   {
    "word": "and",
-   "start": 10.28,
-   "end": 10.34
+   "start": 10.18,
+   "end": 10.3
   },
   {
    "word": "nothing",
-   "start": 10.39,
-   "end": 10.74
+   "start": 10.37,
+   "end": 10.86
   },
   {
    "word": "is",
-   "start": 10.793,
-   "end": 10.9
+   "start": 10.887,
+   "end": 10.94
   },
   {
    "word": "preloaded,",
-   "start": 10.96,
-   "end": 11.62
+   "start": 11.02,
+   "end": 11.74
   },
   {
    "word": "so",
-   "start": 11.7,
-   "end": 11.86
+   "start": 11.82,
+   "end": 11.98
   },
   {
    "word": "everything",
-   "start": 11.911,
-   "end": 12.42
+   "start": 12.031,
+   "end": 12.54
   },
   {
    "word": "you",
-   "start": 12.46,
-   "end": 12.58
+   "start": 12.58,
+   "end": 12.7
   },
   {
    "word": "see",
-   "start": 12.62,
-   "end": 12.74
+   "start": 12.78,
+   "end": 13.02
   },
   {
    "word": "happens",
-   "start": 12.81,
-   "end": 13.3
+   "start": 13.09,
+   "end": 13.58
   },
   {
    "word": "in",
-   "start": 13.353,
-   "end": 13.46
+   "start": 13.633,
+   "end": 13.74
   },
   {
    "word": "this",
-   "start": 13.524,
-   "end": 13.78
+   "start": 13.788,
+   "end": 13.98
   },
   {
    "word": "take.",
-   "start": 13.86,
-   "end": 14.22
+   "start": 14.06,
+   "end": 14.42
   }
  ]
 }

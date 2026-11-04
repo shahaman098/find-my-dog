@@ -2,7 +2,7 @@
  "scene": "06_process",
  "text": "Each clip goes onto a Cloudflare queue. The Worker sends it to SAM 3.1, then Muse Spark compares every tracked animal with Biscuit's photo, looking at coat, colour, size and markings, never at people. On the right are the real requests from this take, including the match call and Spark's answer.",
  "spoken": "Each clip goes onto a Cloudflare queue. The Worker sends it to SAM three point one, then Muse Spark compares every tracked animal with Biscuit's photo, looking at coat, colour, size and markings, never at people. On the right are the real requests from this take, including the match call and Spark's answer.",
- "duration": 18.524,
+ "duration": 19.144,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -13,38 +13,38 @@
   "speed": 1.0
  },
  "onetake": {
-  "from": 68.836,
-  "to": 87.36
+  "from": 68.596,
+  "to": 87.74
  },
  "words": [
   {
    "word": "Each",
    "start": 0.06,
-   "end": 0.444
+   "end": 0.284
   },
   {
    "word": "clip",
-   "start": 0.508,
-   "end": 0.764
+   "start": 0.348,
+   "end": 0.604
   },
   {
    "word": "goes",
-   "start": 0.828,
-   "end": 1.084
+   "start": 0.668,
+   "end": 0.924
   },
   {
    "word": "onto",
-   "start": 1.132,
-   "end": 1.324
+   "start": 0.972,
+   "end": 1.164
   },
   {
    "word": "a",
-   "start": 1.404,
-   "end": 1.484
+   "start": 1.204,
+   "end": 1.244
   },
   {
    "word": "Cloudflare",
-   "start": 1.537,
+   "start": 1.337,
    "end": 2.044
   },
   {
@@ -59,218 +59,218 @@
   },
   {
    "word": "Worker",
-   "start": 2.741,
-   "end": 3.084
+   "start": 2.753,
+   "end": 3.164
   },
   {
    "word": "sends",
-   "start": 3.137,
+   "start": 3.204,
    "end": 3.404
   },
   {
    "word": "it",
-   "start": 3.431,
-   "end": 3.484
+   "start": 3.457,
+   "end": 3.564
   },
   {
    "word": "to",
-   "start": 3.537,
+   "start": 3.591,
    "end": 3.644
   },
   {
    "word": "SAM",
-   "start": 3.724,
-   "end": 3.964
-  },
-  {
-   "word": "3.1,",
-   "start": 3.977,
+   "start": 3.744,
    "end": 4.044
   },
   {
+   "word": "3.1,",
+   "start": 4.057,
+   "end": 4.124
+  },
+  {
    "word": "then",
-   "start": 4.084,
-   "end": 4.284
+   "start": 4.177,
+   "end": 4.444
   },
   {
    "word": "Muse",
-   "start": 4.364,
-   "end": 4.844
+   "start": 4.504,
+   "end": 5.004
   },
   {
    "word": "Spark",
-   "start": 4.892,
-   "end": 5.084
+   "start": 5.068,
+   "end": 5.324
   },
   {
    "word": "compares",
-   "start": 5.148,
-   "end": 5.404
-  },
-  {
-   "word": "every",
-   "start": 5.471,
+   "start": 5.42,
    "end": 5.804
   },
   {
+   "word": "every",
+   "start": 5.871,
+   "end": 6.204
+  },
+  {
    "word": "tracked",
-   "start": 5.866,
-   "end": 6.364
+   "start": 6.275,
+   "end": 6.844
   },
   {
    "word": "animal",
-   "start": 6.457,
-   "end": 6.924
-  },
-  {
-   "word": "with",
-   "start": 6.974,
+   "start": 6.924,
    "end": 7.324
   },
   {
-   "word": "Biscuit's",
-   "start": 7.393,
+   "word": "with",
+   "start": 7.384,
    "end": 7.804
   },
   {
-   "word": "photo,",
-   "start": 7.836,
-   "end": 7.964
+   "word": "Biscuit's",
+   "start": 7.861,
+   "end": 8.204
   },
   {
-   "word": "looking",
-   "start": 8.044,
+   "word": "photo,",
+   "start": 8.252,
    "end": 8.444
   },
   {
-   "word": "at",
-   "start": 8.511,
+   "word": "looking",
+   "start": 8.524,
    "end": 9.004
   },
   {
+   "word": "at",
+   "start": 9.071,
+   "end": 9.564
+  },
+  {
    "word": "coat,",
-   "start": 9.044,
-   "end": 9.324
+   "start": 9.604,
+   "end": 9.884
   },
   {
    "word": "colour,",
-   "start": 9.377,
-   "end": 9.484
+   "start": 9.937,
+   "end": 10.044
   },
   {
    "word": "size",
-   "start": 9.58,
-   "end": 10.124
+   "start": 10.124,
+   "end": 10.604
   },
   {
    "word": "and",
-   "start": 10.17,
-   "end": 10.684
+   "start": 10.65,
+   "end": 11.164
   },
   {
    "word": "markings,",
-   "start": 10.748,
-   "end": 11.004
+   "start": 11.244,
+   "end": 11.564
   },
   {
    "word": "never",
-   "start": 11.064,
-   "end": 11.244
+   "start": 11.604,
+   "end": 11.724
   },
   {
    "word": "at",
-   "start": 11.306,
-   "end": 11.964
+   "start": 11.795,
+   "end": 12.604
   },
   {
    "word": "people.",
-   "start": 12.057,
-   "end": 12.524
+   "start": 12.671,
+   "end": 13.004
   },
   {
    "word": "On",
-   "start": 12.604,
-   "end": 12.764
+   "start": 13.031,
+   "end": 13.084
   },
   {
    "word": "the",
-   "start": 12.821,
-   "end": 13.244
+   "start": 13.153,
+   "end": 13.724
   },
   {
    "word": "right",
-   "start": 13.351,
-   "end": 13.564
+   "start": 13.777,
+   "end": 13.884
   },
   {
    "word": "are",
-   "start": 13.584,
-   "end": 13.644
-  },
-  {
-   "word": "the",
-   "start": 13.697,
+   "start": 13.904,
    "end": 13.964
   },
   {
+   "word": "the",
+   "start": 14.031,
+   "end": 14.364
+  },
+  {
    "word": "real",
-   "start": 14.004,
-   "end": 14.124
-  },
-  {
-   "word": "requests",
-   "start": 14.164,
-   "end": 14.284
-  },
-  {
-   "word": "from",
-   "start": 14.332,
+   "start": 14.404,
    "end": 14.524
   },
   {
-   "word": "this",
-   "start": 14.577,
+   "word": "requests",
+   "start": 14.564,
+   "end": 14.684
+  },
+  {
+   "word": "from",
+   "start": 14.748,
    "end": 15.004
   },
   {
+   "word": "this",
+   "start": 15.057,
+   "end": 15.484
+  },
+  {
    "word": "take,",
-   "start": 15.036,
-   "end": 15.164
+   "start": 15.516,
+   "end": 15.644
   },
   {
    "word": "including",
-   "start": 15.212,
-   "end": 15.404
+   "start": 15.692,
+   "end": 15.884
   },
   {
    "word": "the",
-   "start": 15.468,
-   "end": 15.804
-  },
-  {
-   "word": "match",
-   "start": 15.86,
+   "start": 15.948,
    "end": 16.364
   },
   {
-   "word": "call",
-   "start": 16.384,
-   "end": 16.444
-  },
-  {
-   "word": "and",
-   "start": 16.511,
+   "word": "match",
+   "start": 16.412,
    "end": 16.844
   },
   {
+   "word": "call",
+   "start": 16.884,
+   "end": 17.004
+  },
+  {
+   "word": "and",
+   "start": 17.057,
+   "end": 17.324
+  },
+  {
    "word": "Spark's",
-   "start": 16.908,
-   "end": 17.164
+   "start": 17.404,
+   "end": 17.724
   },
   {
    "word": "answer.",
-   "start": 17.204,
-   "end": 17.324
+   "start": 17.764,
+   "end": 17.884
   }
  ]
 }

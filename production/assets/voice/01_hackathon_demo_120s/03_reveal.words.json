@@ -2,7 +2,7 @@
  "scene": "03_reveal",
  "text": "This is Find My Dog. It searches footage from any camera, for any pet, and the owner stays in control. Neighbours choose what to share. Here's the real app, recorded in one take.",
  "spoken": "This is Find My Dog. It searches footage from any camera, for any pet, and the owner stays in control. Neighbours choose what to share. Here's the real app, recorded in one take.",
- "duration": 11.228,
+ "duration": 11.36,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -13,174 +13,174 @@
   "speed": 1.0
  },
  "onetake": {
-  "from": 19.252,
-  "to": 30.48
+  "from": 19.62,
+  "to": 30.98
  },
  "words": [
   {
    "word": "This",
    "start": 0.06,
-   "end": 0.508
+   "end": 0.38
   },
   {
    "word": "is",
-   "start": 0.561,
-   "end": 0.668
+   "start": 0.433,
+   "end": 0.54
   },
   {
    "word": "Find",
-   "start": 0.732,
-   "end": 0.988
+   "start": 0.604,
+   "end": 0.86
   },
   {
    "word": "My",
-   "start": 1.041,
-   "end": 1.148
+   "start": 0.913,
+   "end": 1.02
   },
   {
    "word": "Dog.",
-   "start": 1.228,
-   "end": 1.548
+   "start": 1.12,
+   "end": 1.5
   },
   {
    "word": "It",
-   "start": 1.628,
-   "end": 1.788
+   "start": 1.58,
+   "end": 1.74
   },
   {
    "word": "searches",
-   "start": 1.832,
-   "end": 2.188
+   "start": 1.793,
+   "end": 2.22
   },
   {
    "word": "footage",
-   "start": 2.238,
-   "end": 2.588
+   "start": 2.28,
+   "end": 2.7
   },
   {
    "word": "from",
-   "start": 2.636,
-   "end": 2.828
+   "start": 2.732,
+   "end": 2.86
   },
   {
    "word": "any",
-   "start": 2.908,
-   "end": 3.148
+   "start": 2.96,
+   "end": 3.26
   },
   {
    "word": "camera,",
-   "start": 3.217,
-   "end": 3.788
+   "start": 3.329,
+   "end": 3.9
   },
   {
    "word": "for",
-   "start": 3.828,
-   "end": 3.948
+   "start": 3.94,
+   "end": 4.06
   },
   {
    "word": "any",
-   "start": 4.048,
-   "end": 4.348
+   "start": 4.16,
+   "end": 4.46
   },
   {
    "word": "pet,",
-   "start": 4.428,
-   "end": 4.828
+   "start": 4.56,
+   "end": 4.94
   },
   {
    "word": "and",
-   "start": 4.868,
-   "end": 4.988
+   "start": 4.98,
+   "end": 5.1
   },
   {
    "word": "the",
-   "start": 5.008,
-   "end": 5.068
+   "start": 5.12,
+   "end": 5.18
   },
   {
    "word": "owner",
-   "start": 5.148,
-   "end": 5.548
+   "start": 5.26,
+   "end": 5.66
   },
   {
    "word": "stays",
-   "start": 5.601,
-   "end": 5.868
+   "start": 5.727,
+   "end": 6.06
   },
   {
    "word": "in",
-   "start": 5.895,
-   "end": 5.948
+   "start": 6.087,
+   "end": 6.14
   },
   {
    "word": "control.",
-   "start": 6.018,
-   "end": 6.708
+   "start": 6.21,
+   "end": 6.9
   },
   {
    "word": "Neighbours",
-   "start": 6.775,
-   "end": 7.228
+   "start": 6.967,
+   "end": 7.5
   },
   {
    "word": "choose",
-   "start": 7.285,
-   "end": 7.628
+   "start": 7.546,
+   "end": 7.82
   },
   {
    "word": "what",
-   "start": 7.692,
-   "end": 7.948
+   "start": 7.868,
+   "end": 8.06
   },
   {
    "word": "to",
-   "start": 8.001,
-   "end": 8.108
+   "start": 8.087,
+   "end": 8.14
   },
   {
    "word": "share.",
-   "start": 8.161,
-   "end": 8.668
+   "start": 8.207,
+   "end": 8.74
   },
   {
    "word": "Here's",
-   "start": 8.716,
-   "end": 8.988
+   "start": 8.78,
+   "end": 9.02
   },
   {
    "word": "the",
-   "start": 9.008,
-   "end": 9.068
+   "start": 9.04,
+   "end": 9.1
   },
   {
    "word": "real",
-   "start": 9.116,
-   "end": 9.308
+   "start": 9.164,
+   "end": 9.42
   },
   {
    "word": "app,",
-   "start": 9.388,
-   "end": 9.708
+   "start": 9.48,
+   "end": 9.74
   },
   {
    "word": "recorded",
-   "start": 9.761,
-   "end": 10.188
+   "start": 9.793,
+   "end": 10.22
   },
   {
    "word": "in",
-   "start": 10.215,
-   "end": 10.268
+   "start": 10.273,
+   "end": 10.38
   },
   {
    "word": "one",
-   "start": 10.348,
-   "end": 10.588
+   "start": 10.46,
+   "end": 10.7
   },
   {
    "word": "take.",
-   "start": 10.668,
-   "end": 11.068
+   "start": 10.78,
+   "end": 11.18
   }
  ]
 }

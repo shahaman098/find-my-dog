@@ -2,7 +2,7 @@
  "scene": "07_result",
  "text": "Biscuit ranks first, and Spark explains why, in plain words. The owner stays in charge: I confirm her, and only then does Spark's tool loop write a search plan for where to look next, and call Muse Image to make a poster for the street. Reloading the page proves it's all stored.",
  "spoken": "Biscuit ranks first, and Spark explains why, in plain words. The owner stays in charge: I confirm her, and only then does Spark's tool loop write a search plan for where to look next, and call Muse Image to make a poster for the street. Reloading the page proves it's all stored.",
- "duration": 17.833,
+ "duration": 18.14,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -13,8 +13,8 @@
   "speed": 1.0
  },
  "onetake": {
-  "from": 87.34,
-  "to": 105.173
+  "from": 87.74,
+  "to": 105.88
  },
  "words": [
   {
@@ -24,258 +24,258 @@
   },
   {
    "word": "ranks",
-   "start": 0.633,
-   "end": 0.9
+   "start": 0.647,
+   "end": 0.98
   },
   {
    "word": "first,",
-   "start": 0.98,
-   "end": 1.46
-  },
-  {
-   "word": "and",
-   "start": 1.48,
+   "start": 1.06,
    "end": 1.54
   },
   {
+   "word": "and",
+   "start": 1.58,
+   "end": 1.7
+  },
+  {
    "word": "Spark",
-   "start": 1.62,
-   "end": 2.02
+   "start": 1.78,
+   "end": 2.18
   },
   {
    "word": "explains",
-   "start": 2.073,
-   "end": 2.5
+   "start": 2.233,
+   "end": 2.66
   },
   {
    "word": "why,",
-   "start": 2.6,
-   "end": 2.98
+   "start": 2.76,
+   "end": 3.22
   },
   {
    "word": "in",
-   "start": 3.033,
-   "end": 3.14
+   "start": 3.273,
+   "end": 3.38
   },
   {
    "word": "plain",
-   "start": 3.22,
-   "end": 3.62
+   "start": 3.447,
+   "end": 3.78
   },
   {
    "word": "words.",
-   "start": 3.713,
+   "start": 3.86,
    "end": 4.34
   },
   {
    "word": "The",
-   "start": 4.38,
-   "end": 4.5
+   "start": 4.42,
+   "end": 4.66
   },
   {
    "word": "owner",
-   "start": 4.567,
-   "end": 4.9
+   "start": 4.727,
+   "end": 5.06
   },
   {
    "word": "stays",
-   "start": 4.953,
-   "end": 5.22
+   "start": 5.127,
+   "end": 5.46
   },
   {
    "word": "in",
-   "start": 5.273,
-   "end": 5.38
+   "start": 5.487,
+   "end": 5.54
   },
   {
    "word": "charge:",
-   "start": 5.449,
-   "end": 6.02
-  },
-  {
-   "word": "I",
-   "start": 6.1,
+   "start": 5.609,
    "end": 6.18
   },
   {
+   "word": "I",
+   "start": 6.26,
+   "end": 6.34
+  },
+  {
    "word": "confirm",
-   "start": 6.25,
-   "end": 6.74
+   "start": 6.41,
+   "end": 6.9
   },
   {
    "word": "her,",
-   "start": 6.8,
-   "end": 7.14
+   "start": 6.96,
+   "end": 7.22
   },
   {
    "word": "and",
-   "start": 7.2,
+   "start": 7.26,
    "end": 7.38
   },
   {
    "word": "only",
-   "start": 7.46,
-   "end": 7.78
+   "start": 7.476,
+   "end": 7.86
   },
   {
    "word": "then",
-   "start": 7.86,
-   "end": 8.18
+   "start": 7.94,
+   "end": 8.26
   },
   {
    "word": "does",
-   "start": 8.244,
-   "end": 8.5
+   "start": 8.324,
+   "end": 8.58
   },
   {
    "word": "Spark's",
-   "start": 8.553,
-   "end": 8.9
+   "start": 8.647,
+   "end": 9.06
   },
   {
    "word": "tool",
-   "start": 8.948,
-   "end": 9.14
+   "start": 9.124,
+   "end": 9.38
   },
   {
    "word": "loop",
-   "start": 9.22,
-   "end": 9.54
+   "start": 9.444,
+   "end": 9.7
   },
   {
    "word": "write",
-   "start": 9.593,
-   "end": 9.86
+   "start": 9.753,
+   "end": 10.02
   },
   {
    "word": "a",
-   "start": 9.9,
-   "end": 9.94
+   "start": 10.1,
+   "end": 10.18
   },
   {
    "word": "search",
-   "start": 9.986,
-   "end": 10.26
+   "start": 10.226,
+   "end": 10.5
   },
   {
    "word": "plan",
-   "start": 10.324,
-   "end": 10.58
+   "start": 10.58,
+   "end": 10.9
   },
   {
    "word": "for",
-   "start": 10.62,
-   "end": 10.74
+   "start": 10.94,
+   "end": 11.06
   },
   {
    "word": "where",
-   "start": 10.78,
-   "end": 10.98
-  },
-  {
-   "word": "to",
-   "start": 11.033,
-   "end": 11.14
-  },
-  {
-   "word": "look",
-   "start": 11.188,
+   "start": 11.113,
    "end": 11.38
   },
   {
+   "word": "to",
+   "start": 11.407,
+   "end": 11.46
+  },
+  {
+   "word": "look",
+   "start": 11.508,
+   "end": 11.7
+  },
+  {
    "word": "next,",
-   "start": 11.46,
-   "end": 11.94
+   "start": 11.796,
+   "end": 12.26
   },
   {
    "word": "and",
-   "start": 11.98,
-   "end": 12.1
-  },
-  {
-   "word": "call",
-   "start": 12.164,
+   "start": 12.3,
    "end": 12.42
   },
   {
-   "word": "Muse",
+   "word": "call",
    "start": 12.5,
    "end": 12.82
   },
   {
-   "word": "Image",
-   "start": 12.9,
+   "word": "Muse",
+   "start": 12.916,
    "end": 13.3
   },
   {
+   "word": "Image",
+   "start": 13.367,
+   "end": 13.7
+  },
+  {
    "word": "to",
-   "start": 13.327,
-   "end": 13.38
+   "start": 13.727,
+   "end": 13.78
   },
   {
    "word": "make",
-   "start": 13.428,
-   "end": 13.62
+   "start": 13.828,
+   "end": 14.02
   },
   {
    "word": "a",
-   "start": 13.74,
-   "end": 13.86
-  },
-  {
-   "word": "poster",
-   "start": 13.894,
+   "start": 14.06,
    "end": 14.1
   },
   {
+   "word": "poster",
+   "start": 14.169,
+   "end": 14.58
+  },
+  {
    "word": "for",
-   "start": 14.14,
-   "end": 14.26
+   "start": 14.6,
+   "end": 14.66
   },
   {
    "word": "the",
-   "start": 14.28,
-   "end": 14.34
+   "start": 14.7,
+   "end": 14.82
   },
   {
    "word": "street.",
-   "start": 14.409,
-   "end": 15.06
+   "start": 14.877,
+   "end": 15.5
   },
   {
    "word": "Reloading",
-   "start": 15.12,
-   "end": 15.54
+   "start": 15.57,
+   "end": 16.02
   },
   {
    "word": "the",
-   "start": 15.56,
-   "end": 15.62
-  },
-  {
-   "word": "page",
-   "start": 15.716,
+   "start": 16.04,
    "end": 16.1
   },
   {
+   "word": "page",
+   "start": 16.196,
+   "end": 16.58
+  },
+  {
    "word": "proves",
-   "start": 16.146,
-   "end": 16.42
+   "start": 16.637,
+   "end": 16.98
   },
   {
    "word": "it's",
-   "start": 16.5,
-   "end": 16.82
+   "start": 17.033,
+   "end": 17.22
   },
   {
    "word": "all",
-   "start": 16.9,
-   "end": 17.14
+   "start": 17.28,
+   "end": 17.46
   },
   {
    "word": "stored.",
-   "start": 17.22,
-   "end": 17.74
+   "start": 17.54,
+   "end": 18.02
   }
  ]
 }

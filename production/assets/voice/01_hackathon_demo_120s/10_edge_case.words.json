@@ -2,7 +2,7 @@
  "scene": "10_edge_case",
  "text": "One edge case: someone with only the share link tries to confirm a sighting, as if they were the owner. The server refuses with a 403, and the owner's decision stays exactly as it was.",
  "spoken": "One edge case: someone with only the share link tries to confirm a sighting, as if they were the owner. The server refuses with a four oh three, and the owner's decision stays exactly as it was.",
- "duration": 12.22,
+ "duration": 11.59,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -13,184 +13,184 @@
   "speed": 1.0
  },
  "onetake": {
-  "from": 137.66,
-  "to": 149.88
+  "from": 137.73,
+  "to": 149.32
  },
  "words": [
   {
    "word": "One",
    "start": 0.06,
-   "end": 0.42
+   "end": 0.27
   },
   {
    "word": "edge",
-   "start": 0.484,
-   "end": 0.74
+   "start": 0.334,
+   "end": 0.59
   },
   {
    "word": "case:",
-   "start": 0.82,
-   "end": 1.3
+   "start": 0.67,
+   "end": 1.15
   },
   {
    "word": "someone",
-   "start": 1.35,
-   "end": 1.7
+   "start": 1.21,
+   "end": 1.63
   },
   {
    "word": "with",
-   "start": 1.748,
-   "end": 1.94
+   "start": 1.662,
+   "end": 1.79
   },
   {
    "word": "only",
-   "start": 2.004,
-   "end": 2.26
+   "start": 1.87,
+   "end": 2.19
   },
   {
    "word": "the",
-   "start": 2.3,
-   "end": 2.42
+   "start": 2.23,
+   "end": 2.35
   },
   {
    "word": "share",
-   "start": 2.473,
-   "end": 2.74
+   "start": 2.417,
+   "end": 2.75
   },
   {
    "word": "link",
-   "start": 2.804,
-   "end": 3.06
+   "start": 2.814,
+   "end": 3.07
   },
   {
    "word": "tries",
-   "start": 3.113,
-   "end": 3.38
+   "start": 3.123,
+   "end": 3.39
   },
   {
    "word": "to",
-   "start": 3.433,
-   "end": 3.54
+   "start": 3.443,
+   "end": 3.55
   },
   {
    "word": "confirm",
-   "start": 3.6,
-   "end": 4.02
+   "start": 3.61,
+   "end": 4.03
   },
   {
    "word": "a",
-   "start": 4.06,
-   "end": 4.1
+   "start": 4.07,
+   "end": 4.11
   },
   {
    "word": "sighting,",
-   "start": 4.153,
-   "end": 4.74
+   "start": 4.163,
+   "end": 4.75
   },
   {
    "word": "as",
-   "start": 4.793,
-   "end": 4.9
+   "start": 4.777,
+   "end": 4.83
   },
   {
    "word": "if",
-   "start": 4.953,
-   "end": 5.06
+   "start": 4.883,
+   "end": 4.99
   },
   {
    "word": "they",
-   "start": 5.124,
-   "end": 5.38
+   "start": 5.038,
+   "end": 5.23
   },
   {
    "word": "were",
-   "start": 5.412,
-   "end": 5.54
+   "start": 5.262,
+   "end": 5.39
   },
   {
    "word": "the",
-   "start": 5.56,
-   "end": 5.62
+   "start": 5.41,
+   "end": 5.47
   },
   {
    "word": "owner.",
-   "start": 5.687,
-   "end": 6.1
+   "start": 5.537,
+   "end": 5.99
   },
   {
    "word": "The",
-   "start": 6.16,
-   "end": 6.34
+   "start": 6.02,
+   "end": 6.11
   },
   {
    "word": "server",
-   "start": 6.409,
-   "end": 6.82
+   "start": 6.179,
+   "end": 6.59
   },
   {
    "word": "refuses",
-   "start": 6.89,
-   "end": 7.38
+   "start": 6.66,
+   "end": 7.15
   },
   {
    "word": "with",
-   "start": 7.412,
-   "end": 7.54
+   "start": 7.182,
+   "end": 7.31
   },
   {
    "word": "a",
-   "start": 7.58,
-   "end": 7.62
+   "start": 7.35,
+   "end": 7.39
   },
   {
    "word": "403,",
-   "start": 7.684,
-   "end": 8.74
+   "start": 7.438,
+   "end": 8.35
   },
   {
    "word": "and",
-   "start": 8.76,
-   "end": 8.82
+   "start": 8.37,
+   "end": 8.43
   },
   {
    "word": "the",
-   "start": 8.84,
-   "end": 8.9
+   "start": 8.47,
+   "end": 8.59
   },
   {
    "word": "owner's",
-   "start": 8.98,
-   "end": 9.46
+   "start": 8.657,
+   "end": 9.07
   },
   {
    "word": "decision",
-   "start": 9.522,
-   "end": 10.02
+   "start": 9.123,
+   "end": 9.55
   },
   {
    "word": "stays",
-   "start": 10.087,
-   "end": 10.42
+   "start": 9.617,
+   "end": 9.95
   },
   {
    "word": "exactly",
-   "start": 10.52,
-   "end": 11.22
+   "start": 10.04,
+   "end": 10.67
   },
   {
    "word": "as",
-   "start": 11.3,
-   "end": 11.46
+   "start": 10.723,
+   "end": 10.83
   },
   {
    "word": "it",
-   "start": 11.513,
-   "end": 11.62
+   "start": 10.883,
+   "end": 10.99
   },
   {
    "word": "was.",
-   "start": 11.72,
-   "end": 12.1
+   "start": 11.09,
+   "end": 11.47
   }
  ]
 }

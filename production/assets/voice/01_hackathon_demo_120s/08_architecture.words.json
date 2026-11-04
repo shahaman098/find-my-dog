@@ -2,7 +2,7 @@
  "scene": "08_architecture",
  "text": "Under the hood, it's simple: a React app, one Cloudflare Worker, D1 for reports, R2 for clips, and a queue, so slow video jobs never block the page. Our key design decision: the owner confirms every match, not the model. The AI suggests; a person decides.",
  "spoken": "Under the hood, it's simple: a React app, one Cloudflare Worker, D one for reports, R two for clips, and a queue, so slow video jobs never block the page. Our key design decision: the owner confirms every match, not the model. The AI suggests; a person decides.",
- "duration": 18.583,
+ "duration": 18.347,
  "format": "pcm_48000",
  "model": "eleven_v3",
  "settings": {
@@ -13,239 +13,239 @@
   "speed": 1.0
  },
  "onetake": {
-  "from": 105.153,
-  "to": 123.736
+  "from": 105.86,
+  "to": 124.207
  },
  "words": [
   {
    "word": "Under",
    "start": 0.06,
-   "end": 0.527
+   "end": 0.46
   },
   {
    "word": "the",
-   "start": 0.547,
-   "end": 0.607
+   "start": 0.48,
+   "end": 0.54
   },
   {
    "word": "hood,",
-   "start": 0.655,
-   "end": 1.007
+   "start": 0.604,
+   "end": 0.94
   },
   {
    "word": "it's",
-   "start": 1.034,
-   "end": 1.247
+   "start": 0.967,
+   "end": 1.1
   },
   {
    "word": "simple:",
-   "start": 1.293,
-   "end": 1.807
+   "start": 1.157,
+   "end": 1.66
   },
   {
    "word": "a",
-   "start": 1.847,
-   "end": 1.887
+   "start": 1.7,
+   "end": 1.74
   },
   {
    "word": "React",
-   "start": 1.967,
-   "end": 2.367
+   "start": 1.82,
+   "end": 2.22
   },
   {
    "word": "app,",
-   "start": 2.427,
-   "end": 2.847
+   "start": 2.3,
+   "end": 2.7
   },
   {
    "word": "one",
-   "start": 2.907,
-   "end": 3.087
+   "start": 2.76,
+   "end": 2.94
   },
   {
    "word": "Cloudflare",
-   "start": 3.154,
-   "end": 3.647
+   "start": 3.02,
+   "end": 3.58
   },
   {
    "word": "Worker,",
-   "start": 3.716,
-   "end": 4.367
+   "start": 3.649,
+   "end": 4.3
   },
   {
    "word": "D1",
-   "start": 4.487,
-   "end": 4.847
+   "start": 4.42,
+   "end": 4.86
   },
   {
    "word": "for",
-   "start": 4.907,
-   "end": 5.087
+   "start": 4.9,
+   "end": 5.02
   },
   {
    "word": "reports,",
-   "start": 5.157,
-   "end": 5.807
+   "start": 5.09,
+   "end": 5.74
   },
   {
    "word": "R2",
-   "start": 5.967,
-   "end": 6.287
+   "start": 5.86,
+   "end": 6.22
   },
   {
    "word": "for",
-   "start": 6.327,
-   "end": 6.447
+   "start": 6.26,
+   "end": 6.38
   },
   {
    "word": "clips,",
-   "start": 6.527,
-   "end": 7.007
+   "start": 6.447,
+   "end": 6.94
   },
   {
    "word": "and",
-   "start": 7.047,
-   "end": 7.167
+   "start": 6.96,
+   "end": 7.02
   },
   {
    "word": "a",
-   "start": 7.267,
-   "end": 7.367
+   "start": 7.1,
+   "end": 7.18
   },
   {
    "word": "queue,",
-   "start": 7.4,
-   "end": 7.727
+   "start": 7.247,
+   "end": 7.66
   },
   {
    "word": "so",
-   "start": 7.807,
-   "end": 7.967
+   "start": 7.74,
+   "end": 7.9
   },
   {
    "word": "slow",
-   "start": 8.047,
-   "end": 8.367
+   "start": 7.996,
+   "end": 8.38
   },
   {
    "word": "video",
-   "start": 8.434,
-   "end": 8.767
+   "start": 8.433,
+   "end": 8.7
   },
   {
    "word": "jobs",
-   "start": 8.863,
-   "end": 9.247
+   "start": 8.796,
+   "end": 9.18
   },
   {
    "word": "never",
-   "start": 9.327,
-   "end": 9.727
+   "start": 9.247,
+   "end": 9.58
   },
   {
    "word": "block",
-   "start": 9.78,
-   "end": 10.047
+   "start": 9.633,
+   "end": 9.9
   },
   {
    "word": "the",
-   "start": 10.067,
-   "end": 10.127
+   "start": 9.92,
+   "end": 9.98
   },
   {
    "word": "page.",
-   "start": 10.223,
-   "end": 10.847
+   "start": 10.076,
+   "end": 10.54
   },
   {
    "word": "Our",
-   "start": 10.907,
-   "end": 11.087
+   "start": 10.62,
+   "end": 10.86
   },
   {
    "word": "key",
-   "start": 11.147,
-   "end": 11.327
+   "start": 10.94,
+   "end": 11.18
   },
   {
    "word": "design",
-   "start": 11.384,
-   "end": 11.727
+   "start": 11.237,
+   "end": 11.58
   },
   {
    "word": "decision:",
-   "start": 11.78,
-   "end": 12.367
+   "start": 11.633,
+   "end": 12.22
   },
   {
    "word": "the",
-   "start": 12.407,
-   "end": 12.527
+   "start": 12.24,
+   "end": 12.3
   },
   {
    "word": "owner",
-   "start": 12.594,
-   "end": 12.927
+   "start": 12.367,
+   "end": 12.7
   },
   {
    "word": "confirms",
-   "start": 12.998,
-   "end": 13.567
+   "start": 12.771,
+   "end": 13.34
   },
   {
    "word": "every",
-   "start": 13.634,
-   "end": 13.967
+   "start": 13.407,
+   "end": 13.74
   },
   {
    "word": "match,",
-   "start": 14.047,
-   "end": 14.607
+   "start": 13.82,
+   "end": 14.38
   },
   {
    "word": "not",
-   "start": 14.687,
-   "end": 14.927
+   "start": 14.44,
+   "end": 14.62
   },
   {
    "word": "the",
-   "start": 14.967,
-   "end": 15.087
+   "start": 14.66,
+   "end": 14.78
   },
   {
    "word": "model.",
-   "start": 15.154,
-   "end": 15.687
+   "start": 14.833,
+   "end": 15.18
   },
   {
    "word": "The",
-   "start": 15.737,
-   "end": 15.887
+   "start": 15.24,
+   "end": 15.42
   },
   {
    "word": "AI",
-   "start": 16.02,
-   "end": 16.287
+   "start": 15.553,
+   "end": 15.82
   },
   {
    "word": "suggests;",
-   "start": 16.349,
-   "end": 16.967
+   "start": 15.891,
+   "end": 16.58
   },
   {
    "word": "a",
-   "start": 17.027,
-   "end": 17.087
+   "start": 16.64,
+   "end": 16.7
   },
   {
    "word": "person",
-   "start": 17.167,
-   "end": 17.647
+   "start": 16.78,
+   "end": 17.26
   },
   {
    "word": "decides.",
-   "start": 17.747,
-   "end": 18.487
+   "start": 17.35,
+   "end": 18.167
   }
  ]
 }
