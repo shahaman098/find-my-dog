@@ -98,7 +98,15 @@ export async function sparkStructured(
   if (!resp.ok) throw new Error(`responses ${resp.status}: ${(await resp.text()).slice(0, 300)}`)
   const j: any = await resp.json()
   const usage = j.usage ?? {}
-  return { parsed: parseModelJson(j.output_text, `${env.SPARK_MODEL} matcher`), usage: { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 } }
+  return { parsed: parseModelJson(outputText(j), `${env.SPARK_MODEL} matcher`), usage: { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 } }
+}
+
+/** Raw /responses JSON has no output_text field — aggregate message content parts. */
+function outputText(j: any): string {
+  return (j.output ?? [])
+    .filter((o: any) => o.type === 'message')
+    .flatMap((o: any) => (o.content ?? []).map((c: any) => c.text ?? ''))
+    .join('')
 }
 
 /** Open-weight Muse Glimmer on Baseten (OpenAI-compatible chat with image_url parts). */

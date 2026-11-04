@@ -27,6 +27,7 @@ async function b64(p) {
 async function uploadVideo(path) {
   const fs = await import('node:fs')
   const form = new FormData()
+  form.append('purpose', 'user_data')
   form.append('file', new Blob([fs.readFileSync(path)], { type: 'video/mp4' }), path.split('/').pop())
   const r = await fetch(`${BASE}/files`, { method: 'POST', headers: { Authorization: `Bearer ${KEY}` }, body: form })
   if (!r.ok) throw new Error(`upload ${r.status}: ${(await r.text()).slice(0, 200)}`)
@@ -132,12 +133,16 @@ async function sparkVerdict(ownerPath, stillPath) {
         { type: 'input_image', image_url: await b64(ownerPath) },
         { type: 'input_image', image_url: await b64(stillPath) },
       ] }],
-      text: { format: { type: 'json_schema', name: 'verdict', schema: { type: 'object', properties: { is_match: { type: 'boolean' }, confidence: { type: 'number' }, rationale: { type: 'string' } }, required: ['is_match', 'confidence', 'rationale'] }, strict: true } },
+      text: { format: { type: 'json_schema', name: 'verdict', schema: { type: 'object', properties: { is_match: { type: 'boolean' }, confidence: { type: 'number' }, rationale: { type: 'string' } }, required: ['is_match', 'confidence', 'rationale'], additionalProperties: false }, strict: true } },
     }),
   })
   if (!r.ok) throw new Error(`spark ${r.status}: ${(await r.text()).slice(0, 300)}`)
   const j = await r.json()
-  return JSON.parse(j.output_text)
+  const text = (j.output ?? [])
+    .filter((o: any) => o.type === 'message')
+    .flatMap((o: any) => (o.content ?? []).map((c: any) => c.text ?? ''))
+    .join('')
+  return JSON.parse(text)
 }
 
 async function g2(owner, same, different, trials) {
