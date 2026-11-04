@@ -26,16 +26,35 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const ZOOM = `(() => { const z = () => { document.documentElement.style.zoom = '2' }; if (document.documentElement) z(); document.addEventListener('DOMContentLoaded', z) })()`
 const POINTER = `
 (() => {
+  // A standard desktop cursor drawn at 2x, following the real input events. Its shape follows the page's own CSS
+  // cursor under the pointer (arrow / pointing hand / I-beam), exactly as the OS cursor would.
+  const SVG = {
+    arrow: ['<svg width="28" height="28" viewBox="0 0 24 24"><path d="M3 1.5 L3 19.8 L7.6 15.6 L10.7 22.6 L13.9 21.2 L10.9 14.4 L17.4 14.4 Z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg>', 3.5, 2],
+    hand: ['<svg width="30" height="30" viewBox="0 0 24 24"><path d="M8.2 2.6c0-.86.7-1.56 1.56-1.56.86 0 1.56.7 1.56 1.56v7.1h.42V8.4c0-.86.7-1.56 1.56-1.56s1.56.7 1.56 1.56v1.3h.42v-.55c0-.86.7-1.56 1.56-1.56s1.56.7 1.56 1.56v1.6h.3c0-.75.6-1.35 1.35-1.35s1.35.6 1.35 1.35v5.1c0 3.7-3 6.95-6.7 6.95h-1.7c-2.05 0-3.9-1-5.1-2.65l-3.1-4.4c-.5-.7-.33-1.68.37-2.17.7-.48 1.65-.33 2.15.33l1.53 2V2.6z" fill="#fff" stroke="#000" stroke-width="1.25" stroke-linejoin="round"/></svg>', 10.5, 1.3],
+    ibeam: ['<svg width="28" height="28" viewBox="0 0 24 24"><g fill="none" stroke-linecap="round"><path d="M8.5 3.2h2.2c.6 0 1.1.3 1.3.8.2-.5.7-.8 1.3-.8h2.2M12 4.2v15.6M8.5 20.8h2.2c.6 0 1.1-.3 1.3-.8.2.5.7.8 1.3.8h2.2" stroke="#fff" stroke-width="3.4"/><path d="M8.5 3.2h2.2c.6 0 1.1.3 1.3.8.2-.5.7-.8 1.3-.8h2.2M12 4.2v15.6M8.5 20.8h2.2c.6 0 1.1-.3 1.3-.8.2.5.7.8 1.3.8h2.2" stroke="#000" stroke-width="1.5"/></g></svg>', 14, 14],
+  }
   const mk = () => {
     if (document.getElementById('__fmd_ptr')) return
     const d = document.createElement('div'); d.id = '__fmd_ptr'
-    d.style.cssText = 'position:fixed;left:-50px;top:-50px;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;' +
-      'background:rgba(77,107,254,.25);border:2px solid #4d6bfe;box-shadow:0 0 0 2px rgba(255,255,255,.85);z-index:2147483647;pointer-events:none;transition:transform .12s'
+    d.style.cssText = 'position:fixed;left:-60px;top:-60px;z-index:2147483647;pointer-events:none;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.35));line-height:0'
     document.documentElement.appendChild(d)
+    let kind = ''
     const zoom = () => parseFloat(getComputedStyle(document.documentElement).zoom) || 1
-    addEventListener('mousemove', e => { d.style.left = (e.clientX / zoom()) + 'px'; d.style.top = (e.clientY / zoom()) + 'px' }, true)
-    addEventListener('mousedown', () => { d.style.transform = 'scale(.7)' }, true)
-    addEventListener('mouseup', () => { d.style.transform = 'scale(1)' }, true)
+    const shapeAt = (x, y) => {
+      const el = document.elementFromPoint(x, y)
+      if (!el) return 'arrow'
+      const c = getComputedStyle(el).cursor
+      if (c === 'pointer') return 'hand'
+      if (c === 'text') return 'ibeam'
+      if (c === 'auto' && (el.matches('input:not([type=file]):not([type=button]):not([type=submit]), textarea, [contenteditable]') || (el.childNodes.length && [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())))) return el.matches('input, textarea, [contenteditable]') ? 'ibeam' : 'arrow'
+      return 'arrow'
+    }
+    addEventListener('mousemove', e => {
+      const k = shapeAt(e.clientX, e.clientY)
+      if (k !== kind) { kind = k; d.innerHTML = SVG[k][0] }
+      const z = zoom(), [, hx, hy] = SVG[k]
+      d.style.left = (e.clientX / z - hx) + 'px'; d.style.top = (e.clientY / z - hy) + 'px'
+    }, true)
   }
   if (document.readyState === 'loading') addEventListener('DOMContentLoaded', mk); else mk()
 })()`
