@@ -3,7 +3,7 @@
 #   1. put the (rotated) Meta key in .dev.vars:  META_API_KEY=...
 #   2. bash production/bootstrap.sh            (~1 h 30 m total; ~$0.60 of Meta API calls)
 #      FILM1_ONLY=1 bash production/bootstrap.sh  (Film 1 only, ~45 min)
-# Needs: node 22, ffmpeg, Xvfb, Playwright's Chromium (all present in Claude Code cloud containers).
+# Needs: node 22, ffmpeg, Xvfb, Playwright's Chromium (all preinstalled in the cloud build containers).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 grep -q '^META_API_KEY=..' .dev.vars || { echo "Put META_API_KEY=<rotated key> in .dev.vars first"; exit 2; }

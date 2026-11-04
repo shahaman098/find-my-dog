@@ -1,6 +1,6 @@
 # Handoff: Find My Dog, Meta Global AI Developer Hackathon
 
-Written 4 Nov 2026, ~19:00 GMT, at the end of a Claude Code session that ran out of credits. Everything needed to finish is in this repo; nothing depends on the old container.
+Written 4 Nov 2026, ~19:00 GMT. Everything needed to finish is in this repo.
 
 **Deadline: 21:00 ET = 02:00 GMT (5 Nov). Submit by 22:00 GMT.** Submission form: https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/submit (answers pre-written in `SUBMISSION.md`). Track: **Indie** (students).
 
@@ -37,7 +37,7 @@ Then listen to the whole film before sending it, check that captions match the s
 
 ## Set up the new environment (5 minutes)
 
-1. Connect GitHub to an account with access to the **private** repo `shahaman098/find-my-dog`; work on branch `claude/brave-darwin-9r9p3b` (or `main`; both are at the same commit).
+1. Connect GitHub to an account with access to the **private** repo `shahaman098/find-my-dog`; work on `main`.
 2. Put the **rotated** Meta key in `.dev.vars` as `META_API_KEY=...`. The tracked `.dev.vars` contains the old, exposed key; overwrite it locally and never commit a key.
 3. Only if a narration line must change: add `ELEVENLABS_API_KEY` as an environment secret (not in chat), then `node production/voice.mjs production/scripts/film1.json <scene_id>`.
 
@@ -55,7 +55,7 @@ If only one film needs redoing after a take exists: `SKIP_CAPTURE=1 BASE=http://
 
 ## Priorities (in order)
 
-- **P0 (Kris):** deploy ✅ done. Rotate Meta + ElevenLabs keys. Make the repo public only after rotating. Remove the "Muse Code" line in `SUBMISSION.md` unless true. Upload Film 1 (unlisted YouTube; check logged-out playback) and submit by 22:00 GMT. **Film 1 v2 is the one to upload.**
+- **P0 (Kris):** deploy ✅ done. Rotate Meta + ElevenLabs keys. Make the repo public only after rotating. Muse Code line in `SUBMISSION.md`: kept (confirmed by Kris). Upload Film 1 (unlisted YouTube; check logged-out playback) and submit by 22:00 GMT. **Film 1 v2 is the one to upload.**
 - **P1:** ✅ done: all three films final and delivered (20:00 GMT). Only re-run `bash production/bootstrap.sh` if the MP4s are lost or a film must change.
 - **P2 (optional, after deploy):** re-shoot on production: `BASE=https://find-my-dog.kiritokris.workers.dev bash production/reshoot_all.sh`. If you do, change scene 04 of `production/scripts/film1.json` back to "…a brand-new report on the deployed site…", re-voice that one scene (needs ElevenLabs), and re-render Film 1.
 - **P3:** ✅ done: `production/11_production_report.md` and `PITCH.md` (60-second pitch + Q&A for the 9 Nov finals). ✅ "Time-boxed" softened to "scoped to one search" in the README, `SUBMISSION.md`, `PITCH.md` and the landing page (no expiry is enforced in code). Redeploy (`npm run deploy`) so the live landing page picks it up.
@@ -68,9 +68,3 @@ If only one film needs redoing after a take exists: `SKIP_CAPTURE=1 BASE=http://
 - **CDP screencast cannot do 4K smoothly**; the capture uses headed Chromium on Xvfb `:99` recorded by ffmpeg `x11grab` (Xvfb must be started with `-nocursor`; the cursor is drawn from real input events).
 - **SAM needs the clip by public URL or Files API**; locally the Worker uploads to `/v1/files` automatically (`worker/src/meta.ts` `uploadVideo`).
 - Honesty rules the films follow (keep them): every footage frame maps to a real take frame; speed is shown on screen; terminal panels replay recorded sessions with literal commands; generated imagery is labelled "concept imagery"; the environment (local vs production) is stated in narration and labels.
-
-## Copy-paste prompt for the new Claude Code session
-
-```text
-Read HANDOFF.md in this repo first and follow it. Context: Meta Global AI Developer Hackathon submission "Find My Dog", deadline 02:00 GMT 5 Nov. The product, evidence pack and film tooling are done and committed. Your job: (1) check .dev.vars has a META_API_KEY (I will add the rotated key myself; never print it), (2) run `bash production/bootstrap.sh` in the background, (3) watch its output; when each film passes every PASS line of production/qa.py, send me the MP4 (and its SRT), Film 1 first, then Film 3, then Film 2, (4) commit and push any script changes to claude/brave-darwin-9r9p3b and main (never commit keys or anything under production/out or production/work), (5) then write production/11_production_report.md. Follow the "Known pitfalls" section exactly. Use UK English and be concise.
-```

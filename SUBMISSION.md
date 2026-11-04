@@ -9,7 +9,7 @@
 
 - [ ] `main` deployed with the latest code, **including the 4 Nov UI redesign** (`npm run deploy`); `curl -X POST …/api/reports/<demo id>/analyze` returns 403
 - [ ] **Rotate `META_API_KEY` before making the repo public** (it was committed in `.dev.vars`, and old commits still contain that file), then `wrangler secret put META_API_KEY`
-- [ ] Remove the "Muse Code" line below unless it is true
+- [x] "Muse Code" line below: kept, confirmed by the owner
 - [ ] Repo public: `github.com/shahaman098/find-my-dog` (created Nov 3, event-only history)
 - [ ] Live URL: https://find-my-dog.kiritokris.workers.dev (real mode, key set as secret)
 - [ ] Demo report seeded at `/#/demo` (visible without any setup)
