@@ -30,8 +30,31 @@ export type ContentPart =
   | { type: 'input_text'; text: string }
   | { type: 'input_image'; image_url: string }
 
-/** Stream SAM 3.1 over a publicly fetchable video URL; return merged tracks. */
-export async function trackVideo(env: Env, videoUrl: string, concept: string, fps: number): Promise<Track[]> {
+/** Upload a clip to the Meta Files API; SAM can then read it by file_id. */
+export async function uploadVideo(env: Env, bytes: ArrayBuffer, filename: string, contentType = 'video/mp4'): Promise<string> {
+  const form = new FormData()
+  form.append('purpose', 'user_data')
+  form.append('file', new Blob([bytes], { type: contentType }), filename)
+  const r = await fetch(`${BASE}/files`, { method: 'POST', headers: { Authorization: `Bearer ${env.META_API_KEY}` }, body: form })
+  if (!r.ok) throw new Error(`files ${r.status}: ${(await r.text()).slice(0, 300)}`)
+  const j: any = await r.json()
+  if (!j.id) throw new Error('files: no id returned')
+  return j.id
+}
+
+/** A clip URL SAM cannot reach (local dev, private host) must be uploaded instead of passed by URL. */
+export function isPublicUrl(u: string): boolean {
+  try {
+    const h = new URL(u).hostname
+    return !(h === 'localhost' || h.endsWith('.localhost') || h === '0.0.0.0' || h === '::1' || /^127\./.test(h) || /^10\./.test(h) || /^192\.168\./.test(h) || /^172\.(1[6-9]|2\d|3[01])\./.test(h))
+  } catch {
+    return false
+  }
+}
+
+/** Stream SAM 3.1 over a video (public URL or uploaded file_id); return merged tracks. */
+export async function trackVideo(env: Env, video: { url: string } | { fileId: string }, concept: string, fps: number): Promise<Track[]> {
+  const input_video = 'url' in video ? { type: 'input_video', video_url: video.url } : { type: 'input_video', file_id: video.fileId }
   const resp = await fetch(`${BASE}/responses`, {
     method: 'POST',
     headers: authHeaders(env),
@@ -42,7 +65,7 @@ export async function trackVideo(env: Env, videoUrl: string, concept: string, fp
         role: 'user',
         content: [
           { type: 'input_text', text: concept },
-          { type: 'input_video', video_url: videoUrl },
+          input_video,
         ],
       }],
       stream: true,

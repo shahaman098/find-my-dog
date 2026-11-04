@@ -84,3 +84,11 @@ test('imageType: sniffs the poster bytes Muse Image actually returns', async () 
   assert.equal(imageType(new Uint8Array([0x89, 0x50, 0x4e, 0x47])), 'image/png')
   assert.equal(imageType(new Uint8Array([0xff, 0xd8, 0xff])), 'image/jpeg')
 })
+
+test('isPublicUrl: local and private hosts are uploaded to SAM, public ones are passed by URL', async () => {
+  const { isPublicUrl } = await import('../worker/src/meta.ts')
+  for (const u of ['http://localhost:8787/x', 'http://127.0.0.1/x', 'http://10.0.0.5/x', 'http://192.168.1.2/x', 'http://172.20.0.1/x', 'not a url'])
+    assert.equal(isPublicUrl(u), false, u)
+  for (const u of ['https://find-my-dog.kiritokris.workers.dev/api/reports/a/clips/b', 'https://example.com/v.mp4', 'http://172.32.0.1/x'])
+    assert.equal(isPublicUrl(u), true, u)
+})

@@ -4,7 +4,7 @@ import type { Clip, Env, MatchVerdict, PipelineMessage, ReportState, Sighting } 
 import { createState, readState, updateState } from './store.ts'
 import { emptyCost, addCost } from './cost.ts'
 import { mockTracks, mockTranscript, mockMatch, mockPlan, MOCK_POSTER_SVG } from './mock.ts'
-import { trackVideo, sparkStructured, glimmerStructured, toolLoop, transcribe, generatePoster, type ContentPart } from './meta.ts'
+import { trackVideo, uploadVideo, isPublicUrl, sparkStructured, glimmerStructured, toolLoop, transcribe, generatePoster, type ContentPart } from './meta.ts'
 import { byClock } from './clock.ts'
 import { MATCH_SCHEMA, matchPrompt, TOOLS, coordinatorInput, posterPrompt } from './prompts.ts'
 
@@ -547,7 +547,16 @@ export default {
           await setClip((cl) => {
             cl.status = 'tracking'
           })
-          const tracks = await trackVideo(env, clip.media_url, concept, clip.fps)
+          // Public deployments pass the clip URL; a URL SAM can't reach (e.g. wrangler dev on localhost) is uploaded
+          // to the Meta Files API first, so the full real pipeline runs anywhere.
+          let video: { url: string } | { fileId: string } = { url: clip.media_url }
+          if (!isPublicUrl(clip.media_url)) {
+            const list = await env.MEDIA.list({ prefix: `${reportId}/clips/${clipId}_` })
+            const obj = list.objects[0] ? await env.MEDIA.get(list.objects[0].key) : null
+            if (!obj) throw new Error('clip media missing in R2')
+            video = { fileId: await uploadVideo(env, await obj.arrayBuffer(), clip.filename || `${clipId}.mp4`, obj.httpMetadata?.contentType ?? 'video/mp4') }
+          }
+          const tracks = await trackVideo(env, video, concept, clip.fps)
           // SAM bills a 50-frame minimum per request (sam.ts samCost) — honor it in the meter.
           const framesBilled = Math.max(Math.round(clip.fps * clip.duration_s), 50)
           await setClip((cl) => {
