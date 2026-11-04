@@ -17,7 +17,7 @@ f1 = json.loads(open(os.path.join(ROOT, 'production', 'film1', 'data.js')).read(
 for name in ['gate', 'street', 'doorstep', 'home']:
     dst = os.path.join(A, f'{name}.jpg')
     if not os.path.exists(dst):
-        im = Image.open(os.path.join(ROOT, 'production', 'out', 'concept', f'{name}_1536x1024.webp')).convert('RGB')
+        im = Image.open(os.path.join(ROOT, 'production', 'assets', 'concept', f'{name}_1536x1024.webp')).convert('RGB')
         im.resize((3840, int(3840 * im.height / im.width)), Image.LANCZOS).save(dst, quality=92)
 # the real top match card, cropped from the take's 4K still of the matches section
 st = Image.open(os.path.join(TAKE, 'still_matches.png')).convert('RGB')

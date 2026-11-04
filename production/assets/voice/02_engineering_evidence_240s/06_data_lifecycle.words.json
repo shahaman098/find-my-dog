@@ -1,0 +1,222 @@
+{
+ "scene": "06_data_lifecycle",
+ "text": "We also verify what happens after the first result appears. Depending on the workflow, that includes persistence, retrieval, refresh behaviour, or downstream integration. This demonstrates that the visible outcome is backed by real application state, not merely a temporary interface animation.",
+ "spoken": "We also verify what happens after the first result appears. Depending on the workflow, that includes persistence, retrieval, refresh behaviour, or downstream integration. This demonstrates that the visible outcome is backed by real application state, not merely a temporary interface animation.",
+ "duration": 16.253958,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.97
+ },
+ "words": [
+  {
+   "word": "We",
+   "start": 0,
+   "end": 0.163
+  },
+  {
+   "word": "also",
+   "start": 0.221,
+   "end": 0.453
+  },
+  {
+   "word": "verify",
+   "start": 0.522,
+   "end": 0.94
+  },
+  {
+   "word": "what",
+   "start": 0.998,
+   "end": 1.138
+  },
+  {
+   "word": "happens",
+   "start": 1.196,
+   "end": 1.556
+  },
+  {
+   "word": "after",
+   "start": 1.614,
+   "end": 1.892
+  },
+  {
+   "word": "the",
+   "start": 1.95,
+   "end": 2.02
+  },
+  {
+   "word": "first",
+   "start": 2.09,
+   "end": 2.299
+  },
+  {
+   "word": "result",
+   "start": 2.334,
+   "end": 2.647
+  },
+  {
+   "word": "appears.",
+   "start": 2.694,
+   "end": 3.193
+  },
+  {
+   "word": "Depending",
+   "start": 3.413,
+   "end": 3.82
+  },
+  {
+   "word": "on",
+   "start": 3.866,
+   "end": 3.936
+  },
+  {
+   "word": "the",
+   "start": 3.971,
+   "end": 4.04
+  },
+  {
+   "word": "workflow,",
+   "start": 4.098,
+   "end": 4.667
+  },
+  {
+   "word": "that",
+   "start": 4.69,
+   "end": 4.841
+  },
+  {
+   "word": "includes",
+   "start": 4.899,
+   "end": 5.283
+  },
+  {
+   "word": "persistence,",
+   "start": 5.341,
+   "end": 5.898
+  },
+  {
+   "word": "retrieval,",
+   "start": 5.944,
+   "end": 6.571
+  },
+  {
+   "word": "refresh",
+   "start": 6.618,
+   "end": 7.024
+  },
+  {
+   "word": "behaviour,",
+   "start": 7.094,
+   "end": 7.639
+  },
+  {
+   "word": "or",
+   "start": 7.674,
+   "end": 7.79
+  },
+  {
+   "word": "downstream",
+   "start": 7.86,
+   "end": 8.348
+  },
+  {
+   "word": "integration.",
+   "start": 8.417,
+   "end": 9.114
+  },
+  {
+   "word": "This",
+   "start": 9.334,
+   "end": 9.52
+  },
+  {
+   "word": "demonstrates",
+   "start": 9.566,
+   "end": 10.135
+  },
+  {
+   "word": "that",
+   "start": 10.17,
+   "end": 10.298
+  },
+  {
+   "word": "the",
+   "start": 10.333,
+   "end": 10.402
+  },
+  {
+   "word": "visible",
+   "start": 10.46,
+   "end": 10.844
+  },
+  {
+   "word": "outcome",
+   "start": 10.902,
+   "end": 11.308
+  },
+  {
+   "word": "is",
+   "start": 11.366,
+   "end": 11.459
+  },
+  {
+   "word": "backed",
+   "start": 11.552,
+   "end": 11.772
+  },
+  {
+   "word": "by",
+   "start": 11.807,
+   "end": 11.912
+  },
+  {
+   "word": "real",
+   "start": 11.981,
+   "end": 12.202
+  },
+  {
+   "word": "application",
+   "start": 12.248,
+   "end": 12.748
+  },
+  {
+   "word": "state,",
+   "start": 12.817,
+   "end": 13.235
+  },
+  {
+   "word": "not",
+   "start": 13.491,
+   "end": 13.711
+  },
+  {
+   "word": "merely",
+   "start": 13.781,
+   "end": 14.094
+  },
+  {
+   "word": "a",
+   "start": 14.152,
+   "end": 14.187
+  },
+  {
+   "word": "temporary",
+   "start": 14.245,
+   "end": 14.779
+  },
+  {
+   "word": "interface",
+   "start": 14.849,
+   "end": 15.36
+  },
+  {
+   "word": "animation.",
+   "start": 15.395,
+   "end": 16.254
+  }
+ ]
+}

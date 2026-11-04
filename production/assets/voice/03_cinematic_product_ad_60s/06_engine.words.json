@@ -1,0 +1,107 @@
+{
+ "scene": "06_engine",
+ "text": "Behind that moment, SAM 3.1 tracks every animal, and Muse Spark matches on appearance. Not magic. Working software.",
+ "spoken": "Behind that moment, SAM three point one tracks every animal, and Muse Spark matches on appearance. Not magic. Working software.",
+ "duration": 7.3375,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "words": [
+  {
+   "word": "Behind",
+   "start": 0,
+   "end": 0.418
+  },
+  {
+   "word": "that",
+   "start": 0.476,
+   "end": 0.615
+  },
+  {
+   "word": "moment,",
+   "start": 0.697,
+   "end": 1.08
+  },
+  {
+   "word": "SAM",
+   "start": 1.115,
+   "end": 1.382
+  },
+  {
+   "word": "3.1",
+   "start": 1.474,
+   "end": 1.73
+  },
+  {
+   "word": "tracks",
+   "start": 1.776,
+   "end": 1.985
+  },
+  {
+   "word": "every",
+   "start": 2.067,
+   "end": 2.241
+  },
+  {
+   "word": "animal,",
+   "start": 2.264,
+   "end": 2.531
+  },
+  {
+   "word": "and",
+   "start": 2.589,
+   "end": 2.821
+  },
+  {
+   "word": "Muse",
+   "start": 2.879,
+   "end": 3.262
+  },
+  {
+   "word": "Spark",
+   "start": 3.286,
+   "end": 3.39
+  },
+  {
+   "word": "matches",
+   "start": 3.495,
+   "end": 3.866
+  },
+  {
+   "word": "on",
+   "start": 3.924,
+   "end": 4.296
+  },
+  {
+   "word": "appearance.",
+   "start": 4.423,
+   "end": 4.772
+  },
+  {
+   "word": "Not",
+   "start": 4.853,
+   "end": 4.957
+  },
+  {
+   "word": "magic.",
+   "start": 5.004,
+   "end": 5.422
+  },
+  {
+   "word": "Working",
+   "start": 5.445,
+   "end": 5.596
+  },
+  {
+   "word": "software.",
+   "start": 5.677,
+   "end": 6.107
+  }
+ ]
+}

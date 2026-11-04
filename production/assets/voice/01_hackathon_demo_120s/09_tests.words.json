@@ -1,0 +1,147 @@
+{
+ "scene": "09_tests",
+ "text": "These are real runs: unit tests, an end-to-end test, and a benchmark on real footage where the right dog ranked first nine times out of nine.",
+ "spoken": "These are real runs: unit tests, an end-to-end test, and a benchmark on real footage where the right dog ranked first nine times out of nine.",
+ "duration": 7.383938,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "These",
+   "start": 0,
+   "end": 0.209
+  },
+  {
+   "word": "are",
+   "start": 0.232,
+   "end": 0.325
+  },
+  {
+   "word": "real",
+   "start": 0.372,
+   "end": 0.58
+  },
+  {
+   "word": "runs:",
+   "start": 0.639,
+   "end": 0.975
+  },
+  {
+   "word": "unit",
+   "start": 1.091,
+   "end": 1.312
+  },
+  {
+   "word": "tests,",
+   "start": 1.347,
+   "end": 1.637
+  },
+  {
+   "word": "an",
+   "start": 1.672,
+   "end": 1.753
+  },
+  {
+   "word": "end-to-end",
+   "start": 1.834,
+   "end": 2.206
+  },
+  {
+   "word": "test,",
+   "start": 2.229,
+   "end": 2.554
+  },
+  {
+   "word": "and",
+   "start": 2.705,
+   "end": 2.856
+  },
+  {
+   "word": "a",
+   "start": 2.914,
+   "end": 2.937
+  },
+  {
+   "word": "benchmark",
+   "start": 3.019,
+   "end": 3.471
+  },
+  {
+   "word": "on",
+   "start": 3.529,
+   "end": 3.611
+  },
+  {
+   "word": "real",
+   "start": 3.669,
+   "end": 3.878
+  },
+  {
+   "word": "footage",
+   "start": 3.936,
+   "end": 4.307
+  },
+  {
+   "word": "where",
+   "start": 4.331,
+   "end": 4.516
+  },
+  {
+   "word": "the",
+   "start": 4.551,
+   "end": 4.621
+  },
+  {
+   "word": "right",
+   "start": 4.69,
+   "end": 4.899
+  },
+  {
+   "word": "dog",
+   "start": 4.957,
+   "end": 5.178
+  },
+  {
+   "word": "ranked",
+   "start": 5.271,
+   "end": 5.55
+  },
+  {
+   "word": "first",
+   "start": 5.619,
+   "end": 5.909
+  },
+  {
+   "word": "nine",
+   "start": 5.991,
+   "end": 6.223
+  },
+  {
+   "word": "times",
+   "start": 6.258,
+   "end": 6.525
+  },
+  {
+   "word": "out",
+   "start": 6.571,
+   "end": 6.676
+  },
+  {
+   "word": "of",
+   "start": 6.711,
+   "end": 6.78
+  },
+  {
+   "word": "nine.",
+   "start": 6.861,
+   "end": 7.384
+  }
+ ]
+}

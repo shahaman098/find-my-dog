@@ -1,0 +1,97 @@
+{
+ "scene": "05_reveal",
+ "text": "Meet Find My Dog. Two neighbours' clips become a ranked match, while you stay in control.",
+ "spoken": "Meet Find My Dog. Two neighbours' clips become a ranked match, while you stay in control.",
+ "duration": 4.736875,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "words": [
+  {
+   "word": "Meet",
+   "start": 0,
+   "end": 0.302
+  },
+  {
+   "word": "Find",
+   "start": 0.36,
+   "end": 0.569
+  },
+  {
+   "word": "My",
+   "start": 0.627,
+   "end": 0.731
+  },
+  {
+   "word": "Dog.",
+   "start": 0.813,
+   "end": 1.115
+  },
+  {
+   "word": "Two",
+   "start": 1.149,
+   "end": 1.324
+  },
+  {
+   "word": "neighbours'",
+   "start": 1.382,
+   "end": 1.718
+  },
+  {
+   "word": "clips",
+   "start": 1.741,
+   "end": 1.985
+  },
+  {
+   "word": "become",
+   "start": 2.032,
+   "end": 2.31
+  },
+  {
+   "word": "a",
+   "start": 2.345,
+   "end": 2.368
+  },
+  {
+   "word": "ranked",
+   "start": 2.45,
+   "end": 2.728
+  },
+  {
+   "word": "match,",
+   "start": 2.81,
+   "end": 3.065
+  },
+  {
+   "word": "while",
+   "start": 3.1,
+   "end": 3.344
+  },
+  {
+   "word": "you",
+   "start": 3.39,
+   "end": 3.495
+  },
+  {
+   "word": "stay",
+   "start": 3.576,
+   "end": 3.773
+  },
+  {
+   "word": "in",
+   "start": 3.808,
+   "end": 3.866
+  },
+  {
+   "word": "control.",
+   "start": 3.924,
+   "end": 4.737
+  }
+ ]
+}

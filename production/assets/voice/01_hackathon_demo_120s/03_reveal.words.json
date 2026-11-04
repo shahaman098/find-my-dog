@@ -1,0 +1,142 @@
+{
+ "scene": "03_reveal",
+ "text": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app, running live.",
+ "spoken": "This is Find My Dog. It searches footage from any camera, for any pet, with the owner in control. Here's the real app, running live.",
+ "duration": 7.430396,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "This",
+   "start": 0,
+   "end": 0.197
+  },
+  {
+   "word": "is",
+   "start": 0.255,
+   "end": 0.337
+  },
+  {
+   "word": "Find",
+   "start": 0.418,
+   "end": 0.685
+  },
+  {
+   "word": "My",
+   "start": 0.778,
+   "end": 0.917
+  },
+  {
+   "word": "Dog.",
+   "start": 1.01,
+   "end": 1.3
+  },
+  {
+   "word": "It",
+   "start": 1.324,
+   "end": 1.44
+  },
+  {
+   "word": "searches",
+   "start": 1.498,
+   "end": 1.846
+  },
+  {
+   "word": "footage",
+   "start": 1.916,
+   "end": 2.241
+  },
+  {
+   "word": "from",
+   "start": 2.264,
+   "end": 2.403
+  },
+  {
+   "word": "any",
+   "start": 2.473,
+   "end": 2.635
+  },
+  {
+   "word": "camera,",
+   "start": 2.694,
+   "end": 3.286
+  },
+  {
+   "word": "for",
+   "start": 3.437,
+   "end": 3.576
+  },
+  {
+   "word": "any",
+   "start": 3.634,
+   "end": 3.796
+  },
+  {
+   "word": "pet,",
+   "start": 3.878,
+   "end": 4.133
+  },
+  {
+   "word": "with",
+   "start": 4.156,
+   "end": 4.319
+  },
+  {
+   "word": "the",
+   "start": 4.354,
+   "end": 4.435
+  },
+  {
+   "word": "owner",
+   "start": 4.528,
+   "end": 4.807
+  },
+  {
+   "word": "in",
+   "start": 4.865,
+   "end": 4.946
+  },
+  {
+   "word": "control.",
+   "start": 5.027,
+   "end": 5.619
+  },
+  {
+   "word": "Here's",
+   "start": 5.77,
+   "end": 6.026
+  },
+  {
+   "word": "the",
+   "start": 6.049,
+   "end": 6.118
+  },
+  {
+   "word": "real",
+   "start": 6.188,
+   "end": 6.42
+  },
+  {
+   "word": "app,",
+   "start": 6.502,
+   "end": 6.734
+  },
+  {
+   "word": "running",
+   "start": 6.769,
+   "end": 7.036
+  },
+  {
+   "word": "live.",
+   "start": 7.105,
+   "end": 7.43
+  }
+ ]
+}

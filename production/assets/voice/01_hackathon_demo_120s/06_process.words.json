@@ -1,0 +1,172 @@
+{
+ "scene": "06_process",
+ "text": "Each clip goes onto a Cloudflare queue. The Worker sends it to SAM 3.1, then Muse Spark compares every tracked animal with Biscuit's photo. This is the real request and response.",
+ "spoken": "Each clip goes onto a Cloudflare queue. The Worker sends it to SAM three point one, then Muse Spark compares every tracked animal with Biscuit's photo. This is the real request and response.",
+ "duration": 10.774063,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "Each",
+   "start": 0,
+   "end": 0.244
+  },
+  {
+   "word": "clip",
+   "start": 0.302,
+   "end": 0.522
+  },
+  {
+   "word": "goes",
+   "start": 0.592,
+   "end": 0.813
+  },
+  {
+   "word": "onto",
+   "start": 0.859,
+   "end": 1.033
+  },
+  {
+   "word": "a",
+   "start": 1.103,
+   "end": 1.126
+  },
+  {
+   "word": "Cloudflare",
+   "start": 1.184,
+   "end": 1.683
+  },
+  {
+   "word": "queue.",
+   "start": 1.73,
+   "end": 2.055
+  },
+  {
+   "word": "The",
+   "start": 2.229,
+   "end": 2.345
+  },
+  {
+   "word": "Worker",
+   "start": 2.403,
+   "end": 2.717
+  },
+  {
+   "word": "sends",
+   "start": 2.775,
+   "end": 2.972
+  },
+  {
+   "word": "it",
+   "start": 3.019,
+   "end": 3.088
+  },
+  {
+   "word": "to",
+   "start": 3.123,
+   "end": 3.193
+  },
+  {
+   "word": "SAM",
+   "start": 3.251,
+   "end": 3.471
+  },
+  {
+   "word": "3.1,",
+   "start": 3.541,
+   "end": 3.75
+  },
+  {
+   "word": "then",
+   "start": 3.796,
+   "end": 4.04
+  },
+  {
+   "word": "Muse",
+   "start": 4.122,
+   "end": 4.458
+  },
+  {
+   "word": "Spark",
+   "start": 4.632,
+   "end": 4.853
+  },
+  {
+   "word": "compares",
+   "start": 4.946,
+   "end": 5.236
+  },
+  {
+   "word": "every",
+   "start": 5.259,
+   "end": 5.619
+  },
+  {
+   "word": "tracked",
+   "start": 5.7,
+   "end": 6.235
+  },
+  {
+   "word": "animal",
+   "start": 6.327,
+   "end": 6.594
+  },
+  {
+   "word": "with",
+   "start": 6.653,
+   "end": 6.908
+  },
+  {
+   "word": "Biscuit's",
+   "start": 6.966,
+   "end": 7.338
+  },
+  {
+   "word": "photo.",
+   "start": 7.396,
+   "end": 7.546
+  },
+  {
+   "word": "This",
+   "start": 7.605,
+   "end": 7.976
+  },
+  {
+   "word": "is",
+   "start": 8.022,
+   "end": 8.487
+  },
+  {
+   "word": "the",
+   "start": 8.661,
+   "end": 8.835
+  },
+  {
+   "word": "real",
+   "start": 8.893,
+   "end": 8.975
+  },
+  {
+   "word": "request",
+   "start": 9.021,
+   "end": 9.091
+  },
+  {
+   "word": "and",
+   "start": 9.16,
+   "end": 9.346
+  },
+  {
+   "word": "response.",
+   "start": 9.404,
+   "end": 9.776
+  }
+ ]
+}

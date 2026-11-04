@@ -1,0 +1,87 @@
+{
+ "scene": "02_friction",
+ "text": "Every day, pet owners lose precious hours to a dog that slipped the gate.",
+ "spoken": "Every day, pet owners lose precious hours to a dog that slipped the gate.",
+ "duration": 4.272479,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "words": [
+  {
+   "word": "Every",
+   "start": 0,
+   "end": 0.464
+  },
+  {
+   "word": "day,",
+   "start": 0.522,
+   "end": 0.72
+  },
+  {
+   "word": "pet",
+   "start": 0.755,
+   "end": 0.975
+  },
+  {
+   "word": "owners",
+   "start": 1.057,
+   "end": 1.37
+  },
+  {
+   "word": "lose",
+   "start": 1.451,
+   "end": 1.637
+  },
+  {
+   "word": "precious",
+   "start": 1.683,
+   "end": 2.043
+  },
+  {
+   "word": "hours",
+   "start": 2.125,
+   "end": 2.461
+  },
+  {
+   "word": "to",
+   "start": 2.508,
+   "end": 2.589
+  },
+  {
+   "word": "a",
+   "start": 2.682,
+   "end": 2.717
+  },
+  {
+   "word": "dog",
+   "start": 2.81,
+   "end": 3.042
+  },
+  {
+   "word": "that",
+   "start": 3.088,
+   "end": 3.216
+  },
+  {
+   "word": "slipped",
+   "start": 3.251,
+   "end": 3.529
+  },
+  {
+   "word": "the",
+   "start": 3.553,
+   "end": 3.622
+  },
+  {
+   "word": "gate.",
+   "start": 3.68,
+   "end": 4.272
+  }
+ ]
+}

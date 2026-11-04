@@ -1,0 +1,202 @@
+{
+ "scene": "08_failure_limits",
+ "text": "Finally, we examine an error condition and how the application responds. We also identify the current limitations, third-party dependencies, and what remains unfinished. The repository, setup instructions, and underlying recordings provide the supporting evidence for this demonstration.",
+ "spoken": "Finally, we examine an error condition and how the application responds. We also identify the current limitations, third-party dependencies, and what remains unfinished. The repository, setup instructions, and underlying recordings provide the supporting evidence for this demonstration.",
+ "duration": 15.882458,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.97
+ },
+ "words": [
+  {
+   "word": "Finally,",
+   "start": 0,
+   "end": 0.522
+  },
+  {
+   "word": "we",
+   "start": 0.546,
+   "end": 0.65
+  },
+  {
+   "word": "examine",
+   "start": 0.708,
+   "end": 1.138
+  },
+  {
+   "word": "an",
+   "start": 1.173,
+   "end": 1.254
+  },
+  {
+   "word": "error",
+   "start": 1.335,
+   "end": 1.602
+  },
+  {
+   "word": "condition",
+   "start": 1.66,
+   "end": 2.183
+  },
+  {
+   "word": "and",
+   "start": 2.252,
+   "end": 2.357
+  },
+  {
+   "word": "how",
+   "start": 2.438,
+   "end": 2.601
+  },
+  {
+   "word": "the",
+   "start": 2.659,
+   "end": 2.728
+  },
+  {
+   "word": "application",
+   "start": 2.775,
+   "end": 3.309
+  },
+  {
+   "word": "responds.",
+   "start": 3.367,
+   "end": 3.982
+  },
+  {
+   "word": "We",
+   "start": 4.156,
+   "end": 4.284
+  },
+  {
+   "word": "also",
+   "start": 4.342,
+   "end": 4.551
+  },
+  {
+   "word": "identify",
+   "start": 4.621,
+   "end": 5.143
+  },
+  {
+   "word": "the",
+   "start": 5.213,
+   "end": 5.283
+  },
+  {
+   "word": "current",
+   "start": 5.352,
+   "end": 5.654
+  },
+  {
+   "word": "limitations,",
+   "start": 5.7,
+   "end": 6.42
+  },
+  {
+   "word": "third-party",
+   "start": 6.455,
+   "end": 6.989
+  },
+  {
+   "word": "dependencies,",
+   "start": 7.036,
+   "end": 7.814
+  },
+  {
+   "word": "and",
+   "start": 7.964,
+   "end": 8.115
+  },
+  {
+   "word": "what",
+   "start": 8.185,
+   "end": 8.359
+  },
+  {
+   "word": "remains",
+   "start": 8.429,
+   "end": 8.8
+  },
+  {
+   "word": "unfinished.",
+   "start": 8.882,
+   "end": 9.555
+  },
+  {
+   "word": "The",
+   "start": 9.776,
+   "end": 9.892
+  },
+  {
+   "word": "repository,",
+   "start": 9.962,
+   "end": 10.751
+  },
+  {
+   "word": "setup",
+   "start": 10.809,
+   "end": 11.192
+  },
+  {
+   "word": "instructions,",
+   "start": 11.262,
+   "end": 11.877
+  },
+  {
+   "word": "and",
+   "start": 11.901,
+   "end": 12.005
+  },
+  {
+   "word": "underlying",
+   "start": 12.075,
+   "end": 12.551
+  },
+  {
+   "word": "recordings",
+   "start": 12.609,
+   "end": 13.015
+  },
+  {
+   "word": "provide",
+   "start": 13.062,
+   "end": 13.479
+  },
+  {
+   "word": "the",
+   "start": 13.503,
+   "end": 13.572
+  },
+  {
+   "word": "supporting",
+   "start": 13.619,
+   "end": 14.037
+  },
+  {
+   "word": "evidence",
+   "start": 14.106,
+   "end": 14.536
+  },
+  {
+   "word": "for",
+   "start": 14.571,
+   "end": 14.687
+  },
+  {
+   "word": "this",
+   "start": 14.733,
+   "end": 14.873
+  },
+  {
+   "word": "demonstration.",
+   "start": 14.919,
+   "end": 15.883
+  }
+ ]
+}

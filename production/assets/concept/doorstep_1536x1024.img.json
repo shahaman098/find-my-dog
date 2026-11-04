@@ -1,0 +1,8 @@
+{
+ "name": "doorstep",
+ "prompt": "Over-the-shoulder view from behind a person standing on a dark front doorstep at night, holding a phone with a lit screen, looking down an empty street; their face is not visible. Photorealistic cinematic film still, anamorphic 2.39 lens look, shallow depth of field, natural light, subtle film grain, muted colour grade, no text, no logos, no watermarks, no visible faces.",
+ "model": "muse-image-1.0",
+ "size": "1536x1024",
+ "contentType": "image/webp",
+ "seconds": 24.342
+}

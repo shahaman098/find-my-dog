@@ -27,6 +27,7 @@ REDACT="$TOKEN" SHOW_CMD="bash production/edge_case.sh   # stranger tries to cha
   node production/term_record.cjs $OUT/12_raw_evidence/terminal/access_prod.json -- bash production/edge_case.sh "$BASE" "$RID" "$CLIP" "$OBJ" "$DEMO_ID"
 
 python3 production/build_film1.py "$TAKE"
+[ -f $OUT/audio/film1_score.wav ] || { mkdir -p $OUT/audio; python3 production/score.py $OUT/audio/film1_score.wav --duration 120 --reveal 18 --end 115; }
 python3 production/mix.py production/film1/audio_plan.json $OUT/audio/film1_score.wav 120 $OUT/04_demo_voiceover.wav $OUT/audio/film1_mix.wav $OUT/06_demo_subtitles.srt
 node production/render.cjs production/film1/index.html $OUT/audio/film1_video.mp4 --fps 30 --duration 120 --workers 3
 ffmpeg -loglevel error -y -i $OUT/audio/film1_video.mp4 -i $OUT/audio/film1_mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -ar 48000 -movflags +faststart -t 120 $OUT/01_hackathon_demo_120s.mp4

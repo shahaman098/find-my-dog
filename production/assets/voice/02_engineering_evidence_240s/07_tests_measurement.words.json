@@ -1,0 +1,222 @@
+{
+ "scene": "07_tests_measurement",
+ "text": "Next, we run the available automated checks and review their results. We distinguish passing tests, failing tests, and functionality that still needs coverage. Any performance numbers are reported with their test conditions and measurement source, rather than presented as unsupported claims.",
+ "spoken": "Next, we run the available automated checks and review their results. We distinguish passing tests, failing tests, and functionality that still needs coverage. Any performance numbers are reported with their test conditions and measurement source, rather than presented as unsupported claims.",
+ "duration": 15.232292,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.97
+ },
+ "words": [
+  {
+   "word": "Next,",
+   "start": 0,
+   "end": 0.348
+  },
+  {
+   "word": "we",
+   "start": 0.395,
+   "end": 0.522
+  },
+  {
+   "word": "run",
+   "start": 0.592,
+   "end": 0.789
+  },
+  {
+   "word": "the",
+   "start": 0.848,
+   "end": 0.929
+  },
+  {
+   "word": "available",
+   "start": 0.987,
+   "end": 1.474
+  },
+  {
+   "word": "automated",
+   "start": 1.521,
+   "end": 2.043
+  },
+  {
+   "word": "checks",
+   "start": 2.078,
+   "end": 2.322
+  },
+  {
+   "word": "and",
+   "start": 2.368,
+   "end": 2.473
+  },
+  {
+   "word": "review",
+   "start": 2.543,
+   "end": 2.844
+  },
+  {
+   "word": "their",
+   "start": 2.891,
+   "end": 3.03
+  },
+  {
+   "word": "results.",
+   "start": 3.065,
+   "end": 3.599
+  },
+  {
+   "word": "We",
+   "start": 3.82,
+   "end": 3.947
+  },
+  {
+   "word": "distinguish",
+   "start": 4.005,
+   "end": 4.493
+  },
+  {
+   "word": "passing",
+   "start": 4.563,
+   "end": 4.876
+  },
+  {
+   "word": "tests,",
+   "start": 4.946,
+   "end": 5.248
+  },
+  {
+   "word": "failing",
+   "start": 5.294,
+   "end": 5.631
+  },
+  {
+   "word": "tests,",
+   "start": 5.689,
+   "end": 5.991
+  },
+  {
+   "word": "and",
+   "start": 6.026,
+   "end": 6.142
+  },
+  {
+   "word": "functionality",
+   "start": 6.235,
+   "end": 6.92
+  },
+  {
+   "word": "that",
+   "start": 6.978,
+   "end": 7.105
+  },
+  {
+   "word": "still",
+   "start": 7.152,
+   "end": 7.396
+  },
+  {
+   "word": "needs",
+   "start": 7.454,
+   "end": 7.639
+  },
+  {
+   "word": "coverage.",
+   "start": 7.697,
+   "end": 8.278
+  },
+  {
+   "word": "Any",
+   "start": 8.499,
+   "end": 8.731
+  },
+  {
+   "word": "performance",
+   "start": 8.789,
+   "end": 9.3
+  },
+  {
+   "word": "numbers",
+   "start": 9.346,
+   "end": 9.741
+  },
+  {
+   "word": "are",
+   "start": 9.787,
+   "end": 9.915
+  },
+  {
+   "word": "reported",
+   "start": 9.95,
+   "end": 10.403
+  },
+  {
+   "word": "with",
+   "start": 10.438,
+   "end": 10.577
+  },
+  {
+   "word": "their",
+   "start": 10.612,
+   "end": 10.751
+  },
+  {
+   "word": "test",
+   "start": 10.798,
+   "end": 11.007
+  },
+  {
+   "word": "conditions",
+   "start": 11.053,
+   "end": 11.541
+  },
+  {
+   "word": "and",
+   "start": 11.575,
+   "end": 11.657
+  },
+  {
+   "word": "measurement",
+   "start": 11.726,
+   "end": 12.168
+  },
+  {
+   "word": "source,",
+   "start": 12.202,
+   "end": 12.539
+  },
+  {
+   "word": "rather",
+   "start": 12.76,
+   "end": 13.027
+  },
+  {
+   "word": "than",
+   "start": 13.073,
+   "end": 13.201
+  },
+  {
+   "word": "presented",
+   "start": 13.259,
+   "end": 13.723
+  },
+  {
+   "word": "as",
+   "start": 13.781,
+   "end": 13.886
+  },
+  {
+   "word": "unsupported",
+   "start": 13.979,
+   "end": 14.594
+  },
+  {
+   "word": "claims.",
+   "start": 14.629,
+   "end": 15.233
+  }
+ ]
+}

@@ -1,0 +1,162 @@
+{
+ "scene": "04_clean_state",
+ "text": "I'm starting a brand-new report on a local Worker running this exact code against the live Meta API. Health reports real models, not mock mode, and nothing is preloaded.",
+ "spoken": "I'm starting a brand-new report on a local Worker running this exact code against the live Meta API. Health reports real models, not mock mode, and nothing is preloaded.",
+ "duration": 9.845271,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "I'm",
+   "start": 0,
+   "end": 0.174
+  },
+  {
+   "word": "starting",
+   "start": 0.221,
+   "end": 0.58
+  },
+  {
+   "word": "a",
+   "start": 0.639,
+   "end": 0.662
+  },
+  {
+   "word": "brand-new",
+   "start": 0.743,
+   "end": 1.115
+  },
+  {
+   "word": "report",
+   "start": 1.161,
+   "end": 1.486
+  },
+  {
+   "word": "on",
+   "start": 1.544,
+   "end": 1.614
+  },
+  {
+   "word": "a",
+   "start": 1.66,
+   "end": 1.683
+  },
+  {
+   "word": "local",
+   "start": 1.753,
+   "end": 2.055
+  },
+  {
+   "word": "Worker",
+   "start": 2.125,
+   "end": 2.531
+  },
+  {
+   "word": "running",
+   "start": 2.81,
+   "end": 3.1
+  },
+  {
+   "word": "this",
+   "start": 3.135,
+   "end": 3.262
+  },
+  {
+   "word": "exact",
+   "start": 3.32,
+   "end": 3.634
+  },
+  {
+   "word": "code",
+   "start": 3.657,
+   "end": 3.889
+  },
+  {
+   "word": "against",
+   "start": 3.924,
+   "end": 4.226
+  },
+  {
+   "word": "the",
+   "start": 4.261,
+   "end": 4.331
+  },
+  {
+   "word": "live",
+   "start": 4.389,
+   "end": 4.644
+  },
+  {
+   "word": "Meta",
+   "start": 4.702,
+   "end": 4.957
+  },
+  {
+   "word": "API.",
+   "start": 5.004,
+   "end": 5.677
+  },
+  {
+   "word": "Health",
+   "start": 5.851,
+   "end": 6.118
+  },
+  {
+   "word": "reports",
+   "start": 6.165,
+   "end": 6.583
+  },
+  {
+   "word": "real",
+   "start": 6.699,
+   "end": 6.943
+  },
+  {
+   "word": "models,",
+   "start": 7.012,
+   "end": 7.465
+  },
+  {
+   "word": "not",
+   "start": 7.5,
+   "end": 7.697
+  },
+  {
+   "word": "mock",
+   "start": 7.814,
+   "end": 8.034
+  },
+  {
+   "word": "mode,",
+   "start": 8.115,
+   "end": 8.382
+  },
+  {
+   "word": "and",
+   "start": 8.406,
+   "end": 8.522
+  },
+  {
+   "word": "nothing",
+   "start": 8.603,
+   "end": 8.905
+  },
+  {
+   "word": "is",
+   "start": 8.951,
+   "end": 9.021
+  },
+  {
+   "word": "preloaded.",
+   "start": 9.091,
+   "end": 9.845
+  }
+ ]
+}

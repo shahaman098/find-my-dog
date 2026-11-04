@@ -1,0 +1,62 @@
+{
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "report": [
+  {
+   "scene": "02_friction",
+   "window": 7,
+   "duration": 4.27,
+   "slack": 2.73,
+   "verdict": "fits"
+  },
+  {
+   "scene": "03_cost",
+   "window": 8,
+   "duration": 5.29,
+   "slack": 2.71,
+   "verdict": "fits"
+  },
+  {
+   "scene": "04_turn",
+   "window": 10,
+   "duration": 3.48,
+   "slack": 6.52,
+   "verdict": "fits"
+  },
+  {
+   "scene": "05_reveal",
+   "window": 10,
+   "duration": 4.74,
+   "slack": 5.26,
+   "verdict": "fits"
+  },
+  {
+   "scene": "06_engine",
+   "window": 10,
+   "duration": 7.34,
+   "slack": 2.66,
+   "verdict": "fits"
+  },
+  {
+   "scene": "07_human",
+   "window": 6,
+   "duration": 1.76,
+   "slack": 4.24,
+   "verdict": "fits"
+  },
+  {
+   "scene": "08_end",
+   "window": 4,
+   "duration": 1.76,
+   "slack": 2.24,
+   "verdict": "fits"
+  }
+ ]
+}

@@ -1,0 +1,157 @@
+{
+ "scene": "07_result",
+ "text": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.",
+ "spoken": "Biscuit ranks first, with Spark's reasons. I confirm her, and Spark's tool loop writes a search plan and calls Muse Image for a poster. Reloading proves it's stored.",
+ "duration": 8.870021,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "Biscuit",
+   "start": 0,
+   "end": 0.337
+  },
+  {
+   "word": "ranks",
+   "start": 0.383,
+   "end": 0.604
+  },
+  {
+   "word": "first,",
+   "start": 0.685,
+   "end": 0.952
+  },
+  {
+   "word": "with",
+   "start": 0.975,
+   "end": 1.103
+  },
+  {
+   "word": "Spark's",
+   "start": 1.126,
+   "end": 1.463
+  },
+  {
+   "word": "reasons.",
+   "start": 1.533,
+   "end": 1.904
+  },
+  {
+   "word": "I",
+   "start": 1.939,
+   "end": 1.985
+  },
+  {
+   "word": "confirm",
+   "start": 2.078,
+   "end": 2.508
+  },
+  {
+   "word": "her,",
+   "start": 2.589,
+   "end": 2.902
+  },
+  {
+   "word": "and",
+   "start": 3.077,
+   "end": 3.228
+  },
+  {
+   "word": "Spark's",
+   "start": 3.274,
+   "end": 3.669
+  },
+  {
+   "word": "tool",
+   "start": 3.715,
+   "end": 3.889
+  },
+  {
+   "word": "loop",
+   "start": 3.959,
+   "end": 4.133
+  },
+  {
+   "word": "writes",
+   "start": 4.214,
+   "end": 4.493
+  },
+  {
+   "word": "a",
+   "start": 4.528,
+   "end": 4.551
+  },
+  {
+   "word": "search",
+   "start": 4.609,
+   "end": 4.841
+  },
+  {
+   "word": "plan",
+   "start": 4.899,
+   "end": 5.085
+  },
+  {
+   "word": "and",
+   "start": 5.143,
+   "end": 5.213
+  },
+  {
+   "word": "calls",
+   "start": 5.271,
+   "end": 5.503
+  },
+  {
+   "word": "Muse",
+   "start": 5.573,
+   "end": 5.782
+  },
+  {
+   "word": "Image",
+   "start": 5.828,
+   "end": 6.118
+  },
+  {
+   "word": "for",
+   "start": 6.153,
+   "end": 6.269
+  },
+  {
+   "word": "a",
+   "start": 6.304,
+   "end": 6.327
+  },
+  {
+   "word": "poster.",
+   "start": 6.385,
+   "end": 6.92
+  },
+  {
+   "word": "Reloading",
+   "start": 7.129,
+   "end": 7.674
+  },
+  {
+   "word": "proves",
+   "start": 7.744,
+   "end": 8.011
+  },
+  {
+   "word": "it's",
+   "start": 8.057,
+   "end": 8.162
+  },
+  {
+   "word": "stored.",
+   "start": 8.185,
+   "end": 8.87
+  }
+ ]
+}

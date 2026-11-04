@@ -129,7 +129,7 @@ async function humanClick(page, locator) {
   await humanClick(page, name); await page.keyboard.type('Biscuit', { delay: 70 }); ev('typed_name')
   const desc = page.locator('textarea')
   await humanClick(page, desc); await page.keyboard.type('Apricot goldendoodle, curly coat, floppy ears, red collar. Friendly but scared of traffic.', { delay: 22 }); ev('typed_description')
-  await page.setInputFiles('input[type=file][accept="image/*"]', path.join(ROOT, 'eval/fixtures/crops/dogpark/t8_f335.jpg')); ev('photo_attached', { file: 't8_f335.jpg' })
+  await page.setInputFiles('input[type=file][accept="image/*"]', path.join(ROOT, 'production/assets/owner_reference.jpg')); ev('photo_attached', { file: 't8_f335.jpg' })
   await sleep(700); await still('report_form')
   await humanClick(page, page.locator('button.sendBtn')); ev('submit_report')
   await page.waitForURL(/#\/r\/\w+$/, { timeout: 60000 })

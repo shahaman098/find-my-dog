@@ -1,0 +1,62 @@
+{
+ "scene": "07_human",
+ "text": "So you can get back to the walk home.",
+ "spoken": "So you can get back to the walk home.",
+ "duration": 1.764708,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "words": [
+  {
+   "word": "So",
+   "start": 0,
+   "end": 0.163
+  },
+  {
+   "word": "you",
+   "start": 0.209,
+   "end": 0.279
+  },
+  {
+   "word": "can",
+   "start": 0.313,
+   "end": 0.43
+  },
+  {
+   "word": "get",
+   "start": 0.476,
+   "end": 0.627
+  },
+  {
+   "word": "back",
+   "start": 0.685,
+   "end": 0.836
+  },
+  {
+   "word": "to",
+   "start": 0.882,
+   "end": 0.94
+  },
+  {
+   "word": "the",
+   "start": 0.998,
+   "end": 1.068
+  },
+  {
+   "word": "walk",
+   "start": 1.115,
+   "end": 1.312
+  },
+  {
+   "word": "home.",
+   "start": 1.37,
+   "end": 1.765
+  }
+ ]
+}

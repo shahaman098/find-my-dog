@@ -1,0 +1,302 @@
+{
+ "scene": "04_code_architecture",
+ "text": "This is where the implementation lives. The client calls the relevant service, and the service executes the core workflow. These highlighted functions correspond to the request we just performed. The engineering trade-off behind owner-confirmed matching is that the matcher is eighty-three percent precise, so its verdict alone is not enough, and a person makes the final call.",
+ "spoken": "This is where the implementation lives. The client calls the relevant service, and the service executes the core workflow. These highlighted functions correspond to the request we just performed. The engineering trade-off behind owner-confirmed matching is that the matcher is eighty-three percent precise, so its verdict alone is not enough, and a person makes the final call.",
+ "duration": 19.690521,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.97
+ },
+ "words": [
+  {
+   "word": "This",
+   "start": 0,
+   "end": 0.232
+  },
+  {
+   "word": "is",
+   "start": 0.279,
+   "end": 0.36
+  },
+  {
+   "word": "where",
+   "start": 0.406,
+   "end": 0.58
+  },
+  {
+   "word": "the",
+   "start": 0.615,
+   "end": 0.685
+  },
+  {
+   "word": "implementation",
+   "start": 0.731,
+   "end": 1.428
+  },
+  {
+   "word": "lives.",
+   "start": 1.498,
+   "end": 1.823
+  },
+  {
+   "word": "The",
+   "start": 1.997,
+   "end": 2.113
+  },
+  {
+   "word": "client",
+   "start": 2.159,
+   "end": 2.519
+  },
+  {
+   "word": "calls",
+   "start": 2.577,
+   "end": 2.798
+  },
+  {
+   "word": "the",
+   "start": 2.844,
+   "end": 2.914
+  },
+  {
+   "word": "relevant",
+   "start": 2.972,
+   "end": 3.332
+  },
+  {
+   "word": "service,",
+   "start": 3.379,
+   "end": 3.75
+  },
+  {
+   "word": "and",
+   "start": 3.773,
+   "end": 3.866
+  },
+  {
+   "word": "the",
+   "start": 3.913,
+   "end": 3.982
+  },
+  {
+   "word": "service",
+   "start": 4.04,
+   "end": 4.4
+  },
+  {
+   "word": "executes",
+   "start": 4.458,
+   "end": 4.957
+  },
+  {
+   "word": "the",
+   "start": 4.981,
+   "end": 5.05
+  },
+  {
+   "word": "core",
+   "start": 5.097,
+   "end": 5.329
+  },
+  {
+   "word": "workflow.",
+   "start": 5.364,
+   "end": 5.909
+  },
+  {
+   "word": "These",
+   "start": 6.13,
+   "end": 6.362
+  },
+  {
+   "word": "highlighted",
+   "start": 6.409,
+   "end": 6.896
+  },
+  {
+   "word": "functions",
+   "start": 6.954,
+   "end": 7.361
+  },
+  {
+   "word": "correspond",
+   "start": 7.419,
+   "end": 7.976
+  },
+  {
+   "word": "to",
+   "start": 8.022,
+   "end": 8.081
+  },
+  {
+   "word": "the",
+   "start": 8.15,
+   "end": 8.22
+  },
+  {
+   "word": "request",
+   "start": 8.29,
+   "end": 8.649
+  },
+  {
+   "word": "we",
+   "start": 8.696,
+   "end": 8.801
+  },
+  {
+   "word": "just",
+   "start": 8.859,
+   "end": 9.044
+  },
+  {
+   "word": "performed.",
+   "start": 9.091,
+   "end": 9.625
+  },
+  {
+   "word": "The",
+   "start": 9.799,
+   "end": 9.915
+  },
+  {
+   "word": "engineering",
+   "start": 9.973,
+   "end": 10.414
+  },
+  {
+   "word": "trade-off",
+   "start": 10.461,
+   "end": 10.937
+  },
+  {
+   "word": "behind",
+   "start": 10.995,
+   "end": 11.297
+  },
+  {
+   "word": "owner-confirmed",
+   "start": 11.413,
+   "end": 12.226
+  },
+  {
+   "word": "matching",
+   "start": 12.284,
+   "end": 12.597
+  },
+  {
+   "word": "is",
+   "start": 12.655,
+   "end": 12.736
+  },
+  {
+   "word": "that",
+   "start": 12.771,
+   "end": 12.899
+  },
+  {
+   "word": "the",
+   "start": 12.945,
+   "end": 13.015
+  },
+  {
+   "word": "matcher",
+   "start": 13.096,
+   "end": 13.41
+  },
+  {
+   "word": "is",
+   "start": 13.468,
+   "end": 13.561
+  },
+  {
+   "word": "eighty-three",
+   "start": 13.642,
+   "end": 14.141
+  },
+  {
+   "word": "percent",
+   "start": 14.188,
+   "end": 14.513
+  },
+  {
+   "word": "precise,",
+   "start": 14.559,
+   "end": 15.175
+  },
+  {
+   "word": "so",
+   "start": 15.325,
+   "end": 15.465
+  },
+  {
+   "word": "its",
+   "start": 15.534,
+   "end": 15.651
+  },
+  {
+   "word": "verdict",
+   "start": 15.732,
+   "end": 16.092
+  },
+  {
+   "word": "alone",
+   "start": 16.15,
+   "end": 16.533
+  },
+  {
+   "word": "is",
+   "start": 16.579,
+   "end": 16.672
+  },
+  {
+   "word": "not",
+   "start": 16.73,
+   "end": 16.881
+  },
+  {
+   "word": "enough,",
+   "start": 16.939,
+   "end": 17.346
+  },
+  {
+   "word": "and",
+   "start": 17.52,
+   "end": 17.659
+  },
+  {
+   "word": "a",
+   "start": 17.717,
+   "end": 17.752
+  },
+  {
+   "word": "person",
+   "start": 17.833,
+   "end": 18.205
+  },
+  {
+   "word": "makes",
+   "start": 18.274,
+   "end": 18.507
+  },
+  {
+   "word": "the",
+   "start": 18.541,
+   "end": 18.611
+  },
+  {
+   "word": "final",
+   "start": 18.669,
+   "end": 18.994
+  },
+  {
+   "word": "call.",
+   "start": 19.052,
+   "end": 19.691
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "scene": "08_end",
+ "text": "Find My Dog. Bring them home.",
+ "spoken": "Find My Dog. Bring them home.",
+ "duration": 1.764708,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "words": [
+  {
+   "word": "Find",
+   "start": 0,
+   "end": 0.313
+  },
+  {
+   "word": "My",
+   "start": 0.395,
+   "end": 0.511
+  },
+  {
+   "word": "Dog.",
+   "start": 0.604,
+   "end": 0.824
+  },
+  {
+   "word": "Bring",
+   "start": 0.848,
+   "end": 1.033
+  },
+  {
+   "word": "them",
+   "start": 1.08,
+   "end": 1.219
+  },
+  {
+   "word": "home.",
+   "start": 1.277,
+   "end": 1.765
+  }
+ ]
+}

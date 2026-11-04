@@ -1,0 +1,147 @@
+{
+ "scene": "05_live_action",
+ "text": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM 3.1 tracks every animal in each one.",
+ "spoken": "I add Biscuit's photo and a description, then upload two neighbour clips: a dog park and a doorbell. SAM three point one tracks every animal in each one.",
+ "duration": 8.126979,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "I",
+   "start": 0,
+   "end": 0.093
+  },
+  {
+   "word": "add",
+   "start": 0.209,
+   "end": 0.383
+  },
+  {
+   "word": "Biscuit's",
+   "start": 0.441,
+   "end": 0.824
+  },
+  {
+   "word": "photo",
+   "start": 0.871,
+   "end": 1.312
+  },
+  {
+   "word": "and",
+   "start": 1.393,
+   "end": 1.509
+  },
+  {
+   "word": "a",
+   "start": 1.567,
+   "end": 1.591
+  },
+  {
+   "word": "description,",
+   "start": 1.649,
+   "end": 2.218
+  },
+  {
+   "word": "then",
+   "start": 2.241,
+   "end": 2.403
+  },
+  {
+   "word": "upload",
+   "start": 2.496,
+   "end": 2.833
+  },
+  {
+   "word": "two",
+   "start": 2.868,
+   "end": 3.03
+  },
+  {
+   "word": "neighbour",
+   "start": 3.1,
+   "end": 3.379
+  },
+  {
+   "word": "clips:",
+   "start": 3.425,
+   "end": 3.715
+  },
+  {
+   "word": "a",
+   "start": 3.738,
+   "end": 3.773
+  },
+  {
+   "word": "dog",
+   "start": 3.855,
+   "end": 4.029
+  },
+  {
+   "word": "park",
+   "start": 4.087,
+   "end": 4.296
+  },
+  {
+   "word": "and",
+   "start": 4.354,
+   "end": 4.423
+  },
+  {
+   "word": "a",
+   "start": 4.47,
+   "end": 4.493
+  },
+  {
+   "word": "doorbell.",
+   "start": 4.539,
+   "end": 5.027
+  },
+  {
+   "word": "SAM",
+   "start": 5.271,
+   "end": 5.526
+  },
+  {
+   "word": "3.1",
+   "start": 5.584,
+   "end": 5.805
+  },
+  {
+   "word": "tracks",
+   "start": 5.863,
+   "end": 6.107
+  },
+  {
+   "word": "every",
+   "start": 6.177,
+   "end": 6.397
+  },
+  {
+   "word": "animal",
+   "start": 6.42,
+   "end": 6.745
+  },
+  {
+   "word": "in",
+   "start": 6.803,
+   "end": 7.047
+  },
+  {
+   "word": "each",
+   "start": 7.094,
+   "end": 7.407
+  },
+  {
+   "word": "one.",
+   "start": 7.477,
+   "end": 7.546
+  }
+ ]
+}

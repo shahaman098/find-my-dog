@@ -1,0 +1,72 @@
+{
+ "scene": "04_turn",
+ "text": "Then the question changes. What if the complicated part simply happened?",
+ "spoken": "Then the question changes. What if the complicated part simply happened?",
+ "duration": 3.483,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "words": [
+  {
+   "word": "Then",
+   "start": 0,
+   "end": 0.163
+  },
+  {
+   "word": "the",
+   "start": 0.197,
+   "end": 0.267
+  },
+  {
+   "word": "question",
+   "start": 0.313,
+   "end": 0.604
+  },
+  {
+   "word": "changes.",
+   "start": 0.65,
+   "end": 1.057
+  },
+  {
+   "word": "What",
+   "start": 1.08,
+   "end": 1.242
+  },
+  {
+   "word": "if",
+   "start": 1.289,
+   "end": 1.358
+  },
+  {
+   "word": "the",
+   "start": 1.405,
+   "end": 1.474
+  },
+  {
+   "word": "complicated",
+   "start": 1.533,
+   "end": 2.148
+  },
+  {
+   "word": "part",
+   "start": 2.206,
+   "end": 2.38
+  },
+  {
+   "word": "simply",
+   "start": 2.426,
+   "end": 2.717
+  },
+  {
+   "word": "happened?",
+   "start": 2.763,
+   "end": 3.483
+  }
+ ]
+}

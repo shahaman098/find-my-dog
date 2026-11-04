@@ -1,0 +1,72 @@
+{
+ "scene": "11_close",
+ "text": "The evidence is in the repo. This is Find My Dog.",
+ "spoken": "The evidence is in the repo. This is Find My Dog.",
+ "duration": 2.925708,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "The",
+   "start": 0,
+   "end": 0.116
+  },
+  {
+   "word": "evidence",
+   "start": 0.163,
+   "end": 0.592
+  },
+  {
+   "word": "is",
+   "start": 0.615,
+   "end": 0.685
+  },
+  {
+   "word": "in",
+   "start": 0.743,
+   "end": 0.813
+  },
+  {
+   "word": "the",
+   "start": 0.859,
+   "end": 0.929
+  },
+  {
+   "word": "repo.",
+   "start": 0.987,
+   "end": 1.44
+  },
+  {
+   "word": "This",
+   "start": 1.614,
+   "end": 1.788
+  },
+  {
+   "word": "is",
+   "start": 1.834,
+   "end": 1.916
+  },
+  {
+   "word": "Find",
+   "start": 1.997,
+   "end": 2.241
+  },
+  {
+   "word": "My",
+   "start": 2.31,
+   "end": 2.438
+  },
+  {
+   "word": "Dog.",
+   "start": 2.508,
+   "end": 2.926
+  }
+ ]
+}

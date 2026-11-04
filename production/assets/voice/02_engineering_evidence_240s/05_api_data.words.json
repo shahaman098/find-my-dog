@@ -1,0 +1,242 @@
+{
+ "scene": "05_api_data",
+ "text": "Here is the request as it travels through the system. We can inspect the actual API response, match it to the relevant logs, and verify the resulting data or artefact. Sensitive fields have been redacted, but the fields needed to understand the behaviour remain visible.",
+ "spoken": "Here is the request as it travels through the system. We can inspect the actual API response, match it to the relevant logs, and verify the resulting data or artefact. Sensitive fields have been redacted, but the fields needed to understand the behaviour remain visible.",
+ "duration": 15.603813,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.97
+ },
+ "words": [
+  {
+   "word": "Here",
+   "start": 0,
+   "end": 0.232
+  },
+  {
+   "word": "is",
+   "start": 0.279,
+   "end": 0.348
+  },
+  {
+   "word": "the",
+   "start": 0.395,
+   "end": 0.464
+  },
+  {
+   "word": "request",
+   "start": 0.522,
+   "end": 0.917
+  },
+  {
+   "word": "as",
+   "start": 0.964,
+   "end": 1.045
+  },
+  {
+   "word": "it",
+   "start": 1.103,
+   "end": 1.184
+  },
+  {
+   "word": "travels",
+   "start": 1.219,
+   "end": 1.614
+  },
+  {
+   "word": "through",
+   "start": 1.649,
+   "end": 1.869
+  },
+  {
+   "word": "the",
+   "start": 1.892,
+   "end": 1.962
+  },
+  {
+   "word": "system.",
+   "start": 1.997,
+   "end": 2.473
+  },
+  {
+   "word": "We",
+   "start": 2.647,
+   "end": 2.775
+  },
+  {
+   "word": "can",
+   "start": 2.821,
+   "end": 2.949
+  },
+  {
+   "word": "inspect",
+   "start": 3.007,
+   "end": 3.367
+  },
+  {
+   "word": "the",
+   "start": 3.402,
+   "end": 3.483
+  },
+  {
+   "word": "actual",
+   "start": 3.541,
+   "end": 3.889
+  },
+  {
+   "word": "API",
+   "start": 3.959,
+   "end": 4.342
+  },
+  {
+   "word": "response,",
+   "start": 4.412,
+   "end": 5.074
+  },
+  {
+   "word": "match",
+   "start": 5.329,
+   "end": 5.631
+  },
+  {
+   "word": "it",
+   "start": 5.677,
+   "end": 5.747
+  },
+  {
+   "word": "to",
+   "start": 5.782,
+   "end": 5.863
+  },
+  {
+   "word": "the",
+   "start": 5.921,
+   "end": 5.991
+  },
+  {
+   "word": "relevant",
+   "start": 6.049,
+   "end": 6.444
+  },
+  {
+   "word": "logs,",
+   "start": 6.513,
+   "end": 6.931
+  },
+  {
+   "word": "and",
+   "start": 7.047,
+   "end": 7.221
+  },
+  {
+   "word": "verify",
+   "start": 7.291,
+   "end": 7.744
+  },
+  {
+   "word": "the",
+   "start": 7.814,
+   "end": 7.883
+  },
+  {
+   "word": "resulting",
+   "start": 7.941,
+   "end": 8.429
+  },
+  {
+   "word": "data",
+   "start": 8.499,
+   "end": 8.893
+  },
+  {
+   "word": "or",
+   "start": 9.114,
+   "end": 9.288
+  },
+  {
+   "word": "artefact.",
+   "start": 9.369,
+   "end": 10.043
+  },
+  {
+   "word": "Sensitive",
+   "start": 10.263,
+   "end": 10.762
+  },
+  {
+   "word": "fields",
+   "start": 10.797,
+   "end": 11.11
+  },
+  {
+   "word": "have",
+   "start": 11.168,
+   "end": 11.343
+  },
+  {
+   "word": "been",
+   "start": 11.377,
+   "end": 11.528
+  },
+  {
+   "word": "redacted,",
+   "start": 11.575,
+   "end": 12.109
+  },
+  {
+   "word": "but",
+   "start": 12.144,
+   "end": 12.283
+  },
+  {
+   "word": "the",
+   "start": 12.318,
+   "end": 12.388
+  },
+  {
+   "word": "fields",
+   "start": 12.457,
+   "end": 12.724
+  },
+  {
+   "word": "needed",
+   "start": 12.794,
+   "end": 13.061
+  },
+  {
+   "word": "to",
+   "start": 13.107,
+   "end": 13.154
+  },
+  {
+   "word": "understand",
+   "start": 13.235,
+   "end": 13.723
+  },
+  {
+   "word": "the",
+   "start": 13.769,
+   "end": 13.839
+  },
+  {
+   "word": "behaviour",
+   "start": 13.897,
+   "end": 14.361
+  },
+  {
+   "word": "remain",
+   "start": 14.431,
+   "end": 14.791
+  },
+  {
+   "word": "visible.",
+   "start": 14.872,
+   "end": 15.604
+  }
+ ]
+}

@@ -1,0 +1,127 @@
+{
+ "scene": "10_edge_case",
+ "text": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a 403, and nothing changes.",
+ "spoken": "Edge case: someone with only the share link tries to confirm a sighting. The server refuses with a four oh three, and nothing changes.",
+ "duration": 7.105313,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 1
+ },
+ "words": [
+  {
+   "word": "Edge",
+   "start": 0,
+   "end": 0.29
+  },
+  {
+   "word": "case:",
+   "start": 0.337,
+   "end": 0.72
+  },
+  {
+   "word": "someone",
+   "start": 0.743,
+   "end": 1.207
+  },
+  {
+   "word": "with",
+   "start": 1.242,
+   "end": 1.416
+  },
+  {
+   "word": "only",
+   "start": 1.486,
+   "end": 1.73
+  },
+  {
+   "word": "the",
+   "start": 1.776,
+   "end": 1.846
+  },
+  {
+   "word": "share",
+   "start": 1.892,
+   "end": 2.125
+  },
+  {
+   "word": "link",
+   "start": 2.171,
+   "end": 2.345
+  },
+  {
+   "word": "tries",
+   "start": 2.38,
+   "end": 2.624
+  },
+  {
+   "word": "to",
+   "start": 2.67,
+   "end": 2.728
+  },
+  {
+   "word": "confirm",
+   "start": 2.786,
+   "end": 3.146
+  },
+  {
+   "word": "a",
+   "start": 3.193,
+   "end": 3.216
+  },
+  {
+   "word": "sighting.",
+   "start": 3.274,
+   "end": 3.808
+  },
+  {
+   "word": "The",
+   "start": 3.959,
+   "end": 4.075
+  },
+  {
+   "word": "server",
+   "start": 4.133,
+   "end": 4.458
+  },
+  {
+   "word": "refuses",
+   "start": 4.505,
+   "end": 4.992
+  },
+  {
+   "word": "with",
+   "start": 5.05,
+   "end": 5.201
+  },
+  {
+   "word": "a",
+   "start": 5.236,
+   "end": 5.259
+  },
+  {
+   "word": "403,",
+   "start": 5.317,
+   "end": 6.049
+  },
+  {
+   "word": "and",
+   "start": 6.084,
+   "end": 6.2
+  },
+  {
+   "word": "nothing",
+   "start": 6.281,
+   "end": 6.56
+  },
+  {
+   "word": "changes.",
+   "start": 6.606,
+   "end": 7.105
+  }
+ ]
+}

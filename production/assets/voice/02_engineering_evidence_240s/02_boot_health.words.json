@@ -1,0 +1,207 @@
+{
+ "scene": "02_boot_health",
+ "text": "We start with the documented setup process, launch the required services, and verify they are reachable. The terminal output is from the recorded environment. The health checks establish which components are available before we begin the user workflow.",
+ "spoken": "We start with the documented setup process, launch the required services, and verify they are reachable. The terminal output is from the recorded environment. The health checks establish which components are available before we begin the user workflow.",
+ "duration": 13.049604,
+ "format": "pcm_48000",
+ "model": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.65,
+  "similarity_boost": 0.85,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.97
+ },
+ "words": [
+  {
+   "word": "We",
+   "start": 0,
+   "end": 0.151
+  },
+  {
+   "word": "start",
+   "start": 0.197,
+   "end": 0.488
+  },
+  {
+   "word": "with",
+   "start": 0.534,
+   "end": 0.673
+  },
+  {
+   "word": "the",
+   "start": 0.697,
+   "end": 0.766
+  },
+  {
+   "word": "documented",
+   "start": 0.836,
+   "end": 1.405
+  },
+  {
+   "word": "setup",
+   "start": 1.451,
+   "end": 1.776
+  },
+  {
+   "word": "process,",
+   "start": 1.823,
+   "end": 2.276
+  },
+  {
+   "word": "launch",
+   "start": 2.334,
+   "end": 2.624
+  },
+  {
+   "word": "the",
+   "start": 2.67,
+   "end": 2.74
+  },
+  {
+   "word": "required",
+   "start": 2.798,
+   "end": 3.193
+  },
+  {
+   "word": "services,",
+   "start": 3.228,
+   "end": 3.773
+  },
+  {
+   "word": "and",
+   "start": 3.924,
+   "end": 4.087
+  },
+  {
+   "word": "verify",
+   "start": 4.168,
+   "end": 4.609
+  },
+  {
+   "word": "they",
+   "start": 4.679,
+   "end": 4.795
+  },
+  {
+   "word": "are",
+   "start": 4.841,
+   "end": 4.946
+  },
+  {
+   "word": "reachable.",
+   "start": 4.992,
+   "end": 5.468
+  },
+  {
+   "word": "The",
+   "start": 5.492,
+   "end": 5.584
+  },
+  {
+   "word": "terminal",
+   "start": 5.642,
+   "end": 6.026
+  },
+  {
+   "word": "output",
+   "start": 6.095,
+   "end": 6.513
+  },
+  {
+   "word": "is",
+   "start": 6.571,
+   "end": 6.653
+  },
+  {
+   "word": "from",
+   "start": 6.699,
+   "end": 6.861
+  },
+  {
+   "word": "the",
+   "start": 6.92,
+   "end": 6.989
+  },
+  {
+   "word": "recorded",
+   "start": 7.059,
+   "end": 7.546
+  },
+  {
+   "word": "environment.",
+   "start": 7.616,
+   "end": 8.348
+  },
+  {
+   "word": "The",
+   "start": 8.568,
+   "end": 8.696
+  },
+  {
+   "word": "health",
+   "start": 8.777,
+   "end": 9.033
+  },
+  {
+   "word": "checks",
+   "start": 9.067,
+   "end": 9.334
+  },
+  {
+   "word": "establish",
+   "start": 9.381,
+   "end": 9.88
+  },
+  {
+   "word": "which",
+   "start": 9.926,
+   "end": 10.101
+  },
+  {
+   "word": "components",
+   "start": 10.159,
+   "end": 10.739
+  },
+  {
+   "word": "are",
+   "start": 10.786,
+   "end": 10.913
+  },
+  {
+   "word": "available",
+   "start": 10.948,
+   "end": 11.482
+  },
+  {
+   "word": "before",
+   "start": 11.529,
+   "end": 11.796
+  },
+  {
+   "word": "we",
+   "start": 11.831,
+   "end": 11.9
+  },
+  {
+   "word": "begin",
+   "start": 11.958,
+   "end": 12.214
+  },
+  {
+   "word": "the",
+   "start": 12.26,
+   "end": 12.33
+  },
+  {
+   "word": "user",
+   "start": 12.388,
+   "end": 12.597
+  },
+  {
+   "word": "workflow.",
+   "start": 12.643,
+   "end": 13.05
+  }
+ ]
+}
