@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Find My Dog: Engineering Evidence (render timeline)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=block">
+<style>
+  :root { --bg:#0b0d12; --ink:#f3f5fa; --sub:#8f97ab; --line:rgba(255,255,255,.12); --acc:#4d6bfe; --acc2:#7d93ff; --good:#3ecf8e; --bad:#ff6b6b; }
+  * { box-sizing:border-box; margin:0; }
+  html, body { width:1920px; height:1080px; overflow:hidden; background:var(--bg); color:var(--ink); font-family:Montserrat, system-ui, sans-serif; }
+  #stage { position:absolute; inset:0; overflow:hidden; background: radial-gradient(60% 50% at 15% 0%, rgba(60,90,180,.22), transparent 70%), var(--bg); }
+  #stage::after { content:''; position:absolute; inset:0; pointer-events:none; background: linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px); background-size:80px 80px; }
+  .scene { position:absolute; inset:0; display:none; z-index:1; }
+  .eyebrow { position:absolute; left:80px; top:44px; font-family:'DM Mono', monospace; font-size:17px; letter-spacing:.2em; color:var(--acc2); text-transform:uppercase; }
+  .h { position:absolute; left:80px; top:78px; font-size:40px; font-weight:400; }
+  .term, .code, .panel { position:absolute; border-radius:14px; border:1px solid var(--line); overflow:hidden; }
+  .term { background:#07090d; padding:16px 20px; font-family:'DM Mono', monospace; font-size:15.5px; line-height:1.48; color:#d6dbe7; white-space:pre-wrap; word-break:break-all; }
+  .term .bar, .code .bar { color:var(--sub); font-size:13.5px; margin-bottom:8px; font-family:'DM Mono', monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .term .cmd { color:var(--acc2); }
+  .code { background:#0a0d14; padding:16px 0; font-family:'DM Mono', monospace; font-size:16px; line-height:1.55; }
+  .code .bar { padding:0 20px; }
+  .code .ln { display:block; padding:0 20px; white-space:pre; color:#c9d1e3; }
+  .code .ln i { display:inline-block; width:46px; color:#4b5470; font-style:normal; }
+  .code .ln.hl { background:rgba(77,107,254,.18); box-shadow:inset 3px 0 0 var(--acc2); color:#fff; }
+  .panel { background:rgba(15,19,30,.92); padding:20px 24px; font-size:21px; line-height:1.5; color:#dfe4f1; }
+  .panel h4 { font-size:16px; font-weight:500; color:var(--sub); letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px; }
+  .panel li { margin:0 0 10px 18px; }
+  .win { position:absolute; border-radius:16px; overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px rgba(0,0,0,.55); background:#000; }
+  .win img { width:100%; height:100%; object-fit:cover; display:block; }
+  .badge { position:absolute; padding:8px 14px; border-radius:999px; background:rgba(11,13,18,.85); border:1px solid var(--line); font-family:'DM Mono', monospace; font-size:17px; white-space:nowrap; }
+  .badge b { color:var(--acc2); font-weight:500; }
+  .ok { color:var(--good); } .er { color:var(--bad); } .dim { color:var(--sub); } .m { color:var(--acc2); }
+  .json { white-space:pre-wrap; font-family:'DM Mono', monospace; font-size:15px; line-height:1.45; color:#dfe4f1; }
+  #cap { position:absolute; left:50%; bottom:34px; transform:translateX(-50%); max-width:1500px; padding:10px 24px; border-radius:14px; background:rgba(5,6,10,.82);
+    font-weight:500; font-size:32px; line-height:1.25; color:#fff; text-align:center; z-index:50; display:none; }
+  #cap .w { color:rgba(255,255,255,.6); } #cap .w.sp { color:#fff; }
+  .steps { position:absolute; left:1560px; top:120px; width:300px; font-family:'DM Mono', monospace; font-size:15px; line-height:1.9; color:var(--sub); }
+  .steps .on { color:#fff; } .steps .cur { color:var(--acc2); }
+  .imgp { position:absolute; border-radius:14px; overflow:hidden; border:1px solid var(--line); background:#fcfcfb; }
+  .imgp img { width:100%; height:100%; object-fit:contain; display:block; }
+</style></head>
+<body><div id="stage">
+  <div class="scene" id="s01"></div><div class="scene" id="s02"></div><div class="scene" id="s03"></div><div class="scene" id="s04"></div>
+  <div class="scene" id="s05"></div><div class="scene" id="s06"></div><div class="scene" id="s07"></div><div class="scene" id="s08"></div>
+  <div id="cap"></div>
+</div>
+<script src="data.js"></script>
+<script>
+const D = window.DATA, T = D.take
+const $ = (id) => document.getElementById(id)
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x))
+const ease = (x) => { x = clamp(x, 0, 1); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2 }
+const pad = (n, w) => String(n).padStart(w, '0')
+const mmss = (s) => `${Math.floor(s / 60)}:${pad(Math.floor(s % 60), 2)}`
+const sc = (id) => D.scenes.find((s) => s.id === id)
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+const wt = (id, prefix, nth = 0) => (D.words[id].filter((w) => w.w.toLowerCase().startsWith(prefix.toLowerCase()))[nth] || D.words[id][0]).s
+function interp(map, t) { if (t <= map[0][0]) return map[0][1]; for (let i = 1; i < map.length; i++) if (t <= map[i][0]) { const [a1, b1] = map[i - 1], [a2, b2] = map[i]; return b1 + (b2 - b1) * (t - a1) / Math.max(a2 - a1, 1e-6) } return map[map.length - 1][1] }
+const takeSrc = (tk) => `${T.dir}/${pad(clamp(Math.round(tk * T.fps) + 1, 1, T.frames), 6)}.jpg`
+const pending = []
+function setImg(img, src) { if (img.getAttribute('src') !== src) { img.setAttribute('src', src); pending.push(img.decode().catch(() => {})) } }
+function el(parent, html) { const d = document.createElement('div'); d.innerHTML = html.trim(); const n = d.firstChild; parent.appendChild(n); return n }
+const box = (cls, x, y, w, h, extra = '') => `<div class="${cls}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;${extra}"></div>`
+
+function termRender(node, rec, t, title) {
+  if (!rec) { node.innerHTML = `<div class="bar">${title}</div><span class="dim">(not recorded)</span>`; return }
+  const shown = rec.chunks.filter((c) => c.t <= t).map((c) => c.s).join('')
+  const maxLines = Math.floor((parseFloat(node.style.height) - 60) / 23)
+  const lines = shown.split('\n'); const keep = lines.slice(-maxLines)
+  node.innerHTML = `<div class="bar">${title} · recorded ${rec.started.slice(0, 16).replace('T', ' ')} UTC · ${t >= rec.duration ? 'exit ' + rec.exit_code : 'running…'}</div><span class="cmd">$ ${esc(rec.command)}</span>\n` +
+    esc(keep.join('\n')).replace(/(# pass \d+|E2E PASS[^\n]*|ok: [^\n]*|typecheck: 0 errors|PASS[^\n]*|HTTP 200|200 OK)/g, '<span class="ok">$1</span>').replace(/(# fail [1-9]\d*|FAIL[^\n]*|HTTP 403|403 Forbidden)/g, '<span class="er">$1</span>')
+}
+function codeRender(node, c, showHl) {
+  node.innerHTML = `<div class="bar">${c.path} · lines ${c.first}–${c.first + c.lines.length - 1} · revision ${D.rev}</div>` +
+    c.lines.map((l, i) => `<span class="ln${showHl && c.hl.includes(i) ? ' hl' : ''}"><i>${c.first + i}</i>${esc(l)}</span>`).join('')
+}
+const B = {}
+// 01 reproducibility
+{ const s = $('s01'); el(s, '<div class="eyebrow">01 · Reproducibility</div>'); el(s, `<div class="h">Repository at revision <span class="m">${D.rev}</span></div>`)
+  B.r1 = el(s, box('term', 80, 160, 1040, 760)); B.r2 = el(s, box('term', 1160, 160, 680, 760)) }
+// 02 boot + health
+{ const s = $('s02'); el(s, '<div class="eyebrow">02 · Boot and health</div>'); el(s, '<div class="h">Documented setup, a fresh Worker, its health check</div>')
+  B.b1 = el(s, box('term', 80, 160, 860, 380)); B.b3 = el(s, box('term', 80, 560, 860, 360)); B.b2 = el(s, box('term', 980, 160, 860, 760)) }
+// 03 end to end
+{ const s = $('s03'); el(s, '<div class="eyebrow">03 · End-to-end execution · the whole take, in order, time-compressed</div>')
+  B.e = el(s, '<div class="win" style="left:80px;top:100px;width:1440px;height:810px"><img></div>'); B.eb = el(s, '<div class="badge" style="left:80px;top:925px"></div>')
+  B.es = el(s, '<div class="steps"></div>') }
+// 04 code
+{ const s = $('s04'); el(s, '<div class="eyebrow">04 · Code and architecture · real source at this revision</div>')
+  B.c1 = el(s, box('code', 80, 110, 880, 520)); B.c2 = el(s, box('code', 980, 110, 860, 520)); B.c3 = el(s, box('code', 80, 650, 880, 300)); B.c4 = el(s, box('code', 980, 650, 860, 300)) }
+// 05 api + data
+{ const s = $('s05'); el(s, '<div class="eyebrow">05 · API and data · the take\'s HAR beside the Worker\'s own log</div>')
+  B.a1 = el(s, box('panel', 80, 110, 880, 820)); B.a2 = el(s, box('term', 980, 110, 860, 520)); B.a3 = el(s, box('panel', 980, 650, 860, 280)) }
+// 06 lifecycle
+{ const s = $('s06'); el(s, '<div class="eyebrow">06 · Data lifecycle · persistence and retrieval</div>')
+  B.l1 = el(s, box('term', 80, 110, 860, 420)); B.l2 = el(s, box('term', 80, 550, 860, 400)); B.l3 = el(s, '<div class="win" style="left:980px;top:110px;width:860px;height:484px"><img></div>')
+  B.l4 = el(s, '<div class="badge" style="left:980px;top:610px">share page after a full reload, from the same take</div>') }
+// 07 tests
+{ const s = $('s07'); el(s, '<div class="eyebrow">07 · Tests and measurement</div>')
+  B.t1 = el(s, box('term', 80, 110, 620, 520)); B.t2 = el(s, box('term', 720, 110, 560, 520)); B.t3 = el(s, box('term', 1300, 110, 540, 520))
+  B.t4 = el(s, `<div class="imgp" style="left:80px;top:650px;width:880px;height:300px"><img src="${D.charts.strength}"></div>`)
+  B.t5 = el(s, `<div class="imgp" style="left:980px;top:650px;width:860px;height:300px"><img src="${D.charts.robustness}"></div>`) }
+// 08 failure + limits
+{ const s = $('s08'); el(s, '<div class="eyebrow">08 · Failure modes and limitations</div>')
+  B.f1 = el(s, box('term', 80, 110, 880, 520)); B.f2 = el(s, box('panel', 980, 110, 860, 820))
+  B.f2.innerHTML = '<h4>Known limitations · EVIDENCE.md §8</h4><ul>' + D.limits.map((l) => `<li>${l}</li>`).join('') + '</ul>'
+  B.f3 = el(s, box('panel', 80, 650, 880, 280)); B.f3.innerHTML = '<h4>Evidence index</h4><div class="json">EVIDENCE.md · production/09_evidence_manifest.md\nproduction/10_script_and_timeline.md\n12_raw_evidence/INDEX.md (raw take, HAR, events, terminal recordings)\neval/results/*.json (benchmarks)</div>' }
+
+// static evidence content
+const N = D.network, mv = N.match && N.match.view
+B.a1.innerHTML = `<h4>HAR · POST …/match</h4><div class="json"><span class="m">POST</span> /api/reports/${T.report_id}/match\nstatus <span class="ok">${N.match.status}</span> · ${N.match.ms} ms · X-Owner-Token: <span class="dim">[redacted]</span>\n\n${esc(JSON.stringify(mv, null, 1)).slice(0, 1400)}</div>`
+B.a3.innerHTML = `<h4>Same request in both records</h4><div style="font-size:21px">HAR: <b>${N.match.ms} ms</b> · Worker log: <b>${((D.terminal.worker_log.chunks.map((c) => c.s).join('').match(/match 200 OK \((\d+)ms\)/) || [, '?'])[1])} ms</b><br><span class="dim" style="font-size:18px">client-side and server-side timings of one POST /match, ~ms apart</span></div>`
+
+window.setTime = async function (t) {
+  pending.length = 0
+  for (const s of D.scenes) { const n = $('s' + s.id.slice(0, 2)); const on = t >= s.start && t < s.end; n.style.display = on ? 'block' : 'none'; if (on) n.style.opacity = clamp((t - s.start) / .35, 0, 1) }
+  const L = (id) => t - sc(id).start
+  if (t < 30) { termRender(B.r1, D.terminal.repo, L('01_reproducibility') - 1, 'repository'); termRender(B.r2, D.terminal.creds, L('01_reproducibility') - (wt('01_reproducibility', 'credentials') - sc('01_reproducibility').start), 'required credentials, no secrets') }
+  else if (t < 60) { const l = L('02_boot_health'); termRender(B.b1, D.terminal.setup, l - 1, 'setup + build'); termRender(B.b3, D.terminal.typecheck, l - 4, 'typecheck'); termRender(B.b2, D.terminal.boot, (t - wt('02_boot_health', 'verify')) * 1.0, 'fresh Worker + health check') }
+  else if (t < 90) {
+    const tk = interp(D.e2e_map, t), sp = (D.e2e_map[1][1] - D.e2e_map[0][1]) / (D.e2e_map[1][0] - D.e2e_map[0][0])
+    setImg(B.e.firstChild, takeSrc(tk))
+    B.eb.innerHTML = `▶▶ <b>${sp.toFixed(1)}×</b> · real time ${mmss(tk)} of ${mmss(T.duration)} · one take, no cuts · ${T.base.replace(/^https?:\/\//, '')}`
+    B.es.innerHTML = D.steps.map(([st, lab], i) => { const nx = D.steps[i + 1] ? D.steps[i + 1][0] : 1e9; const cls = tk >= nx ? 'on' : tk >= st ? 'cur' : ''; return `<div class="${cls}">${mmss(st)}  ${lab}</div>` }).join('')
+  } else if (t < 120) {
+    const hl = t >= wt('04_code_architecture', 'highlighted') - .2
+    codeRender(B.c1, D.codes.consumer, hl); codeRender(B.c2, D.codes.track, hl); codeRender(B.c3, D.codes.match, hl); codeRender(B.c4, D.codes.owner, t >= wt('04_code_architecture', 'trade-off') - .2)
+    B.c3.style.opacity = B.c4.style.opacity = ease((t - wt('04_code_architecture', 'service') + .3) / .5)
+  } else if (t < 150) { termRender(B.a2, D.terminal.worker_log, (t - wt('05_api_data', 'logs')) + .5, 'Worker log (wrangler dev) for this report')
+    B.a3.style.opacity = ease((t - wt('05_api_data', 'logs') - 1) / .5) }
+  else if (t < 180) { termRender(B.l1, D.terminal.d1, L('06_data_lifecycle') - 1, 'D1: the stored report row'); termRender(B.l2, D.terminal.persist, (t - wt('06_data_lifecycle', 'retrieval')), 'retrieval: state + poster from R2')
+    setImg(B.l3.firstChild, D.stills.share || D.stills.share_scrolled) }
+  else if (t < 210) { const l = L('07_tests_measurement'); termRender(B.t1, D.terminal.npm_test, l - 1, 'unit tests'); termRender(B.t2, D.terminal.e2e_mock, l - 3, 'E2E (mock Worker)'); termRender(B.t3, D.terminal.bench, l - 5, 'benchmark summary')
+    B.t4.style.opacity = B.t5.style.opacity = ease((t - wt('07_tests_measurement', 'performance')) / .6) }
+  else { termRender(B.f1, D.terminal.access_prod, (t - wt('08_failure_limits', 'error')) + .3, 'error condition: no owner token')
+    B.f2.style.opacity = ease((t - wt('08_failure_limits', 'limitations')) / .6); B.f3.style.opacity = ease((t - wt('08_failure_limits', 'repository')) / .6) }
+  const cap = D.captions.find((c) => t >= c.s - .05 && t < c.e), capEl = $('cap')
+  if (cap) { capEl.style.display = 'block'; capEl.innerHTML = cap.words.map((w) => `<span class="w${t >= w.s ? ' sp' : ''}">${w.w}</span>`).join(' ') } else capEl.style.display = 'none'
+  await Promise.all(pending)
+}
+</script></body></html>

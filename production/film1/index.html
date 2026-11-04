@@ -73,6 +73,7 @@ function el(parent, html) { const d = document.createElement('div'); d.innerHTML
 function win(parent, x, y, w, h) { const n = el(parent, `<div class="win" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><img></div>`); return n }
 const PAW = '<svg width="72" height="72" viewBox="0 0 24 24"><g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2" ry="2.6"/><ellipse cx="10" cy="5.8" rx="2" ry="2.6"/><ellipse cx="14.5" cy="5.8" rx="2" ry="2.6"/><ellipse cx="18.5" cy="9.5" rx="2" ry="2.6"/><path d="M12.2 11.2c-3 0-6.2 3.6-6.2 6.3 0 1.9 1.5 2.6 3 2.6 1.3 0 2.2-.6 3.2-.6s1.9.6 3.2.6c1.5 0 3-.7 3-2.6 0-2.7-3.2-6.3-6.2-6.3z"/></g></svg>'
 const host = T.base.replace(/^https?:\/\//, '')
+const ENV = /^(localhost|127\.)/.test(host) ? 'local Worker · live Meta API' : 'production'
 const tt = (s) => `t+${mmss(Math.max(0, s))}`
 
 // ---------- build static DOM ----------
@@ -107,11 +108,11 @@ const B = {}
 }
 { // 04 clean state
   const s = $('s04'); B.c = {}
-  el(s, '<div class="eyebrow">Clean state · production</div>')
+  el(s, `<div class="eyebrow">Clean state · ${ENV}</div>`)
   B.c.w = win(s, 80, 110, 1260, 709)
   B.c.p = el(s, '<div class="panel" style="left:1380px;top:110px;width:460px;height:420px"><h4>Health check</h4><div class="json" id="healthjson"></div></div>')
   B.c.u = el(s, `<div class="badge" style="left:80px;top:840px">${host} · report not yet created</div>`)
-  B.c.note = el(s, '<div class="panel" style="left:1380px;top:560px;width:460px;height:260px"><h4>What this proves</h4><div style="font-family:Montserrat;font-size:21px;line-height:1.45;color:#dfe4f1">Real models (<span class="m">mock:false</span>), deployed code, empty form. Everything after this is one continuous take.</div></div>')
+  B.c.note = el(s, '<div class="panel" style="left:1380px;top:560px;width:460px;height:260px"><h4>What this proves</h4><div style="font-family:Montserrat;font-size:21px;line-height:1.45;color:#dfe4f1">Real models (<span class="m">mock:false</span>), this commit\'s code, empty form. Everything after this is one continuous take.</div></div>')
 }
 { // 05 live action
   const s = $('s05'); B.l = {}
@@ -237,7 +238,8 @@ window.setTime = async function (t) {
     setImg(B.x.w.firstChild, takeSrc(tk))
     rowEls.forEach((r, i) => { const spec = rowsSpec.slice(-14)[i]; r.classList.toggle('on', spec.t <= tk); r.classList.toggle('hot', !!spec.hot && spec.t <= tk) })
     $('matchjson').style.opacity = N.match && tk >= (D.take.events.matches_visible ?? 1e9) - .2 ? 1 : 0
-    B.x.lab.innerHTML = `left: the same take at 1× · right: real requests, real cf-ray IDs`
+    const spx = speedAt(D.maps.process, t), anyRay = rowsSpec.some((r) => r.ray)
+    B.x.lab.innerHTML = `left: the same take at ${spx > 1.05 ? spx.toFixed(1) + '×' : '1×'} · right: its real requests${anyRay ? ', real cf-ray IDs' : ' (local Worker: no cf-ray IDs)'}`
   }
   if (scene('07_result', t)) {
     const tk = interp(D.maps.result, t), sp = speedAt(D.maps.result, t)
@@ -258,7 +260,7 @@ window.setTime = async function (t) {
   }
   if (scene('10_edge_case', t)) {
     setImg(B.e.w.firstChild, D.stills.stranger_view)
-    termRender(B.e.t, D.terminal.access_prod, Math.max(0, t - wt('10_edge_case', 'server') + 1.2), 'access checks · production')
+    termRender(B.e.t, D.terminal.access_prod, Math.max(0, t - wt('10_edge_case', 'server') + 1.2), `access checks · ${ENV}`)
   }
   if (scene('11_close', t)) {
     const s = sc('11_close'); B.z.logo.style.opacity = ease((t - s.start) / .6); B.z.tag.style.opacity = ease((t - s.start - .5) / .6); B.z.ev.style.opacity = ease((t - s.start - .9) / .6)

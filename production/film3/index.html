@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Find My Dog: The Impossible Made Simple (render timeline)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600&display=block">
+<style>
+  * { box-sizing:border-box; margin:0; }
+  html, body { width:1920px; height:1080px; overflow:hidden; background:#000; color:#f3f5fa; font-family:Montserrat, system-ui, sans-serif; }
+  #stage { position:absolute; inset:0; overflow:hidden; background:#000; }
+  .layer { position:absolute; inset:0; display:none; }
+  .shot { position:absolute; inset:-4%; background-size:cover; background-position:center; will-change:transform; }
+  .mark { position:absolute; left:44px; bottom:30px; font-family:'DM Mono', monospace; font-size:14px; letter-spacing:.14em; color:rgba(255,255,255,.55); text-transform:uppercase; z-index:40; }
+  .mark.r { left:auto; right:44px; }
+  .vig { position:absolute; inset:0; pointer-events:none; background:radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%); z-index:20; }
+  #grain { position:absolute; inset:-50%; pointer-events:none; z-index:30; opacity:.09; mix-blend-mode:overlay; }
+  .frag { position:absolute; border-radius:14px; padding:14px 18px; font-size:21px; color:#e9edf7; background:rgba(20,24,34,.78); border:1px solid rgba(255,255,255,.14); box-shadow:0 18px 40px rgba(0,0,0,.5); white-space:nowrap; backdrop-filter:blur(4px); }
+  .frag.tile { padding:0; overflow:hidden; background-size:cover; }
+  .frag.tile::after { content:'▶'; position:absolute; left:10px; bottom:6px; font-size:14px; color:rgba(255,255,255,.8); }
+  .win { position:absolute; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.18); box-shadow:0 0 0 1px rgba(125,147,255,.25), 0 40px 120px rgba(40,70,200,.35); background:#000; }
+  .win img { width:100%; height:100%; object-fit:cover; display:block; }
+  svg.arch { position:absolute; left:160px; top:90px; width:1600px; height:900px; }
+  svg.arch .lit > rect { stroke:#b7c4ff !important; stroke-width:3 !important; filter:drop-shadow(0 0 18px rgba(125,147,255,.9)); }
+  #pulse { position:absolute; width:28px; height:28px; margin:-14px 0 0 -14px; border-radius:50%; background:radial-gradient(circle, #fff 0%, #b7c4ff 35%, rgba(77,107,254,0) 70%); box-shadow:0 0 40px 14px rgba(125,147,255,.55); z-index:25; display:none; }
+  #cap { position:absolute; left:50%; bottom:64px; transform:translateX(-50%); font-weight:400; font-size:34px; color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.8); z-index:50; display:none; letter-spacing:.2px; white-space:nowrap; }
+  #cap .w { opacity:.55; } #cap .w.sp { opacity:1; }
+  .logo { position:absolute; left:0; right:0; display:flex; justify-content:center; align-items:center; gap:22px; font-weight:600; color:#7d93ff; letter-spacing:-1px; }
+</style></head>
+<body><div id="stage">
+  <div class="layer" id="L1"><div class="shot" id="gate"></div><div id="iris" style="position:absolute;inset:0;background:#000"></div></div>
+  <div class="layer" id="L2"><div class="shot" id="street"></div></div>
+  <div class="layer" id="L3"><div class="shot" id="doorstep"></div><div id="frags"></div><div id="dim" style="position:absolute;inset:0;background:#05070c;opacity:0"></div></div>
+  <div class="layer" id="L5"><div class="win" id="ui" style="left:240px;top:110px;width:1440px;height:810px"><img></div></div>
+  <div class="layer" id="L6"></div>
+  <div class="layer" id="L7"><div class="shot" id="home"></div><div id="warm" style="position:absolute;inset:0;background:linear-gradient(120deg, rgba(255,170,90,.0), rgba(255,170,90,.22));opacity:0"></div></div>
+  <div class="layer" id="L8"></div>
+  <div class="vig"></div>
+  <svg id="grain" viewBox="0 0 400 400" preserveAspectRatio="none"><filter id="gn"><feTurbulence id="turb" type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="1"/></filter><rect width="400" height="400" filter="url(#gn)"/></svg>
+  <div id="pulse"></div>
+  <div class="mark" id="markL"></div><div class="mark r" id="markR"></div>
+  <div id="cap"></div>
+</div>
+<script src="data.js"></script>
+<script>
+const D = window.DATA, T = D.take
+const $ = (id) => document.getElementById(id)
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x))
+const ease = (x) => { x = clamp(x, 0, 1); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2 }
+const lerp = (a, b, k) => a + (b - a) * k
+const pad = (n, w) => String(n).padStart(w, '0')
+const sc = (id) => D.scenes.find((s) => s.id === id)
+const wt = (id, prefix) => ((D.words[id] || []).find((w) => w.w.toLowerCase().startsWith(prefix.toLowerCase())) || { s: sc(id).start }).s
+function interp(map, t) { if (t <= map[0][0]) return map[0][1]; if (t >= map[1][0]) return map[1][1]; return map[0][1] + (map[1][1] - map[0][1]) * (t - map[0][0]) / (map[1][0] - map[0][0]) }
+const takeSrc = (tk) => `${T.dir}/${pad(clamp(Math.round(tk * T.fps) + 1, 1, T.frames), 6)}.jpg`
+const pending = []
+function setImg(img, src) { if (img.getAttribute('src') !== src) { img.setAttribute('src', src); pending.push(img.decode().catch(() => {})) } }
+for (const n of ['gate', 'street', 'doorstep', 'home']) $(n).style.backgroundImage = `url(assets/${n}.jpg)`
+const PAW = '<svg width="96" height="96" viewBox="0 0 24 24"><g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2" ry="2.6"/><ellipse cx="10" cy="5.8" rx="2" ry="2.6"/><ellipse cx="14.5" cy="5.8" rx="2" ry="2.6"/><ellipse cx="18.5" cy="9.5" rx="2" ry="2.6"/><path d="M12.2 11.2c-3 0-6.2 3.6-6.2 6.3 0 1.9 1.5 2.6 3 2.6 1.3 0 2.2-.6 3.2-.6s1.9.6 3.2.6c1.5 0 3-.7 3-2.6 0-2.7-3.2-6.3-6.2-6.3z"/></g></svg>'
+
+// fragments: what a search looks like today (illustrative)
+const FR = [
+  ['Has anyone seen a curly apricot dog?', 220, 160, .9], ['Check your doorbell cam?', 1240, 250, .6], ['Saw a dog near Elm St, maybe 6pm?', 300, 690, .75],
+  ['Which way did she go?', 1320, 760, .5], ['tile', 760, 140, .4], ['Missed call · Neighbour', 1400, 520, .8], ['tile', 160, 430, .55],
+  ['Sharing to the street group…', 820, 860, .7], ['tile', 1480, 90, .35], ['Any update?', 640, 520, .95], ['tile', 980, 620, .45], ['She was on the lead an hour ago', 260, 900, .65],
+]
+const fragsEl = $('frags')
+const frags = FR.map(([txt, x, y, depth], i) => {
+  const d = document.createElement('div'); d.className = 'frag' + (txt === 'tile' ? ' tile' : '')
+  if (txt === 'tile') { d.style.width = '260px'; d.style.height = '146px'; d.style.backgroundImage = `url(assets/street.jpg)`; d.style.backgroundPosition = `${(i * 23) % 100}% ${(i * 37) % 100}%`; d.style.backgroundSize = '900px auto' }
+  else d.textContent = txt
+  fragsEl.appendChild(d); return { d, x, y, depth, appear: 12.4 + i * 0.55 }
+})
+// engine: architecture + pulse path through real components only
+const L6 = $('L6'); { const wrap = document.createElement('div'); wrap.innerHTML = D.arch_svg; const svg = wrap.querySelector('svg'); svg.classList.add('arch'); L6.appendChild(svg) }
+const ARCH = L6.querySelector('svg')
+const PATH = [['n-spa', 205, 255], ['n-api', 600, 280], ['n-queue', 600, 545], ['n-sam', 1335, 200], ['n-api', 600, 280], ['n-spark', 1335, 385], ['n-image', 1335, 555], ['n-owner', 205, 715]]
+const toScreen = (x, y) => [160 + x, 90 + y]
+const L8 = $('L8')
+L8.innerHTML = `<div class="logo" style="top:420px;font-size:120px">${PAW}<span>findmydog</span></div><div style="position:absolute;left:0;right:0;top:590px;text-align:center;font-size:46px;font-weight:300">Bring them home.</div><div style="position:absolute;left:0;right:0;top:690px;text-align:center;font-family:'DM Mono',monospace;font-size:22px;color:#8f97ab">github.com/shahaman098/find-my-dog</div>`
+const resultCard = document.createElement('div'); resultCard.className = 'win'; resultCard.style.cssText = 'left:460px;top:250px;width:1000px;height:563px;display:none'; resultCard.innerHTML = '<img src="assets/matches_still.jpg" style="object-fit:cover;object-position:50% 30%">'; L6.appendChild(resultCard)
+
+window.setTime = async function (t) {
+  pending.length = 0
+  const show = (id, on) => { $(id).style.display = on ? 'block' : 'none' }
+  const sThen = wt('04_turn', 'Then')
+  show('L1', t < 5.4); show('L2', t >= 5 && t < 12.6); show('L3', t >= 12 && t < 26); show('L5', t >= 23 && t < 40.4); show('L6', t >= 40 && t < 50.4); show('L7', t >= 50 && t < 56.4); show('L8', t >= 56)
+  // crossfades
+  $('L2').style.opacity = ease((t - 5) / .6); $('L3').style.opacity = ease((t - 12) / .6); $('L5').style.opacity = ease((t - 23) / 1.2)
+  $('L6').style.opacity = ease((t - 40) / .5); $('L7').style.opacity = ease((t - 50) / .6); $('L8').style.opacity = ease((t - 56) / .5)
+  // 01: point of light opens into the gate shot
+  const r = t < 1 ? 0 : t < 1.6 ? lerp(0, 1.2, ease((t - 1) / .6)) : lerp(1.2, 120, ease((t - 1.8) / 3.2))
+  $('iris').style.background = `radial-gradient(circle at 50% 52%, transparent ${r}%, #000 ${r + (r < 2 ? 1.5 : 8)}%)`
+  $('gate').style.transform = `scale(${lerp(1.12, 1.02, ease(t / 5.4))})`
+  // 02: one smooth lateral move down the street
+  $('street').style.transform = `translateX(${lerp(2.5, -2.5, ease((t - 5) / 7.6))}%) scale(1.08)`
+  // 03: fragments drift in slow motion; 04: everything freezes on "Then", then dissolves
+  const tf = Math.min(t, sThen)
+  $('doorstep').style.transform = `scale(${lerp(1.04, 1.12, ease((tf - 12) / 9))})`
+  for (const f of frags) {
+    const k = ease((tf - f.appear) / 1.2), dz = f.depth
+    const dx = (tf - 12) * 9 * (dz - .6), dy = -(tf - 12) * 6 * dz
+    const dissolve = t > sThen ? ease((t - sThen - .6) / 1.6) : 0
+    f.d.style.opacity = k * (1 - dissolve)
+    f.d.style.transform = `translate(${f.x + dx}px, ${f.y + dy}px) scale(${(.72 + dz * .4) * (1 - .2 * dissolve)})`
+    f.d.style.filter = `blur(${(1 - dz) * 2.2 + dissolve * 6}px)`
+  }
+  $('dim').style.opacity = t > sThen ? ease((t - sThen) / 2.2) * .92 : 0
+  // 04 -> 05: the clean, singular, real interface
+  const uiK = ease((t - 23) / 2.5)
+  $('ui').style.transform = `perspective(2200px) rotateY(${lerp(-14, 0, uiK)}deg) scale(${lerp(.86, 1, uiK)})`
+  setImg($('ui').firstChild, t < 30.6 ? takeSrc(D.take.events.landing + 4.0) : takeSrc(interp(D.reveal_map, t)))
+  // 06: a signal travels the real architecture, then resolves into the real result
+  if (t >= 40 && t < 50.4) {
+    ARCH.style.opacity = lerp(.25, .5, ease((t - 40) / 1.5)) * (1 - ease((t - 48) / .8))
+    const seg = clamp((t - 41) / 6.6, 0, .999) * (PATH.length - 1), i = Math.floor(seg), k = ease(seg - i)
+    const [, x1, y1] = PATH[i], [, x2, y2] = PATH[i + 1]
+    const [sx, sy] = toScreen(lerp(x1, x2, k), lerp(y1, y2, k))
+    const p = $('pulse'); p.style.display = t > 41 && t < 47.8 ? 'block' : 'none'; p.style.left = sx + 'px'; p.style.top = sy + 'px'
+    for (const [id] of PATH) ARCH.querySelector('#' + id)?.classList.remove('lit')
+    for (let j = 0; j <= i + (k > .9 ? 1 : 0); j++) ARCH.querySelector('#' + PATH[j][0])?.classList.add('lit')
+    resultCard.style.display = t > 47.6 ? 'block' : 'none'; resultCard.style.opacity = ease((t - 47.6) / .8); resultCard.style.transform = `scale(${lerp(.94, 1, ease((t - 47.6) / 1.2))})`
+  } else $('pulse').style.display = 'none'
+  // 07: back to the street, warmer
+  $('home').style.transform = `scale(${lerp(1.02, 1.1, ease((t - 50) / 6.4))})`; $('warm').style.opacity = ease((t - 51) / 4)
+  // marks: generated imagery is labelled; product footage is labelled
+  const concept = t < 23 || (t >= 50 && t < 56.4)
+  $('markL').textContent = concept ? 'concept imagery · Muse Image' : (t >= 23 && t < 40.4) ? 'real product footage · time-compressed' : (t >= 40 && t < 47.6) ? 'abstracted from the real architecture' : t < 50.4 ? 'real product output' : ''
+  $('markR').textContent = (t >= 12 && t < 21) ? 'illustration' : ''
+  $('turb').setAttribute('seed', String(Math.floor(t * D.fps) % 97 + 1))
+  // end card: the tagline is already on screen, so the burned caption is suppressed (the SRT keeps it)
+  const cap = t < 56 && D.captions.find((c) => t >= c.s - .05 && t < c.e), capEl = $('cap')
+  if (cap) { capEl.style.display = 'block'; capEl.innerHTML = cap.words.map((w) => `<span class="w${t >= w.s ? ' sp' : ''}">${w.w}</span>`).join(' ') } else capEl.style.display = 'none'
+  await Promise.all(pending)
+}
+</script></body></html>

@@ -21,15 +21,10 @@ TOKEN=$(python3 -c "import json;print(json.load(open('$SECRET'))['owner_token'])
 CLIP=$(python3 -c "import json;s=json.load(open('$TAKE/final_state.json'));m=[x for x in s['matches'] if x['confirmed']] or s['matches'];print(m[0]['clip_id'])")
 OBJ=$(python3 -c "import json;s=json.load(open('$TAKE/final_state.json'));m=[x for x in s['matches'] if x['confirmed']] or s['matches'];print(m[0]['object_id'])")
 
-# edge case on production: a stranger (no / wrong token) tries to change the decision; then prove nothing changed
-REDACT="$TOKEN" SHOW_CMD="stranger confirms a sighting without the owner token (production)" node production/term_record.cjs $OUT/12_raw_evidence/terminal/access_prod.json -- "
-echo '\$ curl -X POST $BASE/api/reports/$RID/matches/confirm -H \"X-Owner-Token: guessed\" -d {clip_id:$CLIP, object_id:$OBJ, confirmed:false}';
-curl -s -w '\nHTTP %{http_code}\n' -X POST '$BASE/api/reports/$RID/matches/confirm' -H 'X-Owner-Token: guessed' -H 'Content-Type: application/json' -d '{\"clip_id\":\"$CLIP\",\"object_id\":$OBJ,\"confirmed\":false}';
-echo; echo '\$ curl -X POST $BASE/api/reports/$DEMO_ID/analyze      # the public demo report';
-curl -s -w '\nHTTP %{http_code}\n' -X POST '$BASE/api/reports/$DEMO_ID/analyze';
-echo; echo '\$ curl $BASE/api/reports/$RID | jq  .matches[confirmed]      # state after both attempts';
-curl -s '$BASE/api/reports/$RID' | python3 -c 'import json,sys; s=json.load(sys.stdin); print(json.dumps([{k:m[k] for k in (\"clip_id\",\"object_id\",\"is_match\",\"confirmed\")} for m in s[\"matches\"] if m[\"confirmed\"] is not None], indent=1))'
-"
+# edge case: a stranger (no / wrong token) tries to change the decision; then prove nothing changed.
+# production/edge_case.sh prints each command exactly as executed.
+REDACT="$TOKEN" SHOW_CMD="bash production/edge_case.sh   # stranger tries to change the owner's decision" \
+  node production/term_record.cjs $OUT/12_raw_evidence/terminal/access_prod.json -- bash production/edge_case.sh "$BASE" "$RID" "$CLIP" "$OBJ" "$DEMO_ID"
 
 python3 production/build_film1.py "$TAKE"
 python3 production/mix.py production/film1/audio_plan.json $OUT/audio/film1_score.wav 120 $OUT/04_demo_voiceover.wav $OUT/audio/film1_mix.wav $OUT/06_demo_subtitles.srt
