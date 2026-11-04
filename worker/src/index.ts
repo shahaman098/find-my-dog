@@ -203,6 +203,7 @@ const MATCH_SCHEMA = {
     rationale: { type: 'string' },
   },
   required: ['is_match', 'confidence', 'rationale'],
+  additionalProperties: false,
 }
 
 function matchPrompt(pet: ReportState['pet'], transcript: string | null, trackRef: string): ContentPart[] {
@@ -393,6 +394,7 @@ const TOOLS = [
         steps: { type: 'array', items: { type: 'string' } },
       },
       required: ['headline', 'window', 'area', 'why', 'steps'],
+      additionalProperties: false,
     },
   },
   {
@@ -403,6 +405,7 @@ const TOOLS = [
       type: 'object',
       properties: { poster_prompt: { type: 'string' }, headline_text: { type: 'string' } },
       required: ['poster_prompt', 'headline_text'],
+      additionalProperties: false,
     },
   },
 ]
@@ -426,7 +429,7 @@ app.post('/api/reports/:id/analyze', async (c) => {
   }
 
   const best = sightings.reduce((a, b) => (a.confidence >= b.confidence ? a : b))
-  const bestB64 = await b64Of(c.env, `${s0.report_id}/stills/${best.clip_id}_${best.object_id}`)
+  const bestB64 = await b64Of(c.env, `${s0.report_id}/stills/${best.clip_id}_${best.object_id}.jpg`)
   const input = [{
     type: 'message',
     role: 'user',
