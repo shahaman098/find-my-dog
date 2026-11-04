@@ -15,6 +15,10 @@ timeline, a concrete next-search plan, and a shareable alert poster.
 
 **Live:** https://find-my-dog.kiritokris.workers.dev
 
+**Judges, in 60 seconds:** open the [live demo](https://find-my-dog.kiritokris.workers.dev/#/demo) → skim
+[Real-model results](#real-model-results) (9/9 top-ranked, 92% accuracy, identity held through a blackout) →
+read `worker/src/prompts.ts` (every prompt and tool) and `worker/src/index.ts` (the pipeline).
+
 ## Why not just Ring Search Party?
 
 Ring's Search Party for Dogs (launched autumn 2025; Amazon reports 99 dogs home in its first 90 days) proved the need — and drew the map of its gaps:
@@ -72,13 +76,14 @@ worker/src/
 ├─ meta.ts     Meta API clients: SAM stream, Spark structured, Glimmer/Baseten, ASR, Muse Image
 ├─ sam.ts      SAM output grammar parser (<Nf>id<|box…|>) → tracks with timestamps
 ├─ analyze     agentic Spark tool loop: suggest_next_search + make_poster  (in index.ts)
+├─ prompts.ts  every prompt, schema and tool sent to Meta models (shared with the benchmark)
 ├─ cost.ts     itemized per-report cost meter
 ├─ clock.ts    "7:42 PM" / "19:42" → chronological sighting order
 ├─ mock.ts     deterministic full-pipeline simulation (FMD_MOCK=1)
 └─ store.ts    D1-backed report state
 web/src/       report form (voice → WAV) · clip ingest · track gallery · confirm ·
                neighbor upload page · share page (timeline ribbon + cost + poster)
-eval/          gates.ts (G1 persistence / G2 match accuracy) · e2e.ts (full pipeline) · unit.test.ts
+eval/          benchmark.ts (real-model results) · e2e.ts (full pipeline) · unit.test.ts · gates.ts (legacy)
 ```
 
 ## Run it
@@ -107,26 +112,59 @@ The E2E asserts the whole flow — report → clip → SAM tracks → match → 
 plus the access model: the owner token is never returned by reads, non-owners get 403,
 re-running the matcher keeps confirmations, and the demo report refuses writes.
 
-## Verify the core claims (gates)
+## Real-model results
+
+Measured on 4 Nov 2026 against the live Meta API with **the production code path**: `eval/benchmark.ts`
+imports the Worker's own SAM parser (`worker/src/sam.ts`), prompts (`worker/src/prompts.ts`) and model
+clients (`worker/src/meta.ts`). Nothing is mocked. Raw outputs are in [`eval/results/`](eval/results).
+
+| Claim | Result | Evidence |
+|---|---|---|
+| Muse Spark ranks the right animal first | **9 / 9**: the true pet was the top-scored candidate in every case and trial (3 dogs × 3 trials) | `results/match.json` |
+| Match accuracy against look-alike dogs | **92%** (80 / 87) · recall **93%** · precision **83%** before the owner confirms | `results/match.json` |
+| A person is never confirmed as a pet | SAM mislabelled one person as "dog"; Spark rejected that crop **9 / 9** times | `results/match.json` |
+| SAM 3.1 keeps identity through an occlusion | After a **1.5 s full-frame blackout**, the dog came back as the **same track ID**: 1 track, 1 gap of 1.7 s | `results/doorcam_occluded.tracks.json` |
+| SAM finds small animals in real doorbell footage | A dog about **50 × 50 px (0.3% of the frame)** among adults, a child and a stroller: one continuous track for 12.3 s, **0 tracks on people** | `results/doorcam.tracks.json` |
+| The coordinator is a real tool loop | Spark chose both tools itself (`suggest_next_search` → `make_poster`) and planned from the actual sighting times | `results/plan.json` |
+| Unit cost | SAM **$0.20 / 1,000 frames**; Spark **≈ $0.0055 per comparison** (87 comparisons = $0.48) | all of the above |
+
+**How the matching set was built.** SAM 3.1 tracked every dog in a 76 s dog-park news montage
+(16 tracks). The reference photo for each case is a crop of one dog. Positives are crops of the same dog
+from later in the same continuous shot. Negatives are the other dogs, chosen to include deliberate look-alikes
+(a white hound against a white dog, a tan doodle against a shiba), plus the person SAM mislabelled.
+Every identity label was checked by eye. Cases are in [`eval/match_cases.json`](eval/match_cases.json).
+
+**What this does not show (yet).**
+- All 5 false positives scored 0.55–0.65, and every top-ranked true match scored ≥ 0.75. Because the owner
+  confirms every sighting and cards are sorted by score, a false positive never outranked the real pet. On its
+  own, though, 83% precision means the owner confirmation step is load-bearing, not decorative.
+- The reference photos are frames from the same footage, which is easier than a real owner's phone photo.
+  Small n: 3 dogs, 87 comparisons.
+- Across *hard cuts* in the edited montage, SAM sometimes carried one ID onto a different dog. Real camera
+  clips have no cuts, and the product never relies on IDs across clips: each track is matched independently.
+- Muse Image returns WebP (now served with the right type), and its lettering can misspell ("corly coat").
+  The share page shows the owner's real photo next to the generated poster.
+
+Footage is not redistributed (`eval/fixtures/` is git-ignored); [`eval/fixtures/README.md`](eval/fixtures/README.md)
+lists the sources and the exact commands to reproduce every number above.
+
+## Reproduce the results
 
 ```bash
-export $(grep -v '^#' .dev.vars | xargs)
+export $(grep -v '^#' .dev.vars | xargs)        # META_API_KEY
+# fetch + re-encode the footage: see eval/fixtures/README.md (two curl + ffmpeg commands)
 
-# G1: SAM 3.1 keeps a persistent track through an occlusion in one clip
-node eval/gates.ts g1 --clip eval/fixtures/dog_clip.mp4 --fps 3
-
-# G2: Spark matches the right animal from an owner photo, ≥8/10 trials
-node eval/gates.ts g2 --owner eval/fixtures/owner.jpg \
-  --same eval/fixtures/still_a.jpg eval/fixtures/still_b.jpg \
-  --different eval/fixtures/other_animal.jpg
-
-# Full pipeline E2E (dev or deployed URL)
-node eval/e2e.ts http://localhost:8787
+node eval/benchmark.ts track --clip eval/fixtures/dogpark_10fps.mp4 --fps 10 --out eval/results/dogpark.tracks.json
+node eval/benchmark.ts crops --clip eval/fixtures/dogpark_10fps.mp4 --tracks eval/results/dogpark.tracks.json --dir eval/fixtures/crops/dogpark --per 6
+node eval/benchmark.ts match --cases eval/match_cases.json --trials 3 --out eval/results/match.json
+node eval/benchmark.ts track --clip eval/fixtures/doorcam_occluded.mp4 --fps 10 --out eval/results/doorcam_occluded.tracks.json
+node eval/benchmark.ts plan --sightings eval/sightings_sample.json --sighting eval/fixtures/crops/dogpark/t8_f351.jpg \
+  --description "Apricot goldendoodle, curly coat, red collar" --out eval/results/plan.json --poster eval/results/poster.webp
 ```
 
-Fixtures: `dog_clip.mp4` is Meta's own SAM 3 demo asset
-([facebookresearch/sam3](https://github.com/facebookresearch/sam3), `assets/dog.gif`);
-the distractor photo is from Wikimedia Commons.
+Total cost of a full run: about **$0.80** (SAM $0.28, Spark matching $0.48, coordinator + poster ≈ $0.04).
+`eval/gates.ts` is the original night-one gate script, kept for history. Its suggested fixture (`assets/dog.gif`
+from facebookresearch/sam3) is SAM's own *output* with masks painted on, so it is not used for any number above.
 
 ## Team
 

@@ -1,0 +1,4 @@
+[
+  { "clip_id": "c1", "object_id": 8, "place": "Dog park water fountain (Plymouth)", "clock": "5:42 PM", "t_in_clip": 33.5, "duration_seen": 3.5, "confidence": 0.85, "still": "", "media_url": "" },
+  { "clip_id": "c2", "object_id": 0, "place": "Neighbour's doorbell, Elm St car park", "clock": "6:18 PM", "t_in_clip": 0.0, "duration_seen": 12.3, "confidence": 0.75, "still": "", "media_url": "" }
+]

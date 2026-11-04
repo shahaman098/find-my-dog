@@ -76,3 +76,11 @@ test('cost meter: a 1-hour neighborhood search stays under ~$3 (README economics
   const usd = computeUsd(c)
   assert.ok(usd > 1.5 && usd < 3.5, `usd=${usd}`)
 })
+
+test('imageType: sniffs the poster bytes Muse Image actually returns', async () => {
+  const { imageType } = await import('../worker/src/meta.ts')
+  const riff = new Uint8Array([0x52, 0x49, 0x46, 0x46, 0, 0, 0, 0, 0x57, 0x45, 0x42, 0x50])
+  assert.equal(imageType(riff), 'image/webp')
+  assert.equal(imageType(new Uint8Array([0x89, 0x50, 0x4e, 0x47])), 'image/png')
+  assert.equal(imageType(new Uint8Array([0xff, 0xd8, 0xff])), 'image/jpeg')
+})

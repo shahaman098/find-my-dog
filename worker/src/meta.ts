@@ -1,6 +1,6 @@
 /** Meta inference helpers for the Worker: SAM 3.1, Spark/Glimmer matching, ASR, Muse Image. */
 import type { Env, Track } from './types'
-import { parseSegmentation, mergeTracks } from './sam'
+import { parseSegmentation, mergeTracks } from './sam.ts'
 
 export const BASE = 'https://api.meta.ai/v1'
 const BASETEN_BASE = 'https://inference.baseten.co/v1'
@@ -187,8 +187,16 @@ export async function transcribe(env: Env, wav: ArrayBuffer): Promise<{ transcri
   return { transcript: (j.transcript ?? '').trim(), seconds: (j.audioDurationMs ?? 0) / 1000 }
 }
 
-/** Muse Image poster generation -> PNG bytes. */
-export async function generatePoster(env: Env, prompt: string): Promise<{ png: ArrayBuffer }> {
+/** Muse Image returns WebP today; sniff the bytes so the poster is stored and served as what it is. */
+export function imageType(bytes: Uint8Array): string {
+  if (bytes[0] === 0x89 && bytes[1] === 0x50) return 'image/png'
+  if (bytes[0] === 0xff && bytes[1] === 0xd8) return 'image/jpeg'
+  if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[8] === 0x57 && bytes[9] === 0x45) return 'image/webp'
+  return 'application/octet-stream'
+}
+
+/** Muse Image poster generation -> image bytes + their real content type. */
+export async function generatePoster(env: Env, prompt: string): Promise<{ png: ArrayBuffer; contentType: string }> {
   const resp = await fetch(`${BASE}/images/generations`, {
     method: 'POST',
     headers: authHeaders(env),
@@ -201,5 +209,5 @@ export async function generatePoster(env: Env, prompt: string): Promise<{ png: A
   const bin = atob(b64)
   const bytes = new Uint8Array(bin.length)
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
-  return { png: bytes.buffer }
+  return { png: bytes.buffer, contentType: imageType(bytes) }
 }

@@ -6,7 +6,7 @@
  * tracked animal, so the persistence story demos identically.
  */
 import type { Track } from './types'
-import { mergeTracks, type SamRecord } from './sam'
+import { mergeTracks, type SamRecord } from './sam.ts'
 
 const FPS = 30
 const DURATION = 30

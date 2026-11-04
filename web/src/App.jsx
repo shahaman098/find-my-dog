@@ -195,6 +195,41 @@ function HowItWorks() {
   )
 }
 
+/** Measured on real footage with the production code path — see eval/results and the README. */
+const PROOF = [
+  { n: '9 / 9', l: 'times the true pet was the top-ranked candidate', s: 'Muse Spark · 3 dogs × 3 trials vs look-alike distractors' },
+  { n: '92%', l: 'match accuracy across 87 comparisons', s: '93% recall · 83% precision before owner confirmation' },
+  { n: '1 ID', l: 'kept through a 1.5 s full-frame blackout', s: 'SAM 3.1 on real doorbell footage, dog ≈ 50 × 50 px' },
+  { n: '0', l: 'people ever confirmed as a pet', s: 'a person SAM mislabelled "dog" was rejected in 9 / 9 checks' },
+]
+
+const VERSUS = [
+  ['Cameras', 'Scans Ring outdoor cameras', 'Any clip anyone shares: doorbell, CCTV, dashcam, phone'],
+  ['Pets', 'Dogs', 'Dogs, cats, any animal with a photo'],
+  ['Consent', 'Default-on scanning', 'Opt-in, owner-initiated, time-boxed to one search'],
+  ['What you get', 'A "possible match" alert', 'Ranked evidence with reasons, a timeline, a dawn search plan and a poster'],
+  ['Trust', 'Closed source', 'Open source, with the benchmark in the repo'],
+]
+
+function ProofAndVersus() {
+  return (
+    <section className="versus">
+      <p className="eyebrow light"><Icon name="sparkle" size={12} /> MEASURED ON REAL FOOTAGE</p>
+      <div className="proofGrid">
+        {PROOF.map(p => <div key={p.l} className="proof"><b>{p.n}</b><span>{p.l}</span><small>{p.s}</small></div>)}
+      </div>
+      <h2 className="versusTitle">Ring proved the need. We built the open version.</h2>
+      <div className="vsTable" role="table" aria-label="Ring Search Party compared with Find My Dog">
+        <div className="vsRow vsHead" role="row"><span role="columnheader" /><span role="columnheader">Ring Search Party</span><span role="columnheader">Find My Dog</span></div>
+        {VERSUS.map(([k, a, b]) => (
+          <div key={k} className="vsRow" role="row"><span role="rowheader">{k}</span><span role="cell">{a}</span><span role="cell" className="us">{b}</span></div>
+        ))}
+      </div>
+      <p className="sub small vsNote">Ring figures from Amazon's own announcements; ours from <a href={`${REPO}#real-model-results`} target="_blank" rel="noreferrer">the benchmark in the repo</a>.</p>
+    </section>
+  )
+}
+
 function ClosingFooter() {
   return (
     <section className="bleed dark closing">
@@ -304,6 +339,7 @@ function NewReport({ go }) {
         </div>
       </div>
       <HowItWorks />
+      <ProofAndVersus />
       <ClosingFooter />
     </div>
   )
@@ -445,7 +481,13 @@ function ShareView({ id, r }) {
         </div>
       )}
       {tl?.summary && <p className="sub">{tl.summary}</p>}
-      {tl?.poster && <img className="poster" src={tl.poster} alt="alert poster" />}
+      <div className="shareMedia">
+        <figure className="realPhoto">
+          <img src={`/api/reports/${id}/pet_photo`} alt={`${r.pet.name}, the owner's photo`} />
+          <figcaption>This is {r.pet.name} — the owner's own photo</figcaption>
+        </figure>
+        {tl?.poster && <img className="poster" src={tl.poster} alt="alert poster" />}
+      </div>
       {tl?.cost && (
         <p className="sub small costline">
           This search: ${tl.cost.usd?.toFixed(2)} — SAM {tl.cost.sam_frames?.toLocaleString()} video frames ·
@@ -618,7 +660,7 @@ function ReportView({ id, share }) {
               <span className="sub">Reference photo — every tracked animal is compared against this, by appearance only.</span>
             </div>
             {(r.matches || []).length === 0 && <p className="sub">Run the matcher after clips finish processing.</p>}
-            {(r.matches || []).map(m => {
+            {[...(r.matches || [])].sort((a, b) => (b.is_match - a.is_match) || (b.score - a.score)).map(m => {
               const clip = r.clips.find(c => c.clip_id === m.clip_id)
               return (
                 <div key={`${m.clip_id}:${m.object_id}`} className="sighting">

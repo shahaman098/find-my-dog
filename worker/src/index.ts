@@ -1,11 +1,12 @@
 import { Hono } from 'hono'
 import { createMiddleware } from 'hono/factory'
 import type { Clip, Env, MatchVerdict, PipelineMessage, ReportState, Sighting } from './types'
-import { createState, readState, updateState } from './store'
-import { emptyCost, addCost } from './cost'
-import { mockTracks, mockTranscript, mockMatch, mockPlan, MOCK_POSTER_SVG } from './mock'
-import { trackVideo, sparkStructured, glimmerStructured, toolLoop, transcribe, generatePoster, type ContentPart } from './meta'
-import { byClock } from './clock'
+import { createState, readState, updateState } from './store.ts'
+import { emptyCost, addCost } from './cost.ts'
+import { mockTracks, mockTranscript, mockMatch, mockPlan, MOCK_POSTER_SVG } from './mock.ts'
+import { trackVideo, sparkStructured, glimmerStructured, toolLoop, transcribe, generatePoster, type ContentPart } from './meta.ts'
+import { byClock } from './clock.ts'
+import { MATCH_SCHEMA, matchPrompt, TOOLS, coordinatorInput, posterPrompt } from './prompts.ts'
 
 const app = new Hono<{ Bindings: Env }>()
 
@@ -250,32 +251,6 @@ app.patch('/api/reports/:id/clips/:clipId', ownerOnly, async (c) => {
 
 // ---- matching ----
 
-const MATCH_SCHEMA = {
-  type: 'object',
-  properties: {
-    is_match: { type: 'boolean' },
-    confidence: { type: 'number' },
-    rationale: { type: 'string' },
-  },
-  required: ['is_match', 'confidence', 'rationale'],
-  additionalProperties: false,
-}
-
-function matchPrompt(pet: ReportState['pet'], transcript: string | null, trackRef: string): ContentPart[] {
-  let desc = pet.description
-  if (transcript) desc += `\nOwner's voice note: "${transcript}"`
-  return [
-    {
-      type: 'input_text',
-      text:
-        `Lost pet report. Name: ${pet.name}. Species: ${pet.species}.\nDescription: ${desc}\n\n` +
-        `Image 1 is the owner's reference photo of ${pet.name}. Image 2 is one detection (${trackRef}) cropped from neighborhood camera footage.\n` +
-        `Decide whether the animal in image 2 could be ${pet.name}. Judge by robust appearance attributes ` +
-        `(coat color/pattern, size, build, markings, ear/tail shape). If image 2 shows no animal or an unusable crop, is_match=false with low confidence.`,
-    },
-  ] as ContentPart[]
-}
-
 app.post('/api/reports/:id/match', ownerOnly, async (c) => {
   const s0 = await readState(c.env.DB, c.req.param('id'))
   if (!s0) return c.json({ error: 'report not found' }, 404)
@@ -445,37 +420,6 @@ app.get('/api/reports/:id/timeline', async (c) => {
   return c.json({ sightings: sightingsOf(s), next_search: s.next_search, poster: s.poster_key ? `/api/reports/${s.report_id}/poster` : null, cost: s.cost, summary: s.summary })
 })
 
-const TOOLS = [
-  {
-    type: 'function',
-    name: 'suggest_next_search',
-    description: 'Record the recommended next search plan for the owner, based on the sighting pattern.',
-    parameters: {
-      type: 'object',
-      properties: {
-        headline: { type: 'string' },
-        window: { type: 'string' },
-        area: { type: 'string' },
-        why: { type: 'string' },
-        steps: { type: 'array', items: { type: 'string' } },
-      },
-      required: ['headline', 'window', 'area', 'why', 'steps'],
-      additionalProperties: false,
-    },
-  },
-  {
-    type: 'function',
-    name: 'make_poster',
-    description: 'Generate a shareable lost-pet alert poster image.',
-    parameters: {
-      type: 'object',
-      properties: { poster_prompt: { type: 'string' }, headline_text: { type: 'string' } },
-      required: ['poster_prompt', 'headline_text'],
-      additionalProperties: false,
-    },
-  },
-]
-
 app.post('/api/reports/:id/analyze', ownerOnly, async (c) => {
   const s0 = await readState(c.env.DB, c.req.param('id'))
   if (!s0) return c.json({ error: 'not found' }, 404)
@@ -496,22 +440,7 @@ app.post('/api/reports/:id/analyze', ownerOnly, async (c) => {
 
   const best = sightings.reduce((a, b) => (a.confidence >= b.confidence ? a : b))
   const bestB64 = await b64Of(c.env, `${s0.report_id}/stills/${best.clip_id}_${best.object_id}.jpg`)
-  const input = [{
-    type: 'message',
-    role: 'user',
-    content: [
-      {
-        type: 'input_text',
-        text:
-          `You are the search coordinator for a lost ${s0.pet.species} named ${s0.pet.name}.\n` +
-          `Owner description: ${s0.pet.description}\nOwner voice note: ${s0.transcript ?? 'n/a'}\n` +
-          `Confirmed camera sightings:\n${JSON.stringify(sightings, null, 1)}\n\n` +
-          'Decide what to do next using your tools: record a concrete next-search plan (suggest_next_search) ' +
-          'and generate the shareable alert poster (make_poster). Then finish with a one-paragraph summary for the owner.',
-      },
-      { type: 'input_image', image_url: bestB64 },
-    ],
-  }]
+  const input = coordinatorInput(s0.pet, s0.transcript, sightings, bestB64)
   let plan: ReportState['next_search'] = null
   let posterKey: string | null = null
   let images = 0
@@ -524,12 +453,9 @@ app.post('/api/reports/:id/analyze', ownerOnly, async (c) => {
         return 'plan recorded'
       },
       make_poster: async (args) => {
-        const r = await generatePoster(
-          c.env,
-          `${args.poster_prompt}. Bold headline text at top: '${args.headline_text}'. Clean lost-pet alert poster layout, high contrast, printable.`,
-        )
-        posterKey = `${s0.report_id}/poster.png`
-        await c.env.MEDIA.put(posterKey, r.png, { httpMetadata: { contentType: 'image/png' } })
+        const r = await generatePoster(c.env, posterPrompt(args))
+        posterKey = `${s0.report_id}/poster`
+        await c.env.MEDIA.put(posterKey, r.png, { httpMetadata: { contentType: r.contentType } })
         images++
         return 'poster generated'
       },

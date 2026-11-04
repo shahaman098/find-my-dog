@@ -1,0 +1,24 @@
+{
+  "run_at": "2026-11-04T15:53:50.016Z",
+  "model": "muse-spark-1.3",
+  "wall_s": 54.502,
+  "tool_calls": [
+    "suggest_next_search",
+    "make_poster"
+  ],
+  "plan": {
+    "area": "Elm St car park and surrounding quiet side streets, avoiding main traffic roads",
+    "headline": "Search Elm St car park NOW - Biscuit moving away from dog park",
+    "steps": [
+      "Go immediately to Neighbour's doorbell, Elm St car park - last seen 6:18 PM with 12.3s dwell",
+      "Search on foot with treats, water and slip lead, call calmly - friendly but scared, do not chase",
+      "Check under cars, doorways, hedges and quiet alleys - scared of traffic so avoiding busy roads",
+      "Show locals the 5:42 PM water fountain photo and ask to check doorbell/dash cams after 6:18 PM",
+      "Leave flyers at Elm St houses with red-collar apricot goldendoodle description"
+    ],
+    "why": "Two sightings show track from Dog park water fountain at 5:42 PM to Elm St car park at 6:18 PM. Long pause at Elm St suggests sheltering there, and being scared of traffic she will likely stay off main roads near parked cars and doorways.",
+    "window": "ASAP 6:30 PM - 8:00 PM tonight"
+  },
+  "poster_bytes": 373490,
+  "summary": "Biscuit, your friendly apricot goldendoodle with curly coat and red collar, slipped her lead around 5:30 and has been caught on camera twice — drinking at the Dog park water fountain in Plymouth at 5:42 PM and then lingering for 12 seconds at the Neighbour's doorbell on Elm St car park at 6:18 PM — so I've recorded an urgent search plan to focus on foot around the Elm St car park and quiet side streets tonight avoiding traffic which scares her, checking under cars and doorways with treats and asking locals for doorbell footage, and I've also generated a shareable LOST DOG poster with her photo and last-seen locations to spread immediately."
+}

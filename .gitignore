@@ -8,3 +8,9 @@ web/dist/
 eval/fixtures/*.mp4
 eval/fixtures/*.jpg
 .wrangler/
+eval/fixtures/src/
+eval/fixtures/crops/
+eval/fixtures/*.gif
+eval/results/*.raw.txt
+eval/results/*.png
+eval/results/*.webp
