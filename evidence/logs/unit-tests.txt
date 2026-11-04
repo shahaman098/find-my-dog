@@ -1,80 +1,36 @@
-# 2026-11-04 16:11:06 UTC  $ node --test eval/unit.test.ts
+# 2026-11-04 20:15:48 UTC  $ npm test   (revision b56935f)
 
-TAP version 13
 # Subtest: SAM grammar: frames and multiple objects per frame
 ok 1 - SAM grammar: frames and multiple objects per frame
-  ---
-  duration_ms: 2.288366
-  type: 'test'
-  ...
 # Subtest: SAM grammar: confidence is optional and negative coords parse
 ok 2 - SAM grammar: confidence is optional and negative coords parse
-  ---
-  duration_ms: 0.210035
-  type: 'test'
-  ...
 # Subtest: SAM grammar: preamble before the first frame marker is ignored
 ok 3 - SAM grammar: preamble before the first frame marker is ignored
-  ---
-  duration_ms: 0.267161
-  type: 'test'
-  ...
 # Subtest: mergeTracks: persistent identity spans an occlusion gap with timestamps from fps
 ok 4 - mergeTracks: persistent identity spans an occlusion gap with timestamps from fps
-  ---
-  duration_ms: 0.327562
-  type: 'test'
-  ...
 # Subtest: mergeTracks: tracks sorted by first appearance
 ok 5 - mergeTracks: tracks sorted by first appearance
-  ---
-  duration_ms: 0.2765
-  type: 'test'
-  ...
 # Subtest: samCost: 50-frame minimum per request
 ok 6 - samCost: 50-frame minimum per request
-  ---
-  duration_ms: 0.127968
-  type: 'test'
-  ...
 # Subtest: clockMinutes: 12h and 24h forms
 ok 7 - clockMinutes: 12h and 24h forms
-  ---
-  duration_ms: 0.367157
-  type: 'test'
-  ...
 # Subtest: clockMinutes: rejects garbage and ambiguity
 ok 8 - clockMinutes: rejects garbage and ambiguity
-  ---
-  duration_ms: 0.185945
-  type: 'test'
-  ...
 # Subtest: byClock: chronological, not lexicographic; unknown times last
 ok 9 - byClock: chronological, not lexicographic; unknown times last
-  ---
-  duration_ms: 0.368481
-  type: 'test'
-  ...
 # Subtest: cost meter: a 1-hour neighborhood search stays under ~$3 (README economics)
 ok 10 - cost meter: a 1-hour neighborhood search stays under ~$3 (README economics)
-  ---
-  duration_ms: 0.47883
-  type: 'test'
-  ...
 # Subtest: imageType: sniffs the poster bytes Muse Image actually returns
 ok 11 - imageType: sniffs the poster bytes Muse Image actually returns
-  ---
-  duration_ms: 4.574648
-  type: 'test'
-  ...
-1..11
-# tests 11
+# Subtest: isPublicUrl: local and private hosts are uploaded to SAM, public ones are passed by URL
+ok 12 - isPublicUrl: local and private hosts are uploaded to SAM, public ones are passed by URL
+# tests 12
 # suites 0
-# pass 11
+# pass 12
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 121.550919
+# duration_ms 188.870133
 
 # exit code: 0

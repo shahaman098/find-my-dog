@@ -16,12 +16,13 @@ SECRETS="$SECRETS" python3 production/qa.py $OUT/01_hackathon_demo_120s.mp4 --du
 echo "== FILM 1 DONE"
 fi
 
+# Film 3 opens on an iris from black (01_interruption, 0-5 s) and ends on a dark end card (08_end, 56-60 s): only those windows may be black
 python3 production/build_film3.py $TAKE
 [ -f $OUT/audio/film3_score.wav ] || python3 production/score.py $OUT/audio/film3_score.wav --duration 60 --reveal 20.4 --end 56 --bpm 72
 MUSIC_GAIN=0.13 python3 production/mix.py production/film3/audio_plan.json $OUT/audio/film3_score.wav 60 $OUT/05_advert_voiceover.wav $OUT/audio/film3_mix.wav $OUT/07_advert_subtitles.srt
 node production/render.cjs production/film3/index.html $OUT/audio/film3_video.mp4 --fps 24 --duration 60 --workers 3
 ffmpeg -loglevel error -y -i $OUT/audio/film3_video.mp4 -i $OUT/audio/film3_mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -ar 48000 -movflags +faststart -t 60 $OUT/03_cinematic_product_ad_60s.mp4
-SECRETS="$SECRETS" python3 production/qa.py $OUT/03_cinematic_product_ad_60s.mp4 --duration 60 --fps 24 --srt $OUT/07_advert_subtitles.srt --script production/scripts/film3.json --scan production/film3 || echo "FILM3 QA FAILED"
+SECRETS="$SECRETS" python3 production/qa.py $OUT/03_cinematic_product_ad_60s.mp4 --duration 60 --fps 24 --srt $OUT/07_advert_subtitles.srt --script production/scripts/film3.json --scan production/film3 --allow-black 0-5,56-60 || echo "FILM3 QA FAILED"
 echo "== FILM 3 DONE"
 
 python3 production/build_film2.py $TAKE

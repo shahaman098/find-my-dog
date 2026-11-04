@@ -16,7 +16,7 @@ Written 4 Nov 2026, ~19:00 GMT, at the end of a Claude Code session that ran out
 | Film 3 "Impossible Made Simple" (60 s ad) | **Final delivered to Kris** (passes every QA check). |
 | Narration (ElevenLabs voice `dxT8yYZS41hHdsvjw7XV`) | **Committed** in `production/assets/voice/` (no ElevenLabs key needed unless a line changes). |
 | Concept stills (Muse Image) | Committed in `production/assets/concept/`. |
-| `11_production_report.md` | Not written yet (P3). |
+| `11_production_report.md` | **Done** (P3). Live-finals pitch + Q&A sheet in `PITCH.md`. |
 
 ## Set up the new environment (5 minutes)
 
@@ -41,7 +41,7 @@ If only one film needs redoing after a take exists: `SKIP_CAPTURE=1 BASE=http://
 - **P0 (Kris):** deploy ✅ done. Rotate Meta + ElevenLabs keys. Make the repo public only after rotating. Remove the "Muse Code" line in `SUBMISSION.md` unless true. Upload Film 1 (unlisted YouTube; check logged-out playback) and submit by 22:00 GMT. **Film 1 v2 is the one to upload.**
 - **P1:** ✅ done: all three films final and delivered (20:00 GMT). Only re-run `bash production/bootstrap.sh` if the MP4s are lost or a film must change.
 - **P2 (optional, after deploy):** re-shoot on production: `BASE=https://find-my-dog.kiritokris.workers.dev bash production/reshoot_all.sh`. If you do, change scene 04 of `production/scripts/film1.json` back to "…a brand-new report on the deployed site…", re-voice that one scene (needs ElevenLabs), and re-render Film 1.
-- **P3:** write `production/11_production_report.md` from the QA output and `production/09_evidence_manifest.md`; a 60-second live pitch + Q&A sheet (Ring, Petco Love Lost, privacy, SAM failures) for the 9 Nov live finals.
+- **P3:** ✅ done: `production/11_production_report.md` and `PITCH.md` (60-second pitch + Q&A for the 9 Nov finals). **Open issue:** the README, `SUBMISSION.md` and the landing page say "time-boxed", but no expiry is enforced in code. Soften the wording or add expiry (see `PITCH.md` → Privacy).
 
 ## Known pitfalls (each one bit the last session)
 

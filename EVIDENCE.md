@@ -17,7 +17,7 @@ calling the **live Meta API** on 4 Nov 2026. Charts are generated from the raw J
 | 7 | The coordinator is a real tool loop | Spark itself chose `suggest_next_search` → `make_poster` | [§3](#3-the-product-running-on-real-models), [`plan.json`](eval/results/plan.json) |
 | 8 | Only the owner can decide; the demo can't be vandalised | **12 / 12** access checks pass on the real-mode Worker | [§5](#5-access-control-real-mode-worker), [log](evidence/logs/access-control-real.txt) |
 | 8b | The deployed site runs the full real pipeline | `node eval/e2e.ts https://find-my-dog.kiritokris.workers.dev` **passes in real mode**: SAM 3.1 tracks, Spark matches, owner confirms, plan + Muse Image poster, demo read-only ($0.04) | [log](evidence/logs/e2e-production.txt) |
-| 9 | Build and tests are green | typecheck, 11/11 unit tests, web build, full mock E2E: all exit 0 | [§6](#6-tests-and-build) |
+| 9 | Build and tests are green | typecheck, 12/12 unit tests, web build, full mock E2E: all exit 0 | [§6](#6-tests-and-build) |
 
 ---
 
@@ -159,7 +159,7 @@ summary: 12 passed, 0 failed
 | Check | Log | Result |
 |---|---|---|
 | Strict TypeScript over the Worker | [`typecheck.txt`](evidence/logs/typecheck.txt) | exit 0 |
-| Unit tests (SAM grammar, track merge, clock order, cost meter, image sniffing) | [`unit-tests.txt`](evidence/logs/unit-tests.txt) | 11 / 11 pass |
+| Unit tests (SAM grammar, track merge, clock order, cost meter, image sniffing, public-URL check) | [`unit-tests.txt`](evidence/logs/unit-tests.txt) | 12 / 12 pass |
 | Web build | [`web-build.txt`](evidence/logs/web-build.txt) | exit 0 |
 | Full pipeline + access model E2E (mock mode) | [`e2e-mock.txt`](evidence/logs/e2e-mock.txt) | PASS |
 
