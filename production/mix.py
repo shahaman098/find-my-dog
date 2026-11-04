@@ -21,10 +21,14 @@ k = len(plan['voice'])
 filt.append(''.join(f'[v{i}]' for i in range(k)) + f'amix=inputs={k}:normalize=0:dropout_transition=0,apad,atrim=0:{dur},alimiter=limit=0.891:level=false[vo]')
 subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', *ins, '-filter_complex', ';'.join(filt), '-map', '[vo]', '-ac', '1', '-ar', '48000', '-c:a', 'pcm_s24le', vmaster], check=True)
 
-fc = ('[0:a]aformat=channel_layouts=stereo,asplit=2[vk][vm];'
-      '[1:a]atrim=0:%s,volume=0.55[mu];'
-      '[mu][vk]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=400:makeup=1[duck];'
-      '[vm][duck]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.0:LRA=9,aresample=48000,atrim=0:%s[out]') % (dur, dur)
+# Voice first: gentle compression + presence so it reads clearly; music is a quiet bed, carved out of the speech band
+# (300 Hz-3 kHz) and ducked hard under speech. Target: music under speech >= 15 LU below the voice.
+MUSIC_GAIN = float(__import__('os').environ.get('MUSIC_GAIN', '0.12'))  # Film 3 uses MUSIC_GAIN=0.13 (music-only intro); all films measured >= 15 LU music-under-voice
+fc = ('[0:a]aformat=channel_layouts=stereo,acompressor=threshold=0.125:ratio=3:attack=8:release=120:makeup=1.6,'
+      'equalizer=f=3200:t=q:w=1.2:g=2.5,asplit=2[vk][vm];'
+      '[1:a]atrim=0:%s,volume=%s,equalizer=f=1000:t=q:w=0.6:g=-6,equalizer=f=2500:t=q:w=1:g=-4[mu];'
+      '[mu][vk]sidechaincompress=threshold=0.015:ratio=12:attack=12:release=650:makeup=1[duck];'
+      '[vm][duck]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,atrim=0:%s[out]') % (dur, MUSIC_GAIN, dur)
 subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', vmaster, '-i', score, '-filter_complex', fc, '-map', '[out]', '-ar', '48000', '-c:a', 'pcm_s24le', final], check=True)
 
 def ts(x):
