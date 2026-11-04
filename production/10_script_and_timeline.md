@@ -1,5 +1,5 @@
 # Script and timeline: Film 1 "The Proof" (120 s)
-Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice `dxT8yYZS41hHdsvjw7XV` (eleven_multilingual_v2; stability 0.65, similarity 0.85, style 0.15, speed 1.0; 48 kHz). Every time below is generated from the voice word timings and the capture event log. Source revision `fbeb8df`; take `production/out/12_raw_evidence/take_01` against `http://localhost:8788`.
+Locked narration (`production/scripts/film1.json`), voiced with ElevenLabs voice `dxT8yYZS41hHdsvjw7XV` (eleven_multilingual_v2; stability 0.65, similarity 0.85, style 0.15, speed 1.0; 48 kHz). Every time below is generated from the voice word timings and the capture event log. Source revision `fa41914`; take `production/out/12_raw_evidence/take_01` against `http://localhost:8788`.
 **Lock history:** scene 04 originally said "on the deployed site". The production deploy was not available in time, so the take was recorded on a local Worker running the same commit against the live Meta API, and the line was re-locked to say exactly that. No other line changed.
 
 ## 01_hook · 0:00.00–0:08.00

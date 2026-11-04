@@ -1,6 +1,6 @@
 # Evidence manifest (claim → evidence)
 
-Revision `fbeb8df`. Take: `production/out/12_raw_evidence/take_01` (one continuous recording, unedited; Film 1 time-compresses it with on-screen speed and never cuts it).
+Revision `fa41914`. Take: `production/out/12_raw_evidence/take_01` (one continuous recording, unedited; Film 1 time-compresses it with on-screen speed and never cuts it).
 
 | # | Claim in the films | Evidence | Detail |
 |---|---|---|---|
